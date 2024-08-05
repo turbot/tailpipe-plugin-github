@@ -3,6 +3,7 @@ package github_collection
 import (
 	"fmt"
 	"github.com/turbot/tailpipe-plugin-sdk/hcl"
+	"strconv"
 	"time"
 
 	"github.com/rs/xid"
@@ -79,102 +80,151 @@ func (c *AuditLogCollection) EnrichRow(row any, sourceEnrichmentFields *enrichme
 	for key, value := range rawRecord {
 			switch key {
 			case "action":
-					record.Action, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Action = &strVal
+					}
 			case "actor":
-					record.Actor, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Actor = &strVal
+					}
 			case "actor_id":
-					if intVal, ok := value.(int); ok {
-							record.ActorID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.ActorID = &strVal
 					}
 			case "actor_ip":
-					record.ActorIP, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.ActorIP = &strVal
+					}
 			case "actor_is_bot":
 					if boolVal, ok := value.(bool); ok {
 							record.ActorIsBot = &boolVal
 					}
 			case "actor_location_country_code":
-					record.ActorLocationCountryCode, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.ActorLocationCountryCode = &strVal
+					}
 			case "business":
-					record.Business, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Business = &strVal
+					}
 			case "comment_id":
-					if intVal, ok := value.(int); ok {
-							record.CommentID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.CommentID = &strVal
 					}
 			case "created_at":
-				if intVal, ok := value.(int64); ok {
-						t := time.Unix(0, intVal*int64(time.Millisecond))
-						record.CreatedAt = &t
-				}
+					if floatVal, ok := value.(float64); ok {
+							t := time.Unix(0, int64(floatVal)*int64(time.Millisecond))
+							record.CreatedAt = &t
+					}
 			case "_document_id":
-					record.DocumentID, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.DocumentID = &strVal
+					}
 			case "hashed_token":
-					record.HashedToken, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.HashedToken = &strVal
+					}
 			case "operation_type":
-					record.OperationType, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.OperationType = &strVal
+					}
 			case "org":
-					record.Org, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Org = &strVal
+					}
 			case "org_id":
-					if intVal, ok := value.(int); ok {
-							record.OrgID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.OrgID = &strVal
 					}
 			case "programmatic_access_type":
-					record.ProgrammaticAccessType, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.ProgrammaticAccessType = &strVal
+					}
 			case "public_repo":
 					if boolVal, ok := value.(bool); ok {
 							record.PublicRepo = &boolVal
 					}
 			case "pull_request_id":
-					if intVal, ok := value.(int); ok {
-							record.PullRequestID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.PullRequestID = &strVal
 					}
 			case "pull_request_title":
-					record.PullRequestTitle, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.PullRequestTitle = &strVal
+					}
 			case "pull_request_url":
-					record.PullRequestURL, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.PullRequestURL = &strVal
+					}
 			case "repo":
-					record.Repo, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Repo = &strVal
+					}
 			case "repo_id":
-					if intVal, ok := value.(int); ok {
-							record.RepoID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.RepoID = &strVal
 					}
 			case "repository_security_configuration_failure_reason":
-					record.RepositorySecurityConfigurationFailureReason, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.RepositorySecurityConfigurationFailureReason = &strVal
+					}
 			case "repository_security_configuration_state":
-					record.RepositorySecurityConfigurationState, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.RepositorySecurityConfigurationState = &strVal
+					}
 			case "review_id":
-					if intVal, ok := value.(int); ok {
-							record.ReviewID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.ReviewID = &strVal
 					}
 			case "reviewer_type":
-					record.ReviewerType, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.ReviewerType = &strVal
+					}
 			case "security_configuration_id":
-					if intVal, ok := value.(int); ok {
-							record.SecurityConfigurationID = &intVal
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.SecurityConfigurationID = &strVal
 					}
 			case "security_configuration_name":
-					record.SecurityConfigurationName, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.SecurityConfigurationName = &strVal
+					}
 			case "@timestamp":
-				if intVal, ok := value.(int64); ok {
-					t := time.Unix(0, intVal*int64(time.Millisecond))
-					record.Timestamp = &t
-					timeISO8601 := t.Format(time.RFC3339)
-					record.TimeISO8601 = &timeISO8601
-				}
+					if floatVal, ok := value.(float64); ok {
+							t := time.Unix(0, int64(floatVal)*int64(time.Millisecond))
+							record.Timestamp = &t
+							timeISO8601 := t.Format(time.RFC3339)
+							record.TimeISO8601 = &timeISO8601
+					}
 			case "token_id":
-				if intVal, ok := value.(int); ok {
-						record.TokenID = &intVal
-				}
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.TokenID = &strVal
+					}
 			case "topic":
-				record.Topic, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.Topic = &strVal
+					}
 			case "user":
-				record.User, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.User = &strVal
+					}
 			case "user_agent":
-				record.UserAgent, _ = value.(*string)
+					if strVal, ok := value.(string); ok {
+							record.UserAgent = &strVal
+					}
 			case "user_id":
-				if intVal, ok := value.(int); ok {
-						record.UserID = &intVal
-				}
-		}
+					if floatVal, ok := value.(float64); ok {
+							strVal := strconv.FormatInt(int64(floatVal), 10)
+							record.UserID = &strVal
+					}
+			}
 	}
 
 	// Record standardization
@@ -185,13 +235,9 @@ func (c *AuditLogCollection) EnrichRow(row any, sourceEnrichmentFields *enrichme
 	// Hive Fields
 	record.TpCollection = c.Identifier()
 	record.TpConnection = c.Identifier() // TODO: #refactor figure out how to get connection
-	// TODO: Re-add these once Timestamp works
-	record.TpYear = int32(1)
-	record.TpMonth = int32(1)
-	record.TpDay = int32(1)
-	//record.TpYear = int32(record.Timestamp.Year())
-	//record.TpMonth = int32(record.Timestamp.Month())
-	//record.TpDay = int32(record.Timestamp.Day())
+	record.TpYear = int32(record.Timestamp.Year())
+	record.TpMonth = int32(record.Timestamp.Month())
+	record.TpDay = int32(record.Timestamp.Day())
 
 	return record, nil
 }
