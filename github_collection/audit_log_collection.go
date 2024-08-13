@@ -122,6 +122,10 @@ func (c *AuditLogCollection) EnrichRow(row any, sourceEnrichmentFields *enrichme
 					if strVal, ok := value.(string); ok {
 							record.DocumentID = &strVal
 					}
+			case "environment_name":
+					if strVal, ok := value.(string); ok {
+							record.EnvironmentName = &strVal
+					}
 			case "hashed_token":
 					if strVal, ok := value.(string); ok {
 							record.HashedToken = &strVal
@@ -142,6 +146,10 @@ func (c *AuditLogCollection) EnrichRow(row any, sourceEnrichmentFields *enrichme
 			case "programmatic_access_type":
 					if strVal, ok := value.(string); ok {
 							record.ProgrammaticAccessType = &strVal
+					}
+			case "project_name":
+					if strVal, ok := value.(string); ok {
+							record.ProjectName = &strVal
 					}
 			case "public_repo":
 					if boolVal, ok := value.(bool); ok {

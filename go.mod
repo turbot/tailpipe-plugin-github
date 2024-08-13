@@ -8,7 +8,6 @@ replace github.com/turbot/tailpipe-plugin-sdk => ../tailpipe-plugin-sdk
 
 require (
 	github.com/rs/xid v1.5.0
-	github.com/satyrius/gonx v1.4.0
 	github.com/turbot/tailpipe-plugin-sdk v0.0.0
 )
 
@@ -79,7 +78,6 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
-	github.com/smartystreets/goconvey v1.8.1 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.9 // indirect

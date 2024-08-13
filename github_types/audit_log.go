@@ -11,8 +11,9 @@ import (
 * - Should IP addresses be strings?
 * - Are the CreatedAt and Timestamp properties the correct type? Should they be *time.Time or helpers.UnixMillis?
 * - Should we preserve millisecond time fields as is and create new fields?
-* - Should nested properties be broken out?
+* - Should nested properties be broken out/flattened?
 * - How best to add all possible fields? There are about 130 top level properties and 33 nested properties.
+* - Do we use `Data` and `AdditionalFields`?
  */
 type AuditLog struct {
 	enrichment.CommonFields
@@ -27,11 +28,13 @@ type AuditLog struct {
 	CommentID                                    *string    `json:"comment_id,omitempty"`
 	CreatedAt                                    *time.Time `json:"created_at,omitempty"`
 	DocumentID                                   *string    `json:"document_id,omitempty"`
+	EnvironmentName                              *string    `json:"environment_name,omitempty"`
 	HashedToken                                  *string    `json:"hashed_token,omitempty"`
 	OperationType                                *string    `json:"operation_type,omitempty"`
 	Org                                          *string    `json:"org,omitempty"`
 	OrgID                                        *string    `json:"org_id,omitempty"`
 	ProgrammaticAccessType                       *string    `json:"programmatic_access_type,omitempty"`
+	ProjectName                                  *string    `json:"project_name,omitempty"`
 	PublicRepo                                   *bool      `json:"public_repo,omitempty"`
 	PullRequestID                                *string    `json:"pull_request_id,omitempty"`
 	PullRequestTitle                             *string    `json:"pull_request_title,omitempty"`
