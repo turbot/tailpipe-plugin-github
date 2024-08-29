@@ -1,0 +1,10 @@
+package github_table
+
+type AuditLogTableConfig struct {
+	LogFormat *string `hcl:"log_format"`
+}
+
+func (a *AuditLogTableConfig) Validate() error {
+	//TODO implement me
+	return nil
+}

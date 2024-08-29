@@ -1,4 +1,4 @@
-package github_partition
+package github_table
 
 import (
 	"fmt"
@@ -12,30 +12,30 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
 	"github.com/turbot/tailpipe-plugin-sdk/helpers"
 	"github.com/turbot/tailpipe-plugin-sdk/parse"
-	"github.com/turbot/tailpipe-plugin-sdk/partition"
 	"github.com/turbot/tailpipe-plugin-sdk/row_source"
+	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
-// AuditLogPartition - partition for github audit logs
-type AuditLogPartition struct {
-	partition.PartitionBase[*AuditLogPartitionConfig]
+// AuditLogTable - table for github audit logs
+type AuditLogTable struct {
+	table.TableBase[*AuditLogTableConfig]
 }
 
-func (c *AuditLogPartition) SupportedSources() []string {
+func (c *AuditLogTable) SupportedSources() []string {
 	return []string{
 		artifact_source.FileSystemSourceIdentifier,
 	}
 }
 
-func NewAuditLogPartition() partition.Partition {
-	return &AuditLogPartition{}
+func NewAuditLogTable() table.Table {
+	return &AuditLogTable{}
 }
 
-func (c *AuditLogPartition) Identifier() string {
+func (c *AuditLogTable) Identifier() string {
 	return "github_audit_log"
 }
 
-func (c *AuditLogPartition) GetSourceOptions(string) []row_source.RowSourceOption {
+func (c *AuditLogTable) GetSourceOptions(string) []row_source.RowSourceOption {
 	/*
 		if c.Config.LogFormat == nil {
 			defaultLogFormat := `$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"`
@@ -53,16 +53,16 @@ func (c *AuditLogPartition) GetSourceOptions(string) []row_source.RowSourceOptio
 	}
 }
 
-func (c *AuditLogPartition) GetRowSchema() any {
+func (c *AuditLogTable) GetRowSchema() any {
 	return github_types.AuditLog{}
 }
 
-func (c *AuditLogPartition) GetConfigSchema() parse.Config {
-	return &AuditLogPartitionConfig{}
+func (c *AuditLogTable) GetConfigSchema() parse.Config {
+	return &AuditLogTableConfig{}
 }
 
 // EnrichRow NOTE: Receives RawAuditLog & returns AuditLog
-func (c *AuditLogPartition) EnrichRow(row any, sourceEnrichmentFields *enrichment.CommonFields) (any, error) {
+func (c *AuditLogTable) EnrichRow(row any, sourceEnrichmentFields *enrichment.CommonFields) (any, error) {
 	// short-circuit for unexpected row type
 	rawRecord, ok := row.(map[string]interface{})
 	if !ok {
@@ -241,7 +241,7 @@ func (c *AuditLogPartition) EnrichRow(row any, sourceEnrichmentFields *enrichmen
 	record.TpSourceType = "github_audit_log" // TODO: #refactor move to source?
 
 	// Hive Fields
-	record.TpPartition = c.Identifier()
+	record.TpTable = c.Identifier()
 	record.TpIndex = c.Identifier() // TODO: #refactor figure out how to get connection
 	record.TpYear = int32(record.Timestamp.Year())
 	record.TpMonth = int32(record.Timestamp.Month())

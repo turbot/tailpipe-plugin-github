@@ -1,9 +1,9 @@
 package github
 
 import (
-	"github.com/turbot/tailpipe-plugin-github/github_partition"
-	"github.com/turbot/tailpipe-plugin-sdk/partition"
+	"github.com/turbot/tailpipe-plugin-github/github_table"
 	"github.com/turbot/tailpipe-plugin-sdk/plugin"
+	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
 type Plugin struct {
@@ -15,7 +15,7 @@ func NewPlugin() (plugin.TailpipePlugin, error) {
 
 	err := p.RegisterResources(
 		&plugin.ResourceFunctions{
-			Partitions: []func() partition.Partition{github_partition.NewAuditLogPartition}, // TODO: #finish implement error log partition
+			Tables: []func() table.Table{github_table.NewAuditLogTable}, // TODO: #finish implement error log table
 		})
 	if err != nil {
 		return nil, err

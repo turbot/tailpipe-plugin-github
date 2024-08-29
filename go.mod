@@ -5,6 +5,7 @@ go 1.23
 toolchain go1.23.0
 
 replace github.com/turbot/tailpipe-plugin-sdk => ../tailpipe-plugin-sdk
+
 replace github.com/turbot/pipe-fittings => ../pipe-fittings
 
 require (
@@ -62,7 +63,7 @@ require (
 	github.com/gertd/go-pluralize v0.2.1 // indirect
 	github.com/go-git/go-git/v5 v5.12.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
-	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/go-logr/stdr v1.2.2 // indirect; i	ndirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -143,7 +144,6 @@ require (
 	github.com/turbot/go-kit v0.10.0-rc.0 // indirect
 	github.com/turbot/pipe-fittings v1.4.1 // indirect
 	github.com/turbot/steampipe-plugin-code v0.7.0 // indirect
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.8.0 // indirect
 	github.com/turbot/terraform-components v0.0.0-20231108031935-358f803c1a8b // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/xlab/treeprint v1.2.0 // indirect
