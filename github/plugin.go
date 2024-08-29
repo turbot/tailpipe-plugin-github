@@ -1,8 +1,8 @@
 package github
 
 import (
-	"github.com/turbot/tailpipe-plugin-github/github_collection"
-	"github.com/turbot/tailpipe-plugin-sdk/collection"
+	"github.com/turbot/tailpipe-plugin-github/github_partition"
+	"github.com/turbot/tailpipe-plugin-sdk/partition"
 	"github.com/turbot/tailpipe-plugin-sdk/plugin"
 )
 
@@ -15,7 +15,7 @@ func NewPlugin() (plugin.TailpipePlugin, error) {
 
 	err := p.RegisterResources(
 		&plugin.ResourceFunctions{
-			Collections: []func() collection.Collection{github_collection.NewAuditLogCollection}, // TODO: #finish implement error log collection
+			Partitions: []func() partition.Partition{github_partition.NewAuditLogPartition}, // TODO: #finish implement error log partition
 		})
 	if err != nil {
 		return nil, err
