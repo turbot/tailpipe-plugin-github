@@ -241,7 +241,7 @@ func (c *AuditLogTable) EnrichRow(row any, sourceEnrichmentFields *enrichment.Co
 	record.TpSourceType = "github_audit_log" // TODO: #refactor move to source?
 
 	// Hive Fields
-	record.TpTable = c.Identifier()
+	record.TpPartition = c.Identifier()
 	record.TpIndex = c.Identifier() // TODO: #refactor figure out how to get connection
 	record.TpYear = int32(record.Timestamp.Year())
 	record.TpMonth = int32(record.Timestamp.Month())
