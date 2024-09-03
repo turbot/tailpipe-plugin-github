@@ -1,9 +1,9 @@
 package github
 
 import (
-	"github.com/turbot/tailpipe-plugin-github/github_collection"
-	"github.com/turbot/tailpipe-plugin-sdk/collection"
+	"github.com/turbot/tailpipe-plugin-github/github_table"
 	"github.com/turbot/tailpipe-plugin-sdk/plugin"
+	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
 type Plugin struct {
@@ -15,7 +15,7 @@ func NewPlugin() (plugin.TailpipePlugin, error) {
 
 	err := p.RegisterResources(
 		&plugin.ResourceFunctions{
-			Collections: []func() collection.Collection{github_collection.NewAuditLogCollection}, // TODO: #finish implement error log collection
+			Tables: []func() table.Table{github_table.NewAuditLogTable}, // TODO: #finish implement error log table
 		})
 	if err != nil {
 		return nil, err
