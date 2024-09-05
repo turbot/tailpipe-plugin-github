@@ -1,16 +1,14 @@
 package github_source
 
-import "github.com/turbot/tailpipe-plugin-sdk/collection_state"
-
 // TODO: #paging figure out paging for github audit logs - this is a placeholder
 
-type AuditLogPaging struct {
-}
-
-func NewAuditLogPaging() *AuditLogPaging {
-	return &AuditLogPaging{}
-}
-
-func (a *AuditLogPaging) Update(data collection_state.CollectionState) error {
-	return nil
-}
+//type AuditLogPaging struct {
+//}
+//
+//func NewAuditLogPaging() *AuditLogPaging {
+//	return &AuditLogPaging{}
+//}
+//
+//func (a *AuditLogPaging) Update(data collection_state.CollectionState) error {
+//	return nil
+//}
