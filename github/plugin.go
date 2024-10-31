@@ -1,13 +1,13 @@
 package github
 
 import (
-	"github.com/turbot/tailpipe-plugin-github/github_table"
+	"github.com/turbot/tailpipe-plugin-github/tables"
 	"github.com/turbot/tailpipe-plugin-sdk/plugin"
 	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
 type Plugin struct {
-	plugin.PluginBase
+	plugin.Plugin
 }
 
 func NewPlugin() (plugin.TailpipePlugin, error) {
@@ -15,7 +15,7 @@ func NewPlugin() (plugin.TailpipePlugin, error) {
 
 	err := p.RegisterResources(
 		&plugin.ResourceFunctions{
-			Tables: []func() table.Table{github_table.NewAuditLogTable}, // TODO: #finish implement error log table
+			Tables: []func() table.Table{tables.NewAuditLogTable}, // TODO: #finish implement error log table
 		})
 	if err != nil {
 		return nil, err
