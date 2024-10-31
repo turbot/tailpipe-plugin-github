@@ -6,12 +6,8 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
-type Plugin struct {
-	plugin.Plugin
-}
-
 func NewPlugin() (plugin.TailpipePlugin, error) {
-	p := &Plugin{}
+	p := plugin.NewPlugin("github")
 
 	err := p.RegisterResources(
 		&plugin.ResourceFunctions{
@@ -22,8 +18,4 @@ func NewPlugin() (plugin.TailpipePlugin, error) {
 	}
 
 	return p, nil
-}
-
-func (t *Plugin) Identifier() string {
-	return "github"
 }
