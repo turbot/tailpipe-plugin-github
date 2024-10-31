@@ -1,4 +1,4 @@
-package github_table
+package tables
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/rs/xid"
-	"github.com/turbot/tailpipe-plugin-github/github_source"
-	"github.com/turbot/tailpipe-plugin-github/github_types"
+	"github.com/turbot/tailpipe-plugin-github/mappers"
+	"github.com/turbot/tailpipe-plugin-github/models"
 	"github.com/turbot/tailpipe-plugin-sdk/artifact_source"
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
 	"github.com/turbot/tailpipe-plugin-sdk/helpers"
@@ -19,12 +19,6 @@ import (
 // AuditLogTable - table for github audit logs
 type AuditLogTable struct {
 	table.TableBase[*AuditLogTableConfig]
-}
-
-func (c *AuditLogTable) SupportedSources() []string {
-	return []string{
-		artifact_source.FileSystemSourceIdentifier,
-	}
 }
 
 func NewAuditLogTable() table.Table {
@@ -44,17 +38,17 @@ func (c *AuditLogTable) GetSourceOptions(string) []row_source.RowSourceOption {
 
 		return []row_source.RowSourceOption{
 			artifact_source.WithRowPerLine(),
-			artifact_source.WithMapper(github_source.NewAuditLogMapper(*c.Config.LogFormat)),
+			artifact_source.WithMapper(mappers.NewAuditLogMapper(*c.Config.LogFormat)),
 		}
 	*/
 	return []row_source.RowSourceOption{
 		artifact_source.WithRowPerLine(),
-		artifact_source.WithArtifactMapper(github_source.NewAuditLogMapper()),
+		artifact_source.WithArtifactMapper(mappers.NewAuditLogMapper()),
 	}
 }
 
 func (c *AuditLogTable) GetRowSchema() any {
-	return github_types.AuditLog{}
+	return models.AuditLog{}
 }
 
 func (c *AuditLogTable) GetConfigSchema() parse.Config {
@@ -72,7 +66,7 @@ func (c *AuditLogTable) EnrichRow(row any, sourceEnrichmentFields *enrichment.Co
 	// TODO: #validate ensure we have either `time_local` or `time_iso8601` field as without one of these we can't populate timestamp...
 
 	// Build record and add any source enrichment fields
-	var record github_types.AuditLog
+	var record models.AuditLog
 	if sourceEnrichmentFields != nil {
 		record.CommonFields = *sourceEnrichmentFields
 	}

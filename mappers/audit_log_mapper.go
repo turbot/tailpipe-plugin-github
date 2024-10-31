@@ -1,4 +1,4 @@
-package github_source
+package mappers
 
 import (
 	"context"
