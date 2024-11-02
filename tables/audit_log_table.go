@@ -2,9 +2,10 @@ package tables
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	"github.com/turbot/tailpipe-plugin-github/config"
 	"github.com/turbot/tailpipe-plugin-sdk/artifact_mapper"
+	"github.com/turbot/tailpipe-plugin-sdk/types"
 	"strconv"
 	"time"
 
@@ -21,7 +22,7 @@ import (
 
 // AuditLogTable - table for github audit logs
 type AuditLogTable struct {
-	table.TableBase[*AuditLogTableConfig]
+	table.TableBase[*AuditLogTableConfig, *config.GithubConnection]
 }
 
 func NewAuditLogTable() table.Table {
@@ -32,9 +33,9 @@ func (c *AuditLogTable) Identifier() string {
 	return "github_audit_log"
 }
 
-func (c *AuditLogTable) Init(ctx context.Context, tableConfigData *parse.Data, collectionStateJSON json.RawMessage, sourceConfigData *parse.Data) error {
+func (c *AuditLogTable) Init(ctx context.Context, connectionSchemaProvider table.ConnectionSchemaProvider, req *types.CollectRequest) error {
 	// call base init
-	if err := c.TableBase.Init(ctx, tableConfigData, collectionStateJSON, sourceConfigData); err != nil {
+	if err := c.TableBase.Init(ctx, connectionSchemaProvider, req); err != nil {
 		return err
 	}
 
