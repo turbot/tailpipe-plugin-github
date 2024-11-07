@@ -15,8 +15,12 @@ require (
 
 require (
 	github.com/containerd/errdefs v0.1.0 // indirect
+	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/jtolds/gls v4.20.0+incompatible // indirect
+	github.com/satyrius/gonx v1.4.0 // indirect
+	github.com/smarty/assertions v1.16.0 // indirect
 	github.com/turbot/pipes-sdk-go v0.9.1 // indirect
 )
 
@@ -146,7 +150,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/tklauser/numcpus v0.3.0 // indirect
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
-	github.com/turbot/go-kit v0.10.0-rc.0 // indirect
+	github.com/turbot/go-kit v0.10.0-rc.0
 	github.com/turbot/pipe-fittings v1.4.1 // indirect
 	github.com/turbot/steampipe-plugin-code v0.7.0 // indirect
 	github.com/turbot/terraform-components v0.0.0-20231213122222-1f3526cab7a7 // indirect

@@ -5,35 +5,27 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/turbot/tailpipe-plugin-sdk/artifact_mapper"
-	"github.com/turbot/tailpipe-plugin-sdk/types"
+	"github.com/turbot/tailpipe-plugin-github/rows"
+	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
 type AuditLogMapper struct {
-	logFormat string
 }
 
-//func NewAuditLogMapper(logFormat string) artifact_mapper.Mapper {
-func NewAuditLogMapper() artifact_mapper.Mapper {
-	return &AuditLogMapper{
-		//logFormat: logFormat,
-	}
+func NewAuditLogMapper() table.Mapper[*rows.AuditLog] {
+	return &AuditLogMapper{}
 }
 
 func (c *AuditLogMapper) Identifier() string {
 	return "audit_log_mapper"
 }
 
-// TODO: #refactor - can we make this more generic and add it to the SDK?
-func (c *AuditLogMapper) Map(ctx context.Context, a *types.RowData) ([]*types.RowData, error) {
-	var out []*types.RowData
-
+func (c *AuditLogMapper) Map(ctx context.Context, a any) ([]*rows.AuditLog, error) {
 	// validate input type is string
-	input, ok := a.Data.(string)
+	input, ok := a.(string)
 	if !ok {
-		return nil, fmt.Errorf("expected string, got %T", a.Data)
+		return nil, fmt.Errorf("expected string, got %T", a)
 	}
-	inputMetadata := a.Metadata
 
 	// Parse JSONL line
 	var fields map[string]interface{}
@@ -42,7 +34,8 @@ func (c *AuditLogMapper) Map(ctx context.Context, a *types.RowData) ([]*types.Ro
 		return nil, fmt.Errorf("error parsing JSONL line: %w", err)
 	}
 
-	out = append(out, types.NewData(fields, types.WithMetadata(inputMetadata)))
+	row := rows.NewAuditLog()
+	row.FromMap(fields)
 
-	return out, nil
+	return []*rows.AuditLog{row}, nil
 }
