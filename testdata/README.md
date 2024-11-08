@@ -1,6 +1,6 @@
 # Test data
 
-The `generator` folder contains a script, `generate.py`, which writes 500,000 records to a parquet file. To run the sample queries in [docs/tables](../tables), cd into `generator` and run:
+The `generator` folder contains a script, `generate.py`, which writes 500,000 records to a parquet file. To run the sample queries in [docs/tables](../docs/tables), cd into `generator` and run:
 
 ```bash
 $ python generate.py
