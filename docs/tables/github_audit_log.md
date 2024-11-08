@@ -57,7 +57,7 @@ Identifies access outside of standard working hours, which could signal suspicio
 ```sql
 select
   actor,
-  extract(hour from timestamp) as access_hour,
+  date_part('hour', CAST(timestamp AS TIMESTAMP)) as access_hour,
   count(*) as access_count
 from
   github_audit_log
