@@ -17,12 +17,17 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/types"
 )
 
+// register the table from the package init function
+func init() {
+	table.RegisterTable(NewAuditLogTable)
+}
+
 // AuditLogTable - table for github audit logs
 type AuditLogTable struct {
 	table.TableImpl[*rows.AuditLog, *AuditLogTableConfig, *config.GitHubConnection]
 }
 
-func NewAuditLogTable() table.Table {
+func NewAuditLogTable() table.Enricher[*rows.AuditLog] {
 	return &AuditLogTable{}
 }
 
@@ -51,7 +56,7 @@ func (c *AuditLogTable) GetSourceOptions(string) []row_source.RowSourceOption {
 	}
 }
 
-func (c *AuditLogTable) GetRowSchema() any {
+func (c *AuditLogTable) GetRowSchema() types.RowStruct {
 	return rows.AuditLog{}
 }
 
@@ -69,6 +74,7 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *en
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
 	row.TpSourceIP = row.ActorIP
+	// TODO: What should be the TpIndex field for the github_audit_log table??
 	switch {
 	case row.Org != nil:
 		row.TpIndex = *row.Org
@@ -77,7 +83,6 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *en
 	default:
 		row.TpIndex = *row.OrgID
 	}
-	row.TpDate = row.Timestamp.Format("2006-01-02")
-
+	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
 }

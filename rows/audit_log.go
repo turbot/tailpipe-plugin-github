@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
-	"github.com/turbot/tailpipe-plugin-sdk/helpers"
+	"github.com/turbot/tailpipe-plugin-sdk/types"
 )
 
 /*
@@ -22,26 +22,26 @@ import (
 type AuditLog struct {
 	enrichment.CommonFields
 
-	Action                   *string             `json:"action,omitempty"`
-	Actor                    *string             `json:"actor,omitempty"`
-	ActorID                  *int64              `json:"actor_id,omitempty"`
-	ActorIP									 *string							`json:"actor_ip,omitempty"`
-	ActorLocation            *helpers.JSONString `json:"actor_location,omitempty"`
-	Business                 *string             `json:"business,omitempty"`
-	BusinessID               *int64              `json:"business_id,omitempty"`
-	CreatedAt                *time.Time          `json:"created_at,omitempty"`
-	DocumentID               *string             `json:"_document_id,omitempty"`
-	ExternalIdentityNameID   *string             `json:"external_identity_nameid,omitempty"`
-	ExternalIdentityUsername *string             `json:"external_identity_username,omitempty"`
-	HashedToken              *string             `json:"hashed_token,omitempty"`
-	Org                      *string             `json:"org,omitempty"`
-	OrgID                    *string             `json:"org_id,omitempty"`
-	Timestamp                *time.Time          `json:"@timestamp,omitempty"`
-	TokenID                  *int64              `json:"token_id,omitempty"`
-	TokenScopes              *string             `json:"token_scopes,omitempty"`
-	User                     *string             `json:"user,omitempty"`
-	UserID                   *int64              `json:"user_id,omitempty"`
-	AdditionalFields         *helpers.JSONString `json:"additional_fields,omitempty"`
+	Action                   *string           `json:"action,omitempty"`
+	Actor                    *string           `json:"actor,omitempty"`
+	ActorID                  *int64            `json:"actor_id,omitempty"`
+	ActorIP                  *string           `json:"actor_ip,omitempty"`
+	ActorLocation            *types.JSONString `json:"actor_location,omitempty"`
+	Business                 *string           `json:"business,omitempty"`
+	BusinessID               *int64            `json:"business_id,omitempty"`
+	CreatedAt                *time.Time        `json:"created_at,omitempty"`
+	DocumentID               *string           `json:"_document_id,omitempty"`
+	ExternalIdentityNameID   *string           `json:"external_identity_nameid,omitempty"`
+	ExternalIdentityUsername *string           `json:"external_identity_username,omitempty"`
+	HashedToken              *string           `json:"hashed_token,omitempty"`
+	Org                      *string           `json:"org,omitempty"`
+	OrgID                    *string           `json:"org_id,omitempty"`
+	Timestamp                *time.Time        `json:"@timestamp,omitempty"`
+	TokenID                  *int64            `json:"token_id,omitempty"`
+	TokenScopes              *string           `json:"token_scopes,omitempty"`
+	User                     *string           `json:"user,omitempty"`
+	UserID                   *int64            `json:"user_id,omitempty"`
+	AdditionalFields         *types.JSONString `json:"additional_fields,omitempty"`
 }
 
 type ActorLocation struct {
@@ -79,7 +79,7 @@ func (a *AuditLog) FromMap(in map[string]interface{}) {
 			if location, ok := value.(map[string]interface{}); ok {
 				locJSON, err := json.Marshal(location)
 				if err == nil {
-					locStr := helpers.JSONString(locJSON)
+					locStr := types.JSONString(locJSON)
 					a.ActorLocation = &locStr
 				}
 			}
@@ -154,7 +154,7 @@ func (a *AuditLog) FromMap(in map[string]interface{}) {
 	// Marshal dynamic fields into JSON and store in AdditionalFields
 	if len(dynamicFields) > 0 {
 		if dynamicJSON, err := json.Marshal(dynamicFields); err == nil {
-			djStr := helpers.JSONString(dynamicJSON)
+			djStr := types.JSONString(dynamicJSON)
 			a.AdditionalFields = &djStr
 		}
 	}
