@@ -68,7 +68,15 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *en
 	row.TpID = xid.New().String()
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
-	row.TpIndex = c.Identifier() // TODO: #refactor figure out how to get connection
+	row.TpSourceIP = row.ActorIP
+	switch {
+	case row.Org != nil:
+		row.TpIndex = *row.Org
+	case row.User != nil:
+		row.TpIndex = *row.User
+	default:
+		row.TpIndex = *row.OrgID
+	}
 	row.TpDate = row.Timestamp.Format("2006-01-02")
 
 	return row, nil
