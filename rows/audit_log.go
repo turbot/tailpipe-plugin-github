@@ -36,7 +36,7 @@ type AuditLog struct {
 	HashedToken              *string           `json:"hashed_token,omitempty"`
 	Org                      *string           `json:"org,omitempty"`
 	OrgID                    *string           `json:"org_id,omitempty"`
-	Timestamp                *time.Time        `json:"@timestamp,omitempty"`
+	Timestamp                *time.Time        `json:"timestamp,omitempty"`
 	TokenID                  *int64            `json:"token_id,omitempty"`
 	TokenScopes              *string           `json:"token_scopes,omitempty"`
 	User                     *string           `json:"user,omitempty"`
