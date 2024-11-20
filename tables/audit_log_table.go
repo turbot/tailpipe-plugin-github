@@ -8,8 +8,10 @@ import (
 	"github.com/turbot/tailpipe-plugin-github/config"
 	"github.com/turbot/tailpipe-plugin-github/mappers"
 	"github.com/turbot/tailpipe-plugin-github/rows"
+	"github.com/turbot/tailpipe-plugin-sdk/artifact_source"
 	"github.com/turbot/tailpipe-plugin-sdk/constants"
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
+	"github.com/turbot/tailpipe-plugin-sdk/row_source"
 	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
@@ -32,9 +34,11 @@ func (c *AuditLogTable) Identifier() string {
 func (c *AuditLogTable) SupportedSources() []*table.SourceMetadata[*rows.AuditLog] {
 	return []*table.SourceMetadata[*rows.AuditLog]{
 		{
-			// TODO: We don't have any source for this plugin
 			SourceName: constants.ArtifactSourceIdentifier,
 			MapperFunc: mappers.NewAuditLogMapper,
+			Options: []row_source.RowSourceOption{
+				artifact_source.WithRowPerLine(),
+			},
 		},
 	}
 }
