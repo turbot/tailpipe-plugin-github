@@ -1,7 +1,6 @@
 package tables
 
 import (
-	"context"
 	"time"
 
 	"github.com/rs/xid"
@@ -10,16 +9,17 @@ import (
 	"github.com/turbot/tailpipe-plugin-github/mappers"
 	"github.com/turbot/tailpipe-plugin-github/rows"
 	"github.com/turbot/tailpipe-plugin-sdk/artifact_source"
+	"github.com/turbot/tailpipe-plugin-sdk/constants"
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
-	"github.com/turbot/tailpipe-plugin-sdk/parse"
 	"github.com/turbot/tailpipe-plugin-sdk/row_source"
 	"github.com/turbot/tailpipe-plugin-sdk/table"
-	"github.com/turbot/tailpipe-plugin-sdk/types"
 )
+
+const AuditLogTableIdentifier = "github_audit_log"
 
 // register the table from the package init function
 func init() {
-	table.RegisterTable(NewAuditLogTable)
+	table.RegisterTable[*rows.AuditLog, *AuditLogTable]()
 }
 
 // AuditLogTable - table for github audit logs
@@ -27,41 +27,20 @@ type AuditLogTable struct {
 	table.TableImpl[*rows.AuditLog, *AuditLogTableConfig, *config.GitHubConnection]
 }
 
-func NewAuditLogTable() table.Enricher[*rows.AuditLog] {
-	return &AuditLogTable{}
-}
-
-func (c *AuditLogTable) Init(ctx context.Context, connectionSchemaProvider table.ConnectionSchemaProvider, req *types.CollectRequest) error {
-	// call base init
-	if err := c.TableImpl.Init(ctx, connectionSchemaProvider, req); err != nil {
-		return err
-	}
-
-	c.initMapper()
-	return nil
-}
-
-func (c *AuditLogTable) initMapper() {
-	// TODO switch on source
-	c.Mapper = mappers.NewAuditLogMapper()
-}
-
 func (c *AuditLogTable) Identifier() string {
-	return "github_audit_log"
+	return AuditLogTableIdentifier
 }
 
-func (c *AuditLogTable) GetSourceOptions(string) []row_source.RowSourceOption {
-	return []row_source.RowSourceOption{
-		artifact_source.WithRowPerLine(),
+func (c *AuditLogTable) SupportedSources() []*table.SourceMetadata[*rows.AuditLog] {
+	return []*table.SourceMetadata[*rows.AuditLog]{
+		{
+			SourceName: constants.ArtifactSourceIdentifier,
+			MapperFunc: mappers.NewAuditLogMapper,
+			Options: []row_source.RowSourceOption{
+				artifact_source.WithRowPerLine(),
+			},
+		},
 	}
-}
-
-func (c *AuditLogTable) GetRowSchema() types.RowStruct {
-	return rows.AuditLog{}
-}
-
-func (c *AuditLogTable) GetConfigSchema() parse.Config {
-	return &AuditLogTableConfig{}
 }
 
 func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *enrichment.CommonFields) (*rows.AuditLog, error) {
@@ -74,7 +53,7 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *en
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
 	row.TpSourceIP = row.ActorIP
-	// TODO: What should be the TpIndex field for the github_audit_log table??
+
 	switch {
 	case row.Org != nil:
 		row.TpIndex = *row.Org
