@@ -1,12 +1,12 @@
 package config
 
-import "github.com/turbot/tailpipe-plugin-sdk/parse"
+const PluginName = "github"
 
 type GitHubConnection struct {
 }
 
-func NewGitHubConnection() parse.Config {
-	return &GitHubConnection{}
+func (c *GitHubConnection) Identifier() string {
+	return PluginName
 }
 
 func (c *GitHubConnection) Validate() error {

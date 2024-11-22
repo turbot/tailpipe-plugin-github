@@ -19,6 +19,7 @@ require (
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
+	github.com/rs/dnscache v0.0.0-20230804202142-fc85eb664529 // indirect
 	github.com/satyrius/gonx v1.4.0 // indirect
 	github.com/smarty/assertions v1.16.0 // indirect
 	github.com/turbot/pipes-sdk-go v0.9.1 // indirect

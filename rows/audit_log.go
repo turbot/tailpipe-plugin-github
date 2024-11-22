@@ -1,12 +1,10 @@
 package rows
 
 import (
-	"encoding/json"
 	"strconv"
 	"time"
 
 	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
-	"github.com/turbot/tailpipe-plugin-sdk/types"
 )
 
 /*
@@ -22,26 +20,26 @@ import (
 type AuditLog struct {
 	enrichment.CommonFields
 
-	Action                   *string           `json:"action,omitempty"`
-	Actor                    *string           `json:"actor,omitempty"`
-	ActorID                  *int64            `json:"actor_id,omitempty"`
-	ActorIP                  *string           `json:"actor_ip,omitempty"`
-	ActorLocation            *types.JSONString `json:"actor_location,omitempty"`
-	Business                 *string           `json:"business,omitempty"`
-	BusinessID               *int64            `json:"business_id,omitempty"`
-	CreatedAt                *time.Time        `json:"created_at,omitempty"`
-	DocumentID               *string           `json:"_document_id,omitempty"`
-	ExternalIdentityNameID   *string           `json:"external_identity_nameid,omitempty"`
-	ExternalIdentityUsername *string           `json:"external_identity_username,omitempty"`
-	HashedToken              *string           `json:"hashed_token,omitempty"`
-	Org                      *string           `json:"org,omitempty"`
-	OrgID                    *string           `json:"org_id,omitempty"`
-	Timestamp                *time.Time        `json:"timestamp,omitempty"`
-	TokenID                  *int64            `json:"token_id,omitempty"`
-	TokenScopes              *string           `json:"token_scopes,omitempty"`
-	User                     *string           `json:"user,omitempty"`
-	UserID                   *int64            `json:"user_id,omitempty"`
-	AdditionalFields         *types.JSONString `json:"additional_fields,omitempty"`
+	Action                   *string                 `json:"action,omitempty"`
+	Actor                    *string                 `json:"actor,omitempty"`
+	ActorID                  *int64                  `json:"actor_id,omitempty"`
+	ActorIP                  *string                 `json:"actor_ip,omitempty"`
+	ActorLocation            *map[string]interface{} `json:"actor_location,omitempty" parquet:"type=JSON"`
+	Business                 *string                 `json:"business,omitempty"`
+	BusinessID               *int64                  `json:"business_id,omitempty"`
+	CreatedAt                *time.Time              `json:"created_at,omitempty"`
+	DocumentID               *string                 `json:"_document_id,omitempty"`
+	ExternalIdentityNameID   *string                 `json:"external_identity_nameid,omitempty"`
+	ExternalIdentityUsername *string                 `json:"external_identity_username,omitempty"`
+	HashedToken              *string                 `json:"hashed_token,omitempty"`
+	Org                      *string                 `json:"org,omitempty"`
+	OrgID                    *string                 `json:"org_id,omitempty"`
+	Timestamp                *time.Time              `json:"timestamp,omitempty"`
+	TokenID                  *int64                  `json:"token_id,omitempty"`
+	TokenScopes              *string                 `json:"token_scopes,omitempty"`
+	User                     *string                 `json:"user,omitempty"`
+	UserID                   *int64                  `json:"user_id,omitempty"`
+	AdditionalFields         *map[string]interface{} `json:"additional_fields,omitempty" parquet:"type=JSON"`
 }
 
 type ActorLocation struct {
@@ -77,11 +75,7 @@ func (a *AuditLog) FromMap(in map[string]interface{}) {
 			}
 		case "actor_location":
 			if location, ok := value.(map[string]interface{}); ok {
-				locJSON, err := json.Marshal(location)
-				if err == nil {
-					locStr := types.JSONString(locJSON)
-					a.ActorLocation = &locStr
-				}
+				a.ActorLocation = &location
 			}
 		case "business":
 			if strVal, ok := value.(string); ok {
@@ -153,9 +147,6 @@ func (a *AuditLog) FromMap(in map[string]interface{}) {
 
 	// Marshal dynamic fields into JSON and store in AdditionalFields
 	if len(dynamicFields) > 0 {
-		if dynamicJSON, err := json.Marshal(dynamicFields); err == nil {
-			djStr := types.JSONString(dynamicJSON)
-			a.AdditionalFields = &djStr
-		}
+		a.AdditionalFields = &dynamicFields
 	}
 }
