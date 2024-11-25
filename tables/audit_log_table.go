@@ -5,7 +5,6 @@ import (
 
 	"github.com/rs/xid"
 
-	"github.com/turbot/tailpipe-plugin-github/config"
 	"github.com/turbot/tailpipe-plugin-github/mappers"
 	"github.com/turbot/tailpipe-plugin-github/rows"
 	"github.com/turbot/tailpipe-plugin-sdk/artifact_source"
@@ -19,19 +18,22 @@ const AuditLogTableIdentifier = "github_audit_log"
 
 // register the table from the package init function
 func init() {
-	table.RegisterTable[*rows.AuditLog, *AuditLogTable]()
+	// Register the table, with type parameters:
+	// 1. row struct
+	// 2. table config struct
+	// 3. table implementation
+	table.RegisterTable[*rows.AuditLog, *AuditLogTableConfig, *AuditLogTable]()
 }
 
 // AuditLogTable - table for github audit logs
 type AuditLogTable struct {
-	table.TableImpl[*rows.AuditLog, *AuditLogTableConfig, *config.GitHubConnection]
 }
 
 func (c *AuditLogTable) Identifier() string {
 	return AuditLogTableIdentifier
 }
 
-func (c *AuditLogTable) SupportedSources() []*table.SourceMetadata[*rows.AuditLog] {
+func (c *AuditLogTable) SupportedSources(_ *AuditLogTableConfig) []*table.SourceMetadata[*rows.AuditLog] {
 	return []*table.SourceMetadata[*rows.AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
