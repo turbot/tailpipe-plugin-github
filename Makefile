@@ -1,7 +1,7 @@
 TAILPIPE_INSTALL_DIR ?= ~/.tailpipe
 BUILD_TAGS = netgo
 install:
-	go build -o $(TAILPIPE_INSTALL_DIR)/plugins/hub.tailpipe.io/plugins/turbot/github@latest/tailpipe-plugin-gitihub.plugin -tags "${BUILD_TAGS}" *.go
+	go build -o $(TAILPIPE_INSTALL_DIR)/plugins/hub.tailpipe.io/plugins/turbot/github@latest/tailpipe-plugin-github.plugin -tags "${BUILD_TAGS}" *.go
 
 ## Paths
 #PLUGIN_NAME=tailpipe-plugin-github.plugin
