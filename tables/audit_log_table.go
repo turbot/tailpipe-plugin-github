@@ -33,11 +33,11 @@ func (c *AuditLogTable) Identifier() string {
 	return AuditLogTableIdentifier
 }
 
-func (c *AuditLogTable) SupportedSources(_ *AuditLogTableConfig) []*table.SourceMetadata[*rows.AuditLog] {
+func (c *AuditLogTable) GetSourceMetadata(_ *AuditLogTableConfig) []*table.SourceMetadata[*rows.AuditLog] {
 	return []*table.SourceMetadata[*rows.AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
-			MapperFunc: mappers.NewAuditLogMapper,
+			Mapper:     &mappers.AuditLogMapper{},
 			Options: []row_source.RowSourceOption{
 				artifact_source.WithRowPerLine(),
 			},
@@ -45,10 +45,8 @@ func (c *AuditLogTable) SupportedSources(_ *AuditLogTableConfig) []*table.Source
 	}
 }
 
-func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields *enrichment.CommonFields) (*rows.AuditLog, error) {
-	if sourceEnrichmentFields != nil {
-		row.CommonFields = *sourceEnrichmentFields
-	}
+func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, _ *AuditLogTableConfig, sourceEnrichmentFields enrichment.SourceEnrichment) (*rows.AuditLog, error) {
+	row.CommonFields = sourceEnrichmentFields.CommonFields
 
 	// Record standardization
 	row.TpID = xid.New().String()

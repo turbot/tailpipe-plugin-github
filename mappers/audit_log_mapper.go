@@ -6,14 +6,9 @@ import (
 	"fmt"
 
 	"github.com/turbot/tailpipe-plugin-github/rows"
-	"github.com/turbot/tailpipe-plugin-sdk/table"
 )
 
 type AuditLogMapper struct {
-}
-
-func NewAuditLogMapper() table.Mapper[*rows.AuditLog] {
-	return &AuditLogMapper{}
 }
 
 func (c *AuditLogMapper) Identifier() string {
