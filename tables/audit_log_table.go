@@ -1,6 +1,7 @@
 package tables
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/rs/xid"
@@ -59,8 +60,12 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, _ *AuditLogTableConfig, so
 		row.TpIndex = *row.Org
 	case row.User != nil:
 		row.TpIndex = *row.User
-	default:
+	case row.OrgID != nil:
 		row.TpIndex = *row.OrgID
+	case row.UserID != nil:
+		row.TpIndex = fmt.Sprintf("%d", *row.UserID)
+	default:
+		row.TpIndex = "default"
 	}
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
