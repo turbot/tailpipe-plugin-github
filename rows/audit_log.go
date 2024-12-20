@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/turbot/tailpipe-plugin-sdk/enrichment"
+	"github.com/turbot/tailpipe-plugin-sdk/schema"
 )
 
 /*
@@ -18,7 +18,7 @@ import (
  */
 
 type AuditLog struct {
-	enrichment.CommonFields
+	schema.CommonFields
 
 	Action                   *string                 `json:"action,omitempty"`
 	Actor                    *string                 `json:"actor,omitempty"`
