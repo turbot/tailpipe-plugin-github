@@ -15,9 +15,12 @@ require (
 
 require (
 	github.com/containerd/errdefs v0.1.0 // indirect
+	github.com/elastic/go-grok v0.3.1 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/magefile/mage v1.15.0 // indirect
 	github.com/turbot/pipes-sdk-go v0.9.1 // indirect
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.8.0 // indirect
 )
 
 require (
