@@ -1,4 +1,4 @@
-package rows
+package audit_log
 
 import (
 	"strconv"
@@ -17,6 +17,10 @@ import (
 * - How best to add all possible fields? There are about 130 top level properties and 33 nested properties.
  */
 
+type AuditLogBatch struct {
+	Records []AuditLog `json:"Records"`
+}
+
 type AuditLog struct {
 	schema.CommonFields
 
@@ -28,8 +32,8 @@ type AuditLog struct {
 	Business                 *string                 `json:"business,omitempty"`
 	BusinessID               *int64                  `json:"business_id,omitempty"`
 	CreatedAt                *time.Time              `json:"created_at,omitempty"`
-	DocumentID               *string                 `json:"_document_id,omitempty"`
-	ExternalIdentityNameID   *string                 `json:"external_identity_nameid,omitempty"`
+	DocumentID               *string                 `json:"document_id,omitempty"`
+	ExternalIdentityNameID   *string                 `json:"external_identity_name_id,omitempty"`
 	ExternalIdentityUsername *string                 `json:"external_identity_username,omitempty"`
 	HashedToken              *string                 `json:"hashed_token,omitempty"`
 	Org                      *string                 `json:"org,omitempty"`
@@ -46,11 +50,7 @@ type ActorLocation struct {
 	CountryCode *string `json:"country_code,omitempty"`
 }
 
-func NewAuditLog() *AuditLog {
-	return &AuditLog{}
-}
-
-func (a *AuditLog) FromMap(in map[string]interface{}) {
+func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 	// Create a map to hold dynamic fields
 	dynamicFields := make(map[string]interface{})
 
