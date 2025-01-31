@@ -1,12 +1,10 @@
-package tables
+package audit_log
 
 import (
 	"fmt"
 	"time"
 
 	"github.com/rs/xid"
-	"github.com/turbot/tailpipe-plugin-github/mappers"
-	"github.com/turbot/tailpipe-plugin-github/rows"
 	"github.com/turbot/tailpipe-plugin-sdk/artifact_source"
 	"github.com/turbot/tailpipe-plugin-sdk/constants"
 	"github.com/turbot/tailpipe-plugin-sdk/row_source"
@@ -16,28 +14,19 @@ import (
 
 const AuditLogTableIdentifier = "github_audit_log"
 
-// register the table from the package init function
-func init() {
-	// Register the table, with type parameters:
-	// 1. row struct
-	// 2. table config struct
-	// 3. table implementation
-	table.RegisterTable[*rows.AuditLog, *AuditLogTable]()
-}
+// AuditLogTable - table for GitHub audit logs
+type AuditLogTable struct{}
 
-// AuditLogTable - table for github audit logs
-type AuditLogTable struct {
-}
-
-func (c *AuditLogTable) Identifier() string {
+// Identifier implements table.Table
+func (t *AuditLogTable) Identifier() string {
 	return AuditLogTableIdentifier
 }
 
-func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*rows.AuditLog] {
-	return []*table.SourceMetadata[*rows.AuditLog]{
+func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
+	return []*table.SourceMetadata[*AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
-			Mapper:     &mappers.AuditLogMapper{},
+			Mapper: &AuditLogMapper{},
 			Options: []row_source.RowSourceOption{
 				artifact_source.WithRowPerLine(),
 			},
@@ -45,7 +34,8 @@ func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*rows.AuditL
 	}
 }
 
-func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields schema.SourceEnrichment) (*rows.AuditLog, error) {
+// EnrichRow implements table.Table
+func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.SourceEnrichment) (*AuditLog, error) {
 	row.CommonFields = sourceEnrichmentFields.CommonFields
 
 	// Record standardization
@@ -68,4 +58,8 @@ func (c *AuditLogTable) EnrichRow(row *rows.AuditLog, sourceEnrichmentFields sch
 	}
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
+}
+
+func (c *AuditLogTable) GetDescription() string {
+	return "GitHub Audit logs capture API activity and user actions within your GiHub account."
 }
