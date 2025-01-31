@@ -10,7 +10,7 @@ replace github.com/turbot/pipe-fittings => ../pipe-fittings
 
 require (
 	github.com/rs/xid v1.5.0
-	github.com/turbot/tailpipe-plugin-sdk v0.0.0
+	github.com/turbot/tailpipe-plugin-sdk v0.1.0
 )
 
 require (
@@ -23,7 +23,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/magefile/mage v1.15.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/turbot/pipe-fittings/v2 v2.0.0-rc.1 // indirect
+	github.com/turbot/pipe-fittings/v2 v2.0.0 // indirect
 	github.com/turbot/pipes-sdk-go v0.9.1 // indirect
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.8.0 // indirect
 )
