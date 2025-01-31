@@ -32,7 +32,7 @@ type AuditLog struct {
 	Business                 *string                 `json:"business,omitempty"`
 	BusinessID               *int64                  `json:"business_id,omitempty"`
 	CreatedAt                *time.Time              `json:"created_at,omitempty"`
-	DocumentID               *string                 `json:"_document_id,omitempty"`
+	DocumentID               *string                 `json:"document_id,omitempty"`
 	ExternalIdentityNameID   *string                 `json:"external_identity_name_id,omitempty"`
 	ExternalIdentityUsername *string                 `json:"external_identity_username,omitempty"`
 	HashedToken              *string                 `json:"hashed_token,omitempty"`
