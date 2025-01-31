@@ -4,10 +4,6 @@ go 1.23.1
 
 toolchain go1.23.2
 
-replace github.com/turbot/tailpipe-plugin-sdk => ../tailpipe-plugin-sdk
-
-replace github.com/turbot/pipe-fittings => ../pipe-fittings
-
 require (
 	github.com/rs/xid v1.5.0
 	github.com/turbot/tailpipe-plugin-sdk v0.1.0
