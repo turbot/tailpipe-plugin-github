@@ -2,9 +2,7 @@
 
 [Tailpipe](https://tailpipe.io) is an open-source CLI tool that allows you to collect logs and query them with SQL.
 
-[GitHub](https://www.github.com/) is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features.
-
-The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub logs using SQL to track activity, monitor trends, detect anomalies, and more!
+The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub audit logs using SQL to track activity, monitor trends, detect anomalies, and more!
 
 - **[Get started →](https://hub.tailpipe.io/plugins/turbot/github)**
 - Documentation: [Table definitions & examples](https://hub.tailpipe.io/plugins/turbot/github/tables)
@@ -41,9 +39,10 @@ vi ~/.tailpipe/config/github.tpc
 ```
 
 ```hcl
-partition "github_audit_log" "my_logs" {
+partition "github_audit_log" "audit_log" {
   source "file"  {
-    paths = ["/Users/myuser/github_logs"]
+		paths = ["/Users/dir/path"]
+		file_layout = "export-turbot-%{NUMBER:prefix}.json"
   }
 }
 ```
@@ -65,37 +64,44 @@ Run a query:
 ```sql
 select
   action,
-  count(*) as event_count
+  repo,
+  count(*) as action_count
 from
   github_audit_log
 group by
-  action
+  action,
+  repo,
 order by
-  event_count desc;
+  action_count desc;
 ```
 
 ```sh
-+---------------------------------------+-------------+
-| action                                | event_count |
-+---------------------------------------+-------------+
-| pull_request.create                   | 7913        |
-| pull_request.merge                    | 5754        |
-| issue_comment.update                  | 4292        |
-| protected_branch.policy_override      | 3304        |
-| packages.package_version_published    | 2983        |
-| pull_request_review.submit            | 2674        |
-| pull_request.close                    | 2200        |
-| pull_request_review_comment.create    | 1875        |
-| pull_request.create_review_request    | 1793        |
-| repository_vulnerability_alert.create | 1644        |
-+---------------------------------------+-------------+
++----------------------------------------------------------------------+-------------------------------------------------+--------------+
+| action                                                               | repo                                            | action_count |
++----------------------------------------------------------------------+-------------------------------------------------+--------------+
+| packages.package_version_published                                   | turbot/release                                  | 2495         |
+| issue_comment.update                                                 | turbot/hub.guardrails.turbot.com                | 762          |
+| issue_comment.update                                                 | turbot/turbot.com                               | 576          |
+| pull_request.create                                                  | turbot/pipes                                    | 566          |
+| pull_request.merge                                                   | turbot/pipes                                    | 419          |
+| protected_branch.policy_override                                     | turbot/flowpipe                                 | 366          |
+| pull_request_review_comment.create                                   | turbot/guardrails-samples                       | 324          |
+| issue_comment.update                                                 | turbot/hub.flowpipe.io                          | 321          |
+| pull_request.create                                                  | turbot/powerpipe                                | 275          |
+| protected_branch.policy_override                                     | turbot/pipe-fittings                            | 268          |
+| pull_request_review.submit                                           | turbot/steampipe-plugin-aws                     | 261          |
+| pull_request.create                                                  | turbot/turbot.com                               | 257          |
+| issue_comment.update                                                 | turbot/hub.powerpipe.io                         | 251          |
+| pull_request.merge                                                   | turbot/turbot.com                               | 249          |
+| pull_request.merge                                                   | turbot/powerpipe                                | 242          |
++----------------------------------------------------------------------+-------------------------------------------------+--------------+
 ```
 
 ## Detections as Code with Powerpipe
 
 Pre-built dashboards and detections for the GitHub plugin are available in [Powerpipe](https://powerpipe.io) mods, helping you monitor and analyze activity across your GitHub accounts.
 
-For example, the [GitHub Audit Logs Detections mod](https://hub.powerpipe.io/mods/turbot/tailpipe-mod-github-cloudtrail-log-detections) scans your CloudTrail logs for anomalies, such as an S3 bucket being made public or a change in your VPC network infrastructure.
+For example, the [GitHub Audit Logs Detections mod](https://hub.powerpipe.io/mods/turbot/tailpipe-mod-github-audit-log-detections) scans your audit logs for anomalies, such as monitor SSH key additions to user accounts, admin role assignments in GitHub teams.
 
 Dashboards and detections are [open source](https://github.com/topics/tailpipe-mod), allowing easy customization and collaboration.
 
