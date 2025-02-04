@@ -22,6 +22,7 @@ type AuditLogBatch struct {
 	Records []AuditLog `json:"Records"`
 }
 
+// https://docs.panther.com/data-onboarding/supported-logs/github#how-to-onboard-github-organization-logs-to-panther
 type AuditLog struct {
 	schema.CommonFields
 
