@@ -4,7 +4,7 @@ category: ["public cloud"]
 icon_url: "/images/plugins/turbot/github.svg"
 brand_color: "#191717"
 display_name: "GitHub"
-description: "Tailpipe plugin for collecting and querying various audit logs from GitHUb."
+description: "Tailpipe plugin for collecting and querying various audit logs from GitHub."
 og_description: "Collect GitHub logs and query them instantly with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/github-social-graphic.png"
 ---
