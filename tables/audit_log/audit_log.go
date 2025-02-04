@@ -78,7 +78,6 @@ type AuditLog struct {
 	ActionKey                                      *string                 `json:"key,omitempty"`
 	HTTPMethod                                     *string                 `json:"method,omitempty"`
 	ProgrammaticAccessType                         *string                 `json:"programmatic_access_type,omitempty"`
-	PublicRepo                                     *bool                   `json:"public_repo,omitempty"`
 	Referrer                                       *string                 `json:"referrer,omitempty"`
 	RunAttempt                                     *int64                  `json:"run_attempt,omitempty"`
 	RunNumber                                      *int64                  `json:"run_number,omitempty"`
@@ -138,7 +137,6 @@ type AuditLog struct {
 	HashedToken                                    *string                 `json:"hashed_token,omitempty"`
 	Org                                            *string                 `json:"org,omitempty"`
 	OrgID                                          *string                 `json:"org_id,omitempty"`
-	Repo                                           *string                 `json:"repo,omitempty"`
 	RepoID                                         *string                 `json:"repo_id,omitempty"`
 	Timestamp                                      *time.Time              `json:"timestamp,omitempty"`
 	TokenID                                        *int64                  `json:"token_id,omitempty"`
@@ -174,6 +172,147 @@ type ActorLocation struct {
 type ActionReasons struct {
 	Code    *string `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
+}
+
+func (c *AuditLog) GetColumnDescriptions() map[string]string {
+	return map[string]string{
+		"action":                                 "The action performed.",
+		"actor":                                  "Actor that performed the action.",
+		"actor_id":                               "The id of the actor who performed the action.",
+		"actor_ip":                               "Actor IP (only included if explicitly enabled in your GitHub settings https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/displaying-ip-addresses-in-the-audit-log-for-your-enterprise).",
+		"actor_location":                         "Actor location.",
+		"business":                               "The name of the business that relates to this action.",
+		"business_id":                            "ID of the enterprise affected by the action (if applicable).",
+		"created_at":                             "Creation timestamp for audit event.",
+		"completed_at":                           "Completion timestamp for audit event.",
+		"config_was":                             "Previous webhook configuration.",
+		"config":                                 "The webhook configuration.",
+		"document_id":                            "Document id for the audit log events.",
+		"hook_id":                                "The webhook ID.",
+		"active":                                 "Indicates if the webhook is active.",
+		"team":                                   "Team name for team category action",
+		"event":                                  "The workflow event.",
+		"events":                                 "List of events which will send webhook payload.",
+		"name":                                   "The name of the event action category.",
+		"transport_protocol_name":                "Transport protocol name for git audit events.",
+		"transport_protocol":                     "Transport protocol for git audit events.",
+		"repository":                             "Repository name for git event.",
+		"repository_public":                      "If the repository for git audit event is public.",
+		"active_was":                             "Indicates if webhook was active.",
+		"content_type":                           "The content type for the webhook.",
+		"deploy_key_fingerprint":                 "Fingerprint of deploy key.",
+		"emoji":                                  "Emoji that relates to this action.",
+		"explanation":                            "An explanation of the action.",
+		"fingerprint":                            "Fingerprint related to this action.",
+		"limited_availability":                   "If Limited availability.",
+		"message":                                "The message related to this action.",
+		"openssh_public_key":                     "Public Open SSH key related to this action.",
+		"previous_visibility":                    "Visibility of repository prior to this action.",
+		"read_only":                              "Whether the item related to this action is read only.",
+		"target_login":                           "The target login.",
+		"branch":                                 "Branch that relates to this action.",
+		"category_type":                          "Type of category this action is from.",
+		"client_id":                              "ID of the client being used in this action.",
+		"operation_type":                         "Type of operation.",
+		"conclusion":                             "Workflow run conclusion.",
+		"controller_action":                      "Action of the controller.",
+		"device_cookie":                          "Cookie of the actor's session from this action.",
+		"environment_name":                       "Environment name of workflow.",
+		"fork_source":                            "Source repository of this fork.",
+		"fork_source_id":                         "Source repository ID of this fork.",
+		"head_branch":                            "Name of branch of the head at the time of this workflow run.",
+		"head_sha":                               "SHA hash of the head at the time of this workflow run.",
+		"is_hosted_runner":                       "Whether the workflow runner is hosted.",
+		"job_name":                               "Name of workflow job.",
+		"job_workflow_ref":                       "Reference of workflow job.",
+		"key":                                    "Name of key related to this action.",
+		"method":                                 "HTTP Method of this action.",
+		"programmatic_access_type":               "The type of access for programmatic actions.",
+		"referrer":                               "Referrer URL of where this action took place.",
+		"run_attempt":                            "Workflow run attempt.",
+		"run_number":                             "Workflow run number.",
+		"runner_id":                              "ID of this workflow runner.",
+		"runner_group_id":                        "ID of workflow runner group.",
+		"runner_group_name":                      "Name of workflow runner group.",
+		"runner_name":                            "Name of the Workflow runner of this action.",
+		"server_id":                              "ID of the Enterprise Server.",
+		"started_at":                             "Time that the workflow started.",
+		"trigger_id":                             "ID of Trigger that triggered this workflow.",
+		"user_agent":                             "User agent of the actor who performed this action.",
+		"user_programmatic_access_name":          "Name of the user who performed the action.",
+		"pull_request_url":                       "URL of the pull request.",
+		"pull_request_title":                     "Title of the pull request.",
+		"pull_request_id":                        "ID of the pull request.",
+		"overridden_codes":                       "List of overridden codes for this action.",
+		"actions_cache_id":                       "ID of the cache for this action.",
+		"actions_cache_key":                      "Key of the cache for this action.",
+		"actions_cache_scope":                    "Scope of the cache for this action.",
+		"actions_cache_version":                  "Version of the cache for this action.",
+		"alert_number":                           "Number of the alert.",
+		"allow_deletions_enforcement_level":      "Enforcement level for allow deletions.",
+		"enforcement_level":                      "Enforcement level for this action.",
+		"lock_allows_fetch_and_merge":            "Whether the lock allows fetch and merge.",
+		"allow_force_pushes_enforcement_level":   "Enforcement level for allow force pushes.",
+		"lock_branch_enforcement_level":          "Enforcement level for lock branch.",
+		"required_deployments_enforcement_level": "Enforcement level for PR required deployments.",
+		"required_review_thread_resolution_enforcement_level": "Enforcement level for PR required review thread resolution.",
+		"merge_method":                            "Merge method for this action.",
+		"merge_queue_enforcement_level":           "Enforcement level for merge queue.",
+		"new_repo_base_role":                      "Base role for the new repository.",
+		"new_repo_permission":                     "Permission for the new repository.",
+		"permission":                              "New permission for the user being modified.",
+		"oauth_application":                       "The OAuth application.",
+		"oauth_application_id":                    "ID of the OAuth application.",
+		"old_repo_base_role":                      "Old base role for the repository.",
+		"ruleset_enforcement":                     "Enforcement level for ruleset.",
+		"ruleset_id":                              "ID of the ruleset.",
+		"ruleset_name":                            "Name of the ruleset.",
+		"ruleset_source_type":                     "Source type of the ruleset.",
+		"source_version":                          "The source version.",
+		"ecosystem":                               "The package ecosystem.",
+		"is_republished":                          "Whether the package is republished.",
+		"package":                                 "Name of the package.",
+		"version":                                 "The package version.",
+		"integration":                             "Name of the integration.",
+		"actor_is_bot":                            "If actor is bot or not.",
+		"target_version":                          "The target version",
+		"admin_enforced":                          "Repository management policy settings for the admin.",
+		"required_approving_review_count":         "How many reviewers must approve the action.",
+		"require_code_owner_review":               "Whether the codeowner's approval is required on this PR.",
+		"signature_requirement_enforcement_level": "Enforcement level of the signature.",
+		"package_published":                       "A package was published or republished to an organization.",
+		"package_version_published":               "A specific package version was published or respublished to a package.",
+		"external_identity_name_id":               "Displayed when SAML SSO identity was used as a means of authentication.",
+		"external_identity_username":              "Displayed when SAML SSO identity was used as a means of authentication with Enterprise Managed Users.",
+		"hashed_token":                            "Hash of the token used to perform this action (see https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/identifying-audit-log-events-performed-by-an-access-token#searching-on-github).",
+		"org":                                     "The Organization where the action was performed.",
+		"org_id":                                  "The Organization ID where the action was performed.",
+		"repo_id":                                 "Repository ID related to this action.",
+		"timestamp":                               "Timestamp for the event.",
+		"token_id":                                "ID of the token used in this action.",
+		"review_id":                               "The PR review comment ID.",
+		"comment_id":                              "The issue/PR comment ID.",
+		"workflow_id":                             "Workflow id if the event is CI workflow.",
+		"workflow_run_id":                         "Workflow run id if the event is CI workflow.",
+		"alert_id":                                "The alert ID.",
+		"token_scopes":                            "List of scopes of the token used in this action.",
+		"user":                                    "User added/removed for certain permission.",
+		"visibility":                              "Visibility of the repository.",
+		"ghsa_id":                                 "GitHub Security Advisory Identifier.",
+		"owner":                                   "The owner of the GitHub account.",
+		"topic":                                   "Topic related to workflow run.",
+		"reviewer_type":                           "The type of the review.",
+		"after":                                   "Git commit hash of the branch after the event occurred.",
+		"before":                                  "Git commit hash of the branch before the event occurred.",
+		"reasons":                                 "List of reasons for this action.",
+		"user_id":                                 "The user ID",
+		"additional_fields":                       "The additional properties of the action.",
+
+		// Override table specific tp_* column descriptions
+		"tp_index":     "The org Id or user name or user Id that received the request.",
+		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
+		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
+	}
 }
 
 func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
@@ -283,7 +422,7 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 				intVal := int64(floatVal)
 				a.TransportProtocol = &intVal
 			}
-		case "repository":
+		case "repository", "repo":
 			if strVal, ok := value.(string); ok {
 				a.Repository = &strVal
 			}
@@ -303,7 +442,7 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 			if strVal, ok := value.(string); ok {
 				a.Visibility = &strVal
 			}
-		case "repository_public":
+		case "repository_public", "public_repo":
 			if boolVal, ok := value.(bool); ok {
 				a.RepositoryPublic = &boolVal
 			}
@@ -426,10 +565,6 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 		case "programmatic_access_type":
 			if strVal, ok := value.(string); ok {
 				a.ProgrammaticAccessType = &strVal
-			}
-		case "public_repo":
-			if boolVal, ok := value.(bool); ok {
-				a.PublicRepo = &boolVal
 			}
 		case "referrer":
 			if strVal, ok := value.(string); ok {
@@ -683,10 +818,6 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 		case "org_id":
 			if strVal, ok := value.(string); ok {
 				a.OrgID = &strVal
-			}
-		case "repo":
-			if strVal, ok := value.(string); ok {
-				a.Repo = &strVal
 			}
 		case "repo_id":
 			if strVal, ok := value.(string); ok {
