@@ -275,7 +275,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"version":                                 "The package version.",
 		"integration":                             "Name of the integration.",
 		"actor_is_bot":                            "If actor is bot or not.",
-		"target_version":                          "The target version",
+		"target_version":                          "The target version.",
 		"admin_enforced":                          "Repository management policy settings for the admin.",
 		"required_approving_review_count":         "How many reviewers must approve the action.",
 		"require_code_owner_review":               "Whether the codeowner's approval is required on this PR.",
@@ -305,7 +305,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"after":                                   "Git commit hash of the branch after the event occurred.",
 		"before":                                  "Git commit hash of the branch before the event occurred.",
 		"reasons":                                 "List of reasons for this action.",
-		"user_id":                                 "The user ID",
+		"user_id":                                 "The user ID.",
 		"additional_fields":                       "The additional properties of the action.",
 
 		// Override table specific tp_* column descriptions
