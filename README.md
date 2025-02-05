@@ -2,6 +2,8 @@
 
 [Tailpipe](https://tailpipe.io) is an open-source CLI tool that allows you to collect logs and query them with SQL.
 
+[GitHub](https://www.github.com/) is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features.
+
 The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub audit logs using SQL to track activity, monitor trends, detect anomalies, and more!
 
 - **[Get started →](https://hub.tailpipe.io/plugins/turbot/github)**
@@ -39,7 +41,7 @@ vi ~/.tailpipe/config/github.tpc
 ```
 
 ```hcl
-partition "github_audit_log" "audit_log" {
+partition "github_audit_log" "my_logs" {
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
     file_layout = "%{DATA}.json.gz"

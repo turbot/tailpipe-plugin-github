@@ -67,5 +67,5 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 }
 
 func (c *AuditLogTable) GetDescription() string {
-	return "GitHub Audit logs capture API activity and user actions within your GiHub account."
+	return "GitHub audit logs list events triggered by activities that affect your organization."
 }

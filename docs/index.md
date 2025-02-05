@@ -13,13 +13,15 @@ og_image: "/images/plugins/turbot/github-social-graphic.png"
 
 [Tailpipe](https://tailpipe.io) is an open-source CLI tool that allows you to collect logs and query them with SQL.
 
+[GitHub](https://www.github.com/) is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features.
+
 The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub logs using SQL to track activity, monitor trends, detect anomalies, and more!
 
 - Documentation: [Table definitions & examples](https://hub.tailpipe.io/plugins/turbot/github/tables)
 - Community: [Join #tailpipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/tailpipe-plugin-github/issues)
 
-<img src="https://raw.githubusercontent.com/turbot/tailpipe-plugin-github/main/docs/images/github_audit_log_terminal.png" width="50%" type="thumbnail"/>
+![image](https://raw.githubusercontent.com/turbot/tailpipe-plugin-github/main/docs/images/github_audit_log_terminal.png?type=thumbnail)
 
 ## Getting Started
 
@@ -48,7 +50,7 @@ vi ~/.tailpipe/config/github.tpc
 ```
 
 ```hcl
-partition "github_audit_log" "audit_log" {
+partition "github_audit_log" "my_logs" {
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
     file_layout = "%{DATA}.json.gz"

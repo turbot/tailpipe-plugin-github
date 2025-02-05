@@ -1,13 +1,13 @@
 ---
 title: "Tailpipe Table: github_audit_log - Query GitHub Audit Logs"
-description: "GitHub Audit logs capture API activity and user actions within your GitHub account."
+description: "GitHub audit logs list events triggered by activities that affect your organization."
 ---
 
-# Table: github_audit_log - Query GitHub Audit logs
+# Table: github_audit_log - Query GitHub audit logs
 
-The `github_audit_log` table allows you to query data from GitHub Audit logs. This table provides detailed information about activity performed within your GitHub account, including the event name, source IP address, user identity, and more.
+The `github_audit_log` table allows you to query data from GitHub audit logs. This table provides detailed information about activity performed within your GitHub organization, including the event name, source IP address, user identity, and more.
 
-Currently, the table supports exported logs only in JSON format.
+The table currently supports exported logs in JSON format.
 
 ## Configure
 
@@ -42,17 +42,37 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 16+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 15+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
-### Track enforced branch protection rule changes
+### Repositories made public
 
-Monitors modifications to branch protection rules to prevent unauthorized changes that could compromise repository security and compliance.
+Track repositories that were made public to check for accidental visibility changes.
 
 ```sql
 select
+  created_at,
   actor,
-  actor_ip,
-  org
+  additional_fields ->> 'repo' as repo
+from
+  github_audit_log
+where
+  action = 'repo.access'
+  and (additional_fields ->> 'visibility') = 'public'
+order by
+  created_at desc;
+```
+
+### Branch protection overrides
+
+Find instances where a branch protection requirement was overridden by a repository administrator.
+
+```sql
+select
+  created_at,
+  actor,
+  additional_fields ->> 'repo' as repo,
+  additional_fields ->> 'branch' as branch,
+  additional_fields ->> 'reasons' as reasons
 from
   github_audit_log
 where
@@ -61,46 +81,9 @@ order by
   created_at desc;
 ```
 
-### Activity involving an unverified public key
+### Top 10 pull requester authors
 
-Detect when a user account's SSH key or a repository's deploy key is unverified. This may indicate misconfigurations or potential security risks that could impact access control.
-
-```sql
-select
-  actor,
-  action,
-  created_at
-from
-  github_audit_log
-where
-  action = 'public_key.unverify'
-order by
-  created_at desc;
-```
-
-### Repository visibility changed to public
-
-Tracks changes in repository visibility to prevent accidental or unauthorized exposure of sensitive code.
-
-```sql
-select
-  actor,
-  (additional_fields ->> 'visibility') as visibility,
-  (additional_fields ->> 'previous_visibility') as previous_visibility,
-  created_at
-from
-  github_audit_log
-where
-  action = 'repo.access'
-  and visibility = 'public'
-  and previous_visibility = 'private'
-order by
-  created_at desc;
-```
-
-### Top 10 actors
-
-Retrieve the top 10 actors based on their activity or influence within the GitHub organization.
+List the top 10 pull request authors and how many pull requests they've created.
 
 ```sql
 select
@@ -108,6 +91,9 @@ select
   count(*) as action_count
 from
   github_audit_log
+where
+  actor is not null -- Exclude system events
+  and action = 'pull_request.create'
 group by
   actor
 order by
@@ -122,7 +108,7 @@ limit 10;
 Collect GitHub audit logs exported locally as JSON.
 
 ```hcl
-partition "github_audit_log" "audit_log" {
+partition "github_audit_log" "my_logs" {
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
     file_layout = "%{DATA}.json.gz"
@@ -130,13 +116,13 @@ partition "github_audit_log" "audit_log" {
 }
 ```
 
-### Exclude read-only events
+### Exclude comment events
 
-Use the filter argument in your partition to filter out events like issue comments.
+Use the filter argument in your partition to filter out events like issue and pull request review comments.
 
 ```hcl
 partition "github_audit_log" "my_logs_issue_comment" {
-  filter = "action ilike '%issue_comment%'"
+  filter = "action not like 'issue_comment.%' and action not like 'pull_request_review_comment.%'"
 
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
