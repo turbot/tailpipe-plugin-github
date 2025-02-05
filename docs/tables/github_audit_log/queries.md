@@ -87,24 +87,6 @@ having
   setting_changes > 3;
 ```
 
-### Detect bulk member removals
-
-Flags bulk removal of members, which could indicate malicious intent or unauthorized actions.
-
-```sql
-select
-  actor,
-  count(*) as members_removed
-from
-  github_audit_log
-where
-  action = 'org.remove_member'
-group by
-  actor
-having
-  members_removed > 5;
-```
-
 ### Detect disabled security features
 
 Monitors for actions that disable critical security features, potentially compromising security.

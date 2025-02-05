@@ -42,7 +42,7 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 20+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 16+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
 ### Track enforced branch protection rule changes
 
