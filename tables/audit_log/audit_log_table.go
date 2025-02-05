@@ -26,7 +26,7 @@ func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
 	return []*table.SourceMetadata[*AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
-			Mapper: &AuditLogMapper{},
+			Mapper:     &AuditLogMapper{},
 			Options: []row_source.RowSourceOption{
 				artifact_source.WithRowPerLine(),
 			},
@@ -43,8 +43,12 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
 	row.TpSourceIP = row.ActorIP
-	row.TpIps = append(row.TpIps, *row.TpSourceIP)
-	row.TpUsernames = append(row.TpUsernames, *row.User)
+	if row.ActorIP != nil {
+		row.TpIps = append(row.TpIps, *row.TpSourceIP)
+	}
+	if row.User != nil {
+		row.TpUsernames = append(row.TpUsernames, *row.User)
+	}
 
 	switch {
 	case row.Org != nil:

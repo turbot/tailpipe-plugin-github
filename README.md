@@ -41,8 +41,8 @@ vi ~/.tailpipe/config/github.tpc
 ```hcl
 partition "github_audit_log" "audit_log" {
   source "file"  {
-		paths       = ["/Users/myuser/github_audit_logs"]
-		file_layout = "%{DATA}.json.gz"
+    paths       = ["/Users/myuser/github_audit_logs"]
+    file_layout = "%{DATA}.json.gz"
   }
 }
 ```
