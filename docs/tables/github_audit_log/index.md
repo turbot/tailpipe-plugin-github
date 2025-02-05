@@ -56,14 +56,14 @@ select
 from
   github_audit_log
 where
-  action in ('repo.protected_branch.update_rule', 'repo.protected_branch.disable_rule')
+  action in ('protected_branch.policy_override')
 order by
   created_at desc;
 ```
 
-### Force pushes against protected branches
+### Activity involving an unverified public key
 
-Detects force pushes on protected branches to prevent history rewrites, ensuring code integrity and auditability.
+Detect when a user account's SSH key or a repository's deploy key is unverified. This may indicate misconfigurations or potential security risks that could impact access control.
 
 ```sql
 select
@@ -73,7 +73,7 @@ select
 from
   github_audit_log
 where
-  action = 'protected_branch.force_push'
+  action = 'public_key.unverify'
 order by
   created_at desc;
 ```
@@ -86,12 +86,14 @@ Tracks changes in repository visibility to prevent accidental or unauthorized ex
 select
   actor,
   (additional_fields ->> 'visibility') as visibility,
+  (additional_fields ->> 'previous_visibility') as previous_visibility,
   created_at
 from
   github_audit_log
 where
-  action = 'repo.change_visibility'
+  action = 'repo.access'
   and visibility = 'public'
+  and previous_visibility = 'private'
 order by
   created_at desc;
 ```
