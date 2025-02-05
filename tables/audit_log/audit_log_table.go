@@ -43,6 +43,8 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
 	row.TpSourceIP = row.ActorIP
+	row.TpIps = append(row.TpIps, *row.TpSourceIP)
+	row.TpUsernames = append(row.TpUsernames, *row.User)
 
 	switch {
 	case row.Org != nil:

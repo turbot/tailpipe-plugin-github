@@ -45,7 +45,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"action":                     "The action performed.",
 		"actor":                      "Actor that performed the action.",
 		"actor_id":                   "The id of the actor who performed the action.",
-		"actor_ip":                   "Actor IP (only included if explicitly enabled in your GitHub settings https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/displaying-ip-addresses-in-the-audit-log-for-your-enterprise).",
+		"actor_ip":                   "Actor IP (only included if explicitly enabled in your GitHub settings.",
 		"actor_location":             "Actor location.",
 		"business":                   "The name of the business that relates to this action.",
 		"business_id":                "ID of the enterprise affected by the action (if applicable).",
@@ -53,7 +53,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"document_id":                "Document id for the audit log events.",
 		"external_identity_name_id":  "Displayed when SAML SSO identity was used as a means of authentication.",
 		"external_identity_username": "Displayed when SAML SSO identity was used as a means of authentication with Enterprise Managed Users.",
-		"hashed_token":               "Hash of the token used to perform this action (see https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/identifying-audit-log-events-performed-by-an-access-token#searching-on-github).",
+		"hashed_token":               "Hash of the token used to perform this action.",
 		"org":                        "The Organization where the action was performed.",
 		"org_id":                     "The Organization ID where the action was performed.",
 		"timestamp":                  "Timestamp for the event.",
@@ -67,6 +67,8 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"tp_index":     "The org Id or user name or user Id that received the request.",
 		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
 		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
+		"tp_source_ip": "Actor IP (only included if explicitly enabled in your GitHub settings.",
+		"tp_usernames": "Usernames associated with the event.",
 	}
 }
 

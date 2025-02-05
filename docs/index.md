@@ -51,8 +51,8 @@ vi ~/.tailpipe/config/github.tpc
 ```hcl
 partition "github_audit_log" "audit_log" {
   source "file"  {
-    paths = ["/Users/dir/path"]
-    file_layout = "export-turbot-%{NUMBER:prefix}.json"
+    paths       = ["/Users/myuser/github_audit_logs"]
+    file_layout = "%{DATA}.json.gz"
   }
 }
 ```
@@ -84,20 +84,20 @@ order by
 ```
 
 ```sh
-+----------------------------------------------------------------------+--------------+
-| action                                                               | action_count |
-+----------------------------------------------------------------------+--------------+
-| pull_request.create                                                  | 9894         |
-| pull_request.merge                                                   | 7440         |
-| issue_comment.update                                                 | 5832         |
-| packages.package_version_published                                   | 4990         |
-| protected_branch.policy_override                                     | 4012         |
-| pull_request_review.submit                                           | 3672         |
-| pull_request_review_comment.create                                   | 2516         |
-| pull_request.close                                                   | 2462         |
-| pull_request.create_review_request                                   | 2438         |
-| repository_vulnerability_alert.create                                | 1972         |
-| repository_vulnerability_alert.resolve                               | 1486         |
-| repo.change_merge_setting                                            | 892          |
-+----------------------------------------------------------------------+--------------+
++----------------------------------------+--------------+
+| action                                 | action_count |
++----------------------------------------+--------------+
+| pull_request.create                    | 9894         |
+| pull_request.merge                     | 7440         |
+| issue_comment.update                   | 5832         |
+| packages.package_version_published     | 4990         |
+| protected_branch.policy_override       | 4012         |
+| pull_request_review.submit             | 3672         |
+| pull_request_review_comment.create     | 2516         |
+| pull_request.close                     | 2462         |
+| pull_request.create_review_request     | 2438         |
+| repository_vulnerability_alert.create  | 1972         |
+| repository_vulnerability_alert.resolve | 1486         |
+| repo.change_merge_setting              | 892          |
++----------------------------------------+--------------+
 ```
