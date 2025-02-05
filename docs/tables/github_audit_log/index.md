@@ -121,8 +121,8 @@ Collect GitHub audit logs exported locally as JSON.
 ```hcl
 partition "github_audit_log" "audit_log" {
   source "file"  {
-	paths = ["/Users/path/dir"]
-	file_layout = "export-turbot-%{NUMBER:prefix}.json"
+    paths = ["/Users/path/dir"]
+    file_layout = "export-turbot-%{NUMBER:prefix}.json"
   }
 }
 ```
@@ -133,12 +133,11 @@ Use the filter argument in your partition to filter out events like issue commen
 
 ```hcl
 partition "github_audit_log" "my_logs_write" {
-  # Avoid saving read-only events, which can drastically reduce local log size
   filter = "action ilike '%issue_comment%'"
 
   source "file"  {
-	paths = ["/Users/path/dir"]
-	file_layout = "export-turbot-%{NUMBER:prefix}.json"
+    paths = ["/Users/path/dir"]
+    file_layout = "export-turbot-%{NUMBER:prefix}.json"
   }
 }
 ```
