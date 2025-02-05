@@ -1,7 +1,7 @@
 
-# GitHub Security Threat Detection Queries
+## GitHub Security Threat Detection Queries
 
-## Identify frequent repository deletions
+### Identify frequent repository deletions
 Detects users who delete repositories frequently, potentially indicating unauthorized actions.
 
 ```sql
@@ -18,7 +18,7 @@ having
   repo_deletes > 3;
 ```
 
-## Detect access from non-whitelisted locations
+### Detect access from non-whitelisted locations
 Flags access from unapproved locations, which may indicate unauthorized access or policy violations.
 
 ```sql
@@ -34,7 +34,7 @@ group by
   tp_source_location;
 ```
 
-## Identify changes to sensitive settings
+### Identify changes to sensitive settings
 Flags users who frequently modify security-related settings, potentially indicating tampering.
 
 ```sql
@@ -51,7 +51,7 @@ having
   setting_changes > 3;
 ```
 
-## Detect unusual access hours
+### Detect unusual access hours
 Identifies access outside of standard working hours, which could signal suspicious activity.
 
 ```sql
@@ -67,7 +67,7 @@ having
   access_hour not between 8 and 18;
 ```
 
-## Detect bulk member removals
+### Detect bulk member removals
 Flags bulk removal of members, which could indicate malicious intent or unauthorized actions.
 
 ```sql
@@ -84,7 +84,7 @@ having
   members_removed > 5;
 ```
 
-## Detect disabled security features
+### Detect disabled security features
 Monitors for actions that disable critical security features, potentially compromising security.
 
 ```sql
@@ -100,7 +100,7 @@ group by
   actor, action;
 ```
 
-## Identify frequent branch protection changes
+### Identify frequent branch protection changes
 Flags actors who frequently modify branch protection settings, which may indicate tampering.
 
 ```sql
@@ -117,7 +117,7 @@ having
   branch_protection_changes > 3;
 ```
 
-## Detect suspicious IP address changes
+### Detect suspicious IP address changes
 Monitors users with frequent IP address changes, which could indicate unauthorized access attempts.
 
 ```sql
@@ -133,7 +133,7 @@ having
   count(distinct tp_source_ip) > 5;
 ```
 
-## Identify frequent code deletion events
+### Identify frequent code deletion events
 Flags users who delete code frequently, potentially indicating unauthorized actions.
 
 ```sql
@@ -150,7 +150,7 @@ having
   code_deletions > 3;
 ```
 
-## Detect non-standard devices or browsers
+### Detect non-standard devices or browsers
 Flags login attempts from unrecognized devices or browsers, which could indicate suspicious access.
 
 ```sql
@@ -166,7 +166,7 @@ having
   device_logins > 1;
 ```
 
-## Identify disabled vulnerability alerts
+### Identify disabled vulnerability alerts
 Detects actors who frequently disable vulnerability alerts, which may indicate attempts to obscure vulnerabilities.
 
 ```sql
@@ -183,7 +183,7 @@ having
   vulnerability_alerts_disabled > 2;
 ```
 
-## Detect IP allow list changes
+### Detect IP allow list changes
 Flags users who alter IP allow lists, potentially bypassing security controls.
 
 ```sql
@@ -200,7 +200,7 @@ having
   ip_allow_list_changes > 2;
 ```
 
-## Identify frequent repository transfers
+### Identify frequent repository transfers
 Detects users who frequently transfer repositories, which may indicate unauthorized actions.
 
 ```sql
@@ -217,7 +217,7 @@ having
   repo_transfers > 2;
 ```
 
-## Detect disabled advanced security features
+### Detect disabled advanced security features
 Monitors actors disabling advanced security features, potentially reducing security controls.
 
 ```sql
@@ -232,7 +232,7 @@ group by
   actor;
 ```
 
-## Detect frequent personal access token access
+### Detect frequent personal access token access
 Flags actors frequently accessing resources using personal access tokens, which may indicate token abuse.
 
 ```sql
@@ -249,7 +249,7 @@ having
   token_access_count > 5;
 ```
 
-## Identify excessive repository visibility changes
+### Identify excessive repository visibility changes
 Detects frequent changes to repository visibility, which could signal unauthorized actions.
 
 ```sql
@@ -266,7 +266,7 @@ having
   visibility_changes > 3;
 ```
 
-## Detect changes to code scanning settings
+### Detect changes to code scanning settings
 Flags actors who modify code scanning settings, potentially obscuring security issues.
 
 ```sql
@@ -281,7 +281,7 @@ group by
   actor;
 ```
 
-## Detect programmatic access from unknown IPs
+### Detect programmatic access from unknown IPs
 Identifies suspicious programmatic access from unknown IP addresses.
 
 ```sql
@@ -297,7 +297,7 @@ group by
   actor, tp_source_ip;
 ```
 
-## Identify frequent branch deletion
+### Identify frequent branch deletion
 Flags users who delete branches often, potentially indicating unauthorized tampering.
 
 ```sql
@@ -314,7 +314,7 @@ having
   branch_deletions > 3;
 ```
 
-## Detect disabled secret scanning
+### Detect disabled secret scanning
 Flags actors disabling secret scanning, potentially compromising security.
 
 ```sql
@@ -328,3 +328,41 @@ where
 group by
   actor;
 ```
+
+## Operational Examples
+
+### Detect issue comment updated or deleted by bot
+Identifies issue comments that were updated or deleted by a bot, helping track automated modifications and prevent unintended content changes.
+
+```sql
+select
+  actor,
+  action,
+  (additional_fields ->> 'repo') as repository,
+  (additional_fields ->> 'programmatic_access_type') as programmatic_access_type,
+  (additional_fields ->> 'operation_type') as operation_type,
+  (additional_fields ->> 'actor_is_bot') as actor_is_bot
+from
+  github_audit_log
+where
+  action in ('issue_comment.update', 'issue_comment.destroy')
+  and actor_is_bot;
+```
+
+### Identify repository default workflow permission changes
+Tracks modifications to the workflow execution settings, including restricting workflows from forks.
+
+```sql
+select 
+  actor, 
+  (additional_fields ->> 'repo') as repository, 
+  (additional_fields ->> 'operation_type') as operation_type, 
+  (additional_fields ->> 'public_repo') as is_public_repo,
+  created_at 
+from 
+  github_audit_log 
+where 
+  action = 'repo.set_default_workflow_permissions'
+order by 
+  created_at desc;
+``

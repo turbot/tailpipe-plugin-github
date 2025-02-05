@@ -40,85 +40,83 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 100+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 20+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
-### Suspicious repository deletions
+### Track enforced branch protection rule changes
 
-Identify suspicious repository deletions by users.
+Monitors modifications to branch protection rules to prevent unauthorized changes that could compromise repository security and compliance.
 
 ```sql
 select 
   actor, 
-  repo, 
-  created_at 
-from
+  actor_ip, 
+  org
+from 
   github_audit_log 
-where
-  action = 'repo.destroy'
-order by created_at desc;
-
+where 
+  action in ('repo.protected_branch.update_rule', 'repo.protected_branch.disable_rule')
+order by 
+  created_at desc;
 ```
 
-### Force push detection
+### Force pushes against protected branches
 
-Detect force pushes to protected branches.
+Detects force pushes on protected branches to prevent history rewrites, ensuring code integrity and auditability.
 
 ```sql
 select 
   actor, 
   action,
-  repo, 
-  pull_request_url, 
   created_at 
 from 
   github_audit_log 
 where 
   action = 'protected_branch.force_push'
-order by created_at desc;
+order by 
+  created_at desc;
 ```
 
-### Repository visibility changes
+### Repository visibility changed to public
 
-Track public repository visibility changes.
+Tracks changes in repository visibility to prevent accidental or unauthorized exposure of sensitive code.
 
 ```sql
 select 
-  actor, 
-  repo, 
-  visibility, 
+  actor,
+  (additional_fields ->> 'visibility') as visibility,
   created_at 
 from 
   github_audit_log 
 where 
-  action = 'repo.change_visibility' 
+  action = 'repo.change_visibility'
   and visibility = 'public'
-order by created_at desc;
+order by 
+  created_at desc;
 ```
 
-### Top 10 events
+### Detect vulnerability alert disabled
 
-List the top 10 events group by repository and how many times they were called.
+Identifies repositories where security alerts were disabled, ensuring continuous vulnerability monitoring and risk mitigation.
 
 ```sql
-select
-  action,
-  repo,
-  count(*) as action_count
-from
-  github_audit_log
-group by
-  action,
-  repo,
-order by
-  action_count desc
-limit 10;
+select 
+  actor, 
+  org, 
+  additional_fields, 
+  created_at 
+from 
+  github_audit_log 
+where 
+  action = 'repo.disable_vulnerability_alerts'
+order by 
+  created_at desc;
 ```
 
 ## Example Configurations
 
 ### Collect logs from local files
 
-You can also collect GitHub audit logs from local file.
+Collect GitHub audit logs exported locally as JSON.
 
 ```hcl
 partition "github_audit_log" "audit_log" {
@@ -131,12 +129,12 @@ partition "github_audit_log" "audit_log" {
 
 ### Exclude read-only events
 
-Use the filter argument in your partition to exclude read-only events and reduce the size of local log storage.
+Use the filter argument in your partition to filter out events like issue comments.
 
 ```hcl
 partition "github_audit_log" "my_logs_write" {
   # Avoid saving read-only events, which can drastically reduce local log size
-  filter = "action ilike '%view%' or action ilike '%login%' or action ilike '%access%' or action ilike '%check%'"
+  filter = "action ilike '%issue_comment%'"
 
   source "file"  {
 	paths = ["/Users/path/dir"]

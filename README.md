@@ -64,37 +64,31 @@ Run a query:
 ```sql
 select
   action,
-  repo,
   count(*) as action_count
 from
   github_audit_log
 group by
-  action,
-  repo,
+  action
 order by
   action_count desc;
 ```
 
 ```sh
-+----------------------------------------------------------------------+-------------------------------------------------+--------------+
-| action                                                               | repo                                            | action_count |
-+----------------------------------------------------------------------+-------------------------------------------------+--------------+
-| packages.package_version_published                                   | turbot/release                                  | 2495         |
-| issue_comment.update                                                 | turbot/hub.guardrails.turbot.com                | 762          |
-| issue_comment.update                                                 | turbot/turbot.com                               | 576          |
-| pull_request.create                                                  | turbot/pipes                                    | 566          |
-| pull_request.merge                                                   | turbot/pipes                                    | 419          |
-| protected_branch.policy_override                                     | turbot/flowpipe                                 | 366          |
-| pull_request_review_comment.create                                   | turbot/guardrails-samples                       | 324          |
-| issue_comment.update                                                 | turbot/hub.flowpipe.io                          | 321          |
-| pull_request.create                                                  | turbot/powerpipe                                | 275          |
-| protected_branch.policy_override                                     | turbot/pipe-fittings                            | 268          |
-| pull_request_review.submit                                           | turbot/steampipe-plugin-aws                     | 261          |
-| pull_request.create                                                  | turbot/turbot.com                               | 257          |
-| issue_comment.update                                                 | turbot/hub.powerpipe.io                         | 251          |
-| pull_request.merge                                                   | turbot/turbot.com                               | 249          |
-| pull_request.merge                                                   | turbot/powerpipe                                | 242          |
-+----------------------------------------------------------------------+-------------------------------------------------+--------------+
++----------------------------------------------------------------------+--------------+
+| action                                                               | action_count |
++----------------------------------------------------------------------+--------------+
+| pull_request.create                                                  | 9894         |
+| pull_request.merge                                                   | 7440         |
+| issue_comment.update                                                 | 5832         |
+| packages.package_version_published                                   | 4990         |
+| protected_branch.policy_override                                     | 4012         |
+| pull_request_review.submit                                           | 3672         |
+| pull_request_review_comment.create                                   | 2516         |
+| pull_request.close                                                   | 2462         |
+| pull_request.create_review_request                                   | 2438         |
+| repository_vulnerability_alert.create                                | 1972         |
+| repository_vulnerability_alert.resolve                               | 1486         |
++----------------------------------------------------------------------+--------------+
 ```
 
 ## Detections as Code with Powerpipe
