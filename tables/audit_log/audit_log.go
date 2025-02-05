@@ -7,16 +7,6 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/schema"
 )
 
-/*
-* TODOs:
-* - Should IDs be strings or ints?
-* - Should IP addresses be strings?
-* - Are the CreatedAt and Timestamp properties the correct type? Should they be *time.Time or helpers.UnixMillis?
-* - Should we preserve millisecond time fields as is and create new fields?
-* - Should nested properties be broken out/flattened?
-* - How best to add all possible fields? There are about 130 top level properties and 33 nested properties.
- */
-
 type AuditLogBatch struct {
 	Records []AuditLog `json:"Records"`
 }
@@ -48,6 +38,38 @@ type AuditLog struct {
 
 type ActorLocation struct {
 	CountryCode *string `json:"country_code,omitempty"`
+}
+
+func (c *AuditLog) GetColumnDescriptions() map[string]string {
+	return map[string]string{
+		"action":                     "The action performed.",
+		"actor":                      "Actor that performed the action.",
+		"actor_id":                   "The id of the actor who performed the action.",
+		"actor_ip":                   "Actor IP (only included if explicitly enabled in your GitHub settings.",
+		"actor_location":             "Actor location.",
+		"business":                   "The name of the business that relates to this action.",
+		"business_id":                "ID of the enterprise affected by the action (if applicable).",
+		"created_at":                 "Creation timestamp for audit event.",
+		"document_id":                "Document id for the audit log events.",
+		"external_identity_name_id":  "Displayed when SAML SSO identity was used as a means of authentication.",
+		"external_identity_username": "Displayed when SAML SSO identity was used as a means of authentication with Enterprise Managed Users.",
+		"hashed_token":               "Hash of the token used to perform this action.",
+		"org":                        "The Organization where the action was performed.",
+		"org_id":                     "The Organization ID where the action was performed.",
+		"timestamp":                  "Timestamp for the event.",
+		"token_id":                   "ID of the token used in this action.",
+		"token_scopes":               "List of scopes of the token used in this action.",
+		"user":                       "User added/removed for certain permission.",
+		"user_id":                    "The user ID.",
+		"additional_fields":          "The additional properties of the action.",
+
+		// Override table specific tp_* column descriptions
+		"tp_index":     "The org Id or user name or user Id that received the request.",
+		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
+		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
+		"tp_source_ip": "Actor IP (only included if explicitly enabled in your GitHub settings.",
+		"tp_usernames": "Usernames associated with the event.",
+	}
 }
 
 func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
