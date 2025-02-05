@@ -51,8 +51,8 @@ vi ~/.tailpipe/config/github.tpc
 ```hcl
 partition "github_audit_log" "audit_log" {
   source "file"  {
-	paths = ["/Users/dir/path"]
-	file_layout = "export-turbot-%{NUMBER:prefix}.json"
+    paths = ["/Users/dir/path"]
+    file_layout = "export-turbot-%{NUMBER:prefix}.json"
   }
 }
 ```
