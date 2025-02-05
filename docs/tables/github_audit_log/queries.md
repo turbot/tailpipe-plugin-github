@@ -39,12 +39,12 @@ Retrieve the top 10 actors based on their activity or influence within the GitHu
 
 ```sql
 select
-  action,
+  actor,
   count(*) as action_count
 from
   github_audit_log
 group by
-  action
+  actor
 order by
   action_count desc
 limit 10;
@@ -63,7 +63,8 @@ from
 where
   and tp_source_ip not in ('trusted_ip_1', 'trusted_ip_2')
 group by
-  actor, tp_source_ip;
+  actor, 
+  tp_source_ip;
 ```
 
 ## GitHub Security Threat Detection Queries
@@ -118,7 +119,8 @@ from
 where
   action in ('dependabot_alerts.disable', 'secret_scanning.disable')
 group by
-  actor, action;
+  actor, 
+  action;
 ```
 
 ### Detect suspicious IP address changes
@@ -133,7 +135,8 @@ select
 from
   github_audit_log
 group by
-  actor, tp_source_ip
+  actor, 
+  tp_source_ip
 having
   count(distinct tp_source_ip) > 5;
 ```

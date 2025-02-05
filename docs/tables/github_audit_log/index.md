@@ -56,7 +56,7 @@ select
 from
   github_audit_log
 where
-  action in ('protected_branch.policy_override')
+  action = 'protected_branch.policy_override'
 order by
   created_at desc;
 ```
@@ -98,18 +98,18 @@ order by
   created_at desc;
 ```
 
-### Top 10 actions
+### Top 10 actors
 
-List the top 10 actions and how many times they were called.
+Retrieve the top 10 actors based on their activity or influence within the GitHub organization.
 
 ```sql
 select
-  action,
+  actor,
   count(*) as action_count
 from
   github_audit_log
 group by
-  action
+  actor
 order by
   action_count desc
 limit 10;
