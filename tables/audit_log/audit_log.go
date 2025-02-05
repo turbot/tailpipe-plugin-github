@@ -7,16 +7,6 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/schema"
 )
 
-/*
-* TODOs:
-* - Should IDs be strings or ints?
-* - Should IP addresses be strings?
-* - Are the CreatedAt and Timestamp properties the correct type? Should they be *time.Time or helpers.UnixMillis?
-* - Should we preserve millisecond time fields as is and create new fields?
-* - Should nested properties be broken out/flattened?
-* - How best to add all possible fields? There are about 130 top level properties and 33 nested properties.
- */
-
 type AuditLogBatch struct {
 	Records []AuditLog `json:"Records"`
 }
