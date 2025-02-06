@@ -99,7 +99,8 @@ Tracks actions that disable critical security features, which may indicate poten
 select
   actor,
   action,
-  count(*) as disable_actions
+  timestamp,
+  repo
 from
   github_audit_log
 where
@@ -246,7 +247,7 @@ select
 from
   github_audit_log
 where
-  action = 'protected_branch.update_admin_enforced'
+  action = 'protected_branch.policy_override'
 group by
   actor
 having
@@ -283,7 +284,7 @@ Tracks modifications to the workflow execution settings, including restricting w
 select
   actor,
   timestamp,
-  (additional_fields ->> 'repo') as repository,
+  repo,
   (additional_fields ->> 'operation_type') as operation_type,
   (additional_fields ->> 'public_repo') as is_public_repo,
   created_at
@@ -319,6 +320,7 @@ Identifies instances where advanced security features were disabled for a reposi
 ```sql
 select
   actor,
+  actor_ip,
   timestamp,
   repo
 from
