@@ -4,7 +4,7 @@
 
 [GitHub](https://www.github.com/) is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features.
 
-The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub logs using SQL to track activity, monitor trends, detect anomalies, and more!
+The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub audit logs using SQL to track activity, monitor trends, detect anomalies, and more!
 
 - **[Get started →](https://hub.tailpipe.io/plugins/turbot/github)**
 - Documentation: [Table definitions & examples](https://hub.tailpipe.io/plugins/turbot/github/tables)
@@ -43,7 +43,8 @@ vi ~/.tailpipe/config/github.tpc
 ```hcl
 partition "github_audit_log" "my_logs" {
   source "file"  {
-    paths = ["/Users/myuser/github_logs"]
+    paths       = ["/Users/myuser/github_audit_logs"]
+    file_layout = "%{DATA}.json.gz"
   }
 }
 ```
@@ -65,43 +66,33 @@ Run a query:
 ```sql
 select
   action,
-  count(*) as event_count
+  count(*) as action_count
 from
   github_audit_log
 group by
   action
 order by
-  event_count desc;
+  action_count desc;
 ```
 
 ```sh
-+---------------------------------------+-------------+
-| action                                | event_count |
-+---------------------------------------+-------------+
-| pull_request.create                   | 7913        |
-| pull_request.merge                    | 5754        |
-| issue_comment.update                  | 4292        |
-| protected_branch.policy_override      | 3304        |
-| packages.package_version_published    | 2983        |
-| pull_request_review.submit            | 2674        |
-| pull_request.close                    | 2200        |
-| pull_request_review_comment.create    | 1875        |
-| pull_request.create_review_request    | 1793        |
-| repository_vulnerability_alert.create | 1644        |
-+---------------------------------------+-------------+
++----------------------------------------+--------------+
+| action                                 | action_count |
++----------------------------------------+--------------+
+| pull_request.create                    | 9894         |
+| pull_request.merge                     | 7440         |
+| issue_comment.update                   | 5832         |
+| packages.package_version_published     | 4990         |
+| protected_branch.policy_override       | 4012         |
+| pull_request_review.submit             | 3672         |
+| pull_request_review_comment.create     | 2516         |
+| pull_request.close                     | 2462         |
+| pull_request.create_review_request     | 2438         |
+| repository_vulnerability_alert.create  | 1972         |
+| repository_vulnerability_alert.resolve | 1486         |
+| repo.change_merge_setting              | 892          |
++----------------------------------------+--------------+
 ```
-
-## Detections as Code with Powerpipe
-
-Pre-built dashboards and detections for the GitHub plugin are available in [Powerpipe](https://powerpipe.io) mods, helping you monitor and analyze activity across your GitHub accounts.
-
-For example, the [GitHub Audit Logs Detections mod](https://hub.powerpipe.io/mods/turbot/tailpipe-mod-github-cloudtrail-log-detections) scans your CloudTrail logs for anomalies, such as an S3 bucket being made public or a change in your VPC network infrastructure.
-
-Dashboards and detections are [open source](https://github.com/topics/tailpipe-mod), allowing easy customization and collaboration.
-
-To get started, choose a mod from the [Powerpipe Hub](https://hub.powerpipe.io/?engines=tailpipe&q=github).
-
-![image](docs/images/github_audit_log_mitre_dashboard.png)
 
 ## Developing
 

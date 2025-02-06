@@ -41,6 +41,8 @@ func (c *AuditLogMapper) Map(ctx context.Context, a any, _ ...table.MapOption[*A
 	if err != nil {
 		return nil, fmt.Errorf("error in unmarshaling audit log: %w", err)
 	}
+
+	// We need this map because we need to manually parse the timestamp from int to timestamp 
 	auditLog.mapAuditLogFields(fields)
 
 	return &auditLog, nil
