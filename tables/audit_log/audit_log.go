@@ -15,6 +15,7 @@ type AuditLog struct {
 	schema.CommonFields
 
 	Action                   *string                 `json:"action,omitempty"`
+	OperationType            *string                 `json:"operation_type,omitempty"`
 	Actor                    *string                 `json:"actor,omitempty"`
 	ActorID                  *int64                  `json:"actor_id,omitempty"`
 	ActorIP                  *string                 `json:"actor_ip,omitempty"`
@@ -27,6 +28,7 @@ type AuditLog struct {
 	ExternalIdentityUsername *string                 `json:"external_identity_username,omitempty"`
 	HashedToken              *string                 `json:"hashed_token,omitempty"`
 	Org                      *string                 `json:"org,omitempty"`
+	Repo                     *string                 `json:"repo,omitempty"`
 	OrgID                    *string                 `json:"org_id,omitempty"`
 	Timestamp                *time.Time              `json:"timestamp,omitempty"`
 	TokenID                  *int64                  `json:"token_id,omitempty"`
@@ -55,7 +57,9 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"external_identity_username": "The username associated with an external identity provider.",
 		"hashed_token":               "A hashed representation of the authentication token used in the event.",
 		"org":                        "The name of the organization associated with the event, if applicable.",
+		"repo":                       "The name of the repository associated with the event, if applicable.",
 		"org_id":                     "The unique identifier of the organization associated with the event.",
+		"operation_type":             "Indicates the type of operation performed with the event, such as create, modify, access, transfer or remove.",
 		"timestamp":                  "The time the audit log event occurred, given as a Unix timestamp.",
 		"token_id":                   "The unique identifier of the authentication token used.",
 		"token_scopes":               "A comma-separated list of permissions associated with the authentication token.",
@@ -64,7 +68,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"additional_fields":          "A JSON object containing any extra metadata related to the event.",
 
 		// Override table-specific tp_* column descriptions
-		"tp_index":     "The organization ID, username, or user ID that received the request.",
+		"tp_index":     "The organization name, or GitHub package name that received the request.",
 		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
 		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
 		"tp_source_ip": "The IP address of the actor.",
@@ -85,9 +89,18 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 			if strVal, ok := value.(string); ok {
 				a.Actor = &strVal
 			}
+		case "repo", "repository":
+			if strVal, ok := value.(string); ok {
+				a.Repo = &strVal
+			}
+			dynamicFields[key] = value
 		case "actor_ip":
 			if strVal, ok := value.(string); ok {
 				a.ActorIP = &strVal
+			}
+		case "operation_type":
+			if strVal, ok := value.(string); ok {
+				a.OperationType = &strVal
 			}
 		case "actor_id":
 			if floatVal, ok := value.(float64); ok {

@@ -1,7 +1,6 @@
 package audit_log
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/rs/xid"
@@ -50,18 +49,13 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 		row.TpUsernames = append(row.TpUsernames, *row.User)
 	}
 
-	switch {
-	case row.Org != nil:
+	if row.Org != nil {
 		row.TpIndex = *row.Org
-	case row.User != nil:
-		row.TpIndex = *row.User
-	case row.OrgID != nil:
-		row.TpIndex = *row.OrgID
-	case row.UserID != nil:
-		row.TpIndex = fmt.Sprintf("%d", *row.UserID)
-	default:
-		row.TpIndex = "default"
+	} else {
+		pack := (*row.AdditionalFields)["package"]
+		row.TpIndex = pack.(string)
 	}
+	
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
 }

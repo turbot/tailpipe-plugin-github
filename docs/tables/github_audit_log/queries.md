@@ -18,7 +18,7 @@ order by
 
 ### Top 10 events
 
-List the 10 most frequently called events.
+List the 10 most frequently called actions.
 
 ```sql
 select
@@ -33,9 +33,9 @@ order by
 limit 10;
 ```
 
-### Top 10 actors
+### Top 10 pull requester authors
 
-Retrieve the top 10 actors based on their activity or influence within the GitHub organization.
+List the top 10 pull request authors and how many pull requests they've created.
 
 ```sql
 select
@@ -43,6 +43,9 @@ select
   count(*) as action_count
 from
   github_audit_log
+where
+  actor is not null -- Exclude system events
+  and action = 'pull_request.create'
 group by
   actor
 order by
@@ -52,44 +55,45 @@ limit 10;
 
 ### Activity from unapproved IP addresses
 
-Flag activity originating from IP addresses outside an approved list.
+Identify activities originating from IP addresses that are not in the approved list.
 
 ```sql
 select
   actor,
+  timestamp,
   tp_source_ip
 from
   github_audit_log
 where
-  and tp_source_ip not in ('trusted_ip_1', 'trusted_ip_2')
+  and tp_source_ip not in ('192.0.2.146', '206.253.208.100')
 group by
-  actor, 
+  actor,
   tp_source_ip;
 ```
 
 ## GitHub Security Threat Detection Queries
 
-### Identify changes to sensitive settings
+### Frequent changes to security settings
 
-Flags users who frequently modify security-related settings, potentially indicating tampering.
+Flags users who frequently modify security-related settings or secrets, potentially indicating suspicious activity.
 
 ```sql
 select
   actor,
-  count(*) as setting_changes 
+  count(*) as setting_changes
 from
-  github_audit_log 
+  github_audit_log
 where
-  action in ('org.update_actions_settings', 'org.update_actions_secret') 
+  action in ('org.update_actions_settings', 'org.update_actions_secret')
 group by
-  actor 
+  actor
 having
   setting_changes > 3;
 ```
 
-### Detect disabled security features
+### Disabled security features
 
-Monitors for actions that disable critical security features, potentially compromising security.
+Tracks actions that disable critical security features, which may indicate potential security risks.
 
 ```sql
 select
@@ -101,13 +105,13 @@ from
 where
   action in ('dependabot_alerts.disable', 'secret_scanning.disable')
 group by
-  actor, 
+  actor,
   action;
 ```
 
-### Detect suspicious IP address changes
+### Frequent IP address changes
 
-Monitors users with frequent IP address changes, which could indicate unauthorized access attempts.
+Flags users with frequent IP address changes, which may indicate unauthorized access attempts.
 
 ```sql
 select
@@ -117,15 +121,15 @@ select
 from
   github_audit_log
 group by
-  actor, 
+  actor,
   tp_source_ip
 having
   count(distinct tp_source_ip) > 5;
 ```
 
-### Identify frequent code deletion events
+### Frequent code deletion
 
-Flags users who delete code frequently, potentially indicating unauthorized actions.
+Identifies users who frequently remove repository topics, which may impact project organization and discoverability.
 
 ```sql
 select
@@ -141,63 +145,62 @@ having
   code_deletions > 3;
 ```
 
-### Identify disabled vulnerability alerts
+### Vulnerability alerts disabled
 
-Detects actors who frequently disable vulnerability alerts, which may indicate attempts to obscure vulnerabilities.
+Tracks instances where users disable vulnerability alerts, which may limit awareness of security issues.
 
 ```sql
 select
   actor,
-  count(*) as vulnerability_alerts_disabled
+  actor_ip,
+  timestamp,
+  org
 from
   github_audit_log
 where
   action = 'repository_vulnerability_alerts.disable'
 group by
-  actor
-having
-  vulnerability_alerts_disabled > 2;
-```
-
-### Detect IP allow list changes
-
-Flags users who alter IP allow lists, potentially bypassing security controls.
-
-```sql
-select
-  actor,
-  count(*) as ip_allow_list_changes
-from
-  github_audit_log
-where
-  action in ('ip_allow_list_entry.create', 'ip_allow_list_entry.destroy')
-group by
-  actor
-having
-  ip_allow_list_changes > 2;
-```
-
-### Detect disabled secret scanning
-
-Flags actors disabling secret scanning, potentially compromising security.
-
-```sql
-select
-  actor,
-  count(*) as secret_scanning_disabled
-from
-  github_audit_log
-where
-  action = 'secret_scanning.disable'
-group by
   actor;
+```
+
+### IP allow list modifications
+
+Identifies users who modify IP allow lists, which can impact network access restrictions.
+
+```sql
+select
+  actor,
+  timestamp,
+  action,
+  repo
+from
+  github_audit_log
+where
+  action in ('ip_allow_list_entry.create', 'ip_allow_list_entry.destroy');
+```
+
+### Secret scanning disabled
+
+Tracks instances where users disable secret scanning, reducing the ability to detect exposed credentials.
+
+```sql
+select
+  actor,
+  action,
+  timestamp,
+  additional_fields ->> 'public_repo' as public_repo, 
+  additional_fields ->> 'user_agent' as user_agent, 
+from
+  github_audit_log
+where
+  action = 'repository_secret_scanning.disable';
 ```
 
 ## Volume Examples
 
-### Identify excessive repository visibility changes
+### Frequent repository visibility changes to public
 
-Detects frequent changes to repository visibility, which could signal unauthorized actions.
+Identifies users who have changed repository visibility to public multiple times, which may increase the risk of unintended data exposure.
 
 ```sql
 select
@@ -206,16 +209,17 @@ select
 from
   github_audit_log
 where
-  action = 'repository_visibility_change.enable'
+  action = 'repo.access'
+  and (additional_fields ->> 'visibility') = 'public'
 group by
   actor
 having
   visibility_changes > 3;
 ```
 
-### Frequent personal access token access
+### Frequent personal access token access granted
 
-Flags actors frequently accessing resources using personal access tokens, which may indicate token abuse.
+Identifies users who frequently grant fine-grained personal access tokens access to resources, which may indicate excessive or unintended token usage.
 
 ```sql
 select
@@ -231,9 +235,9 @@ having
   token_access_count > 5;
 ```
 
-### Identify frequent branch protection changes
+### Frequent branch protection overrides
 
-Flags actors who frequently modify branch protection settings, which may indicate tampering.
+Identifies repository administrators who frequently override branch protection requirements, which may impact enforcement of repository policies.
 
 ```sql
 select
@@ -259,7 +263,8 @@ Identifies issue comments that were updated or deleted by a bot, helping track a
 select
   actor,
   action,
-  (additional_fields ->> 'repo') as repository,
+  timestamp,
+  repo as repository,
   (additional_fields ->> 'programmatic_access_type') as programmatic_access_type,
   (additional_fields ->> 'operation_type') as operation_type,
   (additional_fields ->> 'actor_is_bot') as actor_is_bot
@@ -275,16 +280,49 @@ where
 Tracks modifications to the workflow execution settings, including restricting workflows from forks.
 
 ```sql
-select 
-  actor, 
-  (additional_fields ->> 'repo') as repository, 
-  (additional_fields ->> 'operation_type') as operation_type, 
+select
+  actor,
+  timestamp,
+  (additional_fields ->> 'repo') as repository,
+  (additional_fields ->> 'operation_type') as operation_type,
   (additional_fields ->> 'public_repo') as is_public_repo,
-  created_at 
-from 
+  created_at
+from
+  github_audit_log
+where
+  action = 'repo.set_default_workflow_permissions'
+order by
+  created_at desc;
+```
+
+### Most recent pull request reviews
+
+Retrieves pull request reviews submitted in the last two days.
+
+```sql
+select
+  actor,
+  timestamp,
+  (additional_fields ->> 'pull_request_title') as pull_request_title,
+  (additional_fields ->> 'pull_request_url') as pull_request_url
+from
   github_audit_log 
 where 
-  action = 'repo.set_default_workflow_permissions'
-order by 
-  created_at desc;
-``
+  action = 'pull_request_review.submit'
+  and timestamp >= cast(current_timestamp as timestamp) - interval '2 days';
+```
+
+### Advanced security disabled in repositories
+
+Identifies instances where advanced security features were disabled for a repository.
+
+```sql
+select
+  actor,
+  timestamp,
+  repo
+from
+  github_audit_log 
+where 
+  action = 'repo.advanced_security_disabled';
+```
