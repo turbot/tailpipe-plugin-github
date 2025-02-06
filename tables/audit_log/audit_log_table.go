@@ -52,8 +52,8 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 	if row.Org != nil {
 		row.TpIndex = *row.Org
 	} else {
-		pack := (*row.AdditionalFields)["package"]
-		row.TpIndex = pack.(string)
+		// Set the default tp_index value to "default" for events that do not contain the "org" property, such as packages.package_version_deleted and packages.package_version_published.
+		row.TpIndex = "default"
 	}
 	
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)

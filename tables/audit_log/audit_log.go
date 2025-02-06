@@ -45,33 +45,33 @@ type ActorLocation struct {
 func (c *AuditLog) GetColumnDescriptions() map[string]string {
 	return map[string]string{
 		"action":                     "The name of the action that was performed, for example 'user.login' or 'repo.create'.",
-		"actor":                      "The actor who performed the action.",
 		"actor_id":                   "The ID of the actor who performed the action.",
 		"actor_ip":                   "The IP address from which the action was performed.",
 		"actor_location":             "A JSON object containing geographical information about the actor’s IP address.",
-		"business":                   "The name of the business associated with the event, if applicable.",
+		"actor":                      "The actor who performed the action.",
+		"additional_fields":          "A JSON object containing any extra metadata related to the event.",
 		"business_id":                "The unique identifier of the business associated with the event.",
+		"business":                   "The name of the business associated with the event, if applicable.",
 		"created_at":                 "The time the audit log event was recorded in UTC.",
 		"document_id":                "A unique identifier for an audit event.",
 		"external_identity_name_id":  "The unique identifier of an external identity provider or linked identity.",
 		"external_identity_username": "The username associated with an external identity provider.",
 		"hashed_token":               "A hashed representation of the authentication token used in the event.",
+		"operation_type":             "Indicates the type of operation performed with the event, such as create, modify, access, transfer or remove.",
+		"org_id":                     "The unique identifier of the organization associated with the event.",
 		"org":                        "The name of the organization associated with the event, if applicable.",
 		"repo":                       "The name of the repository associated with the event, if applicable.",
-		"org_id":                     "The unique identifier of the organization associated with the event.",
-		"operation_type":             "Indicates the type of operation performed with the event, such as create, modify, access, transfer or remove.",
 		"timestamp":                  "The time the audit log event occurred, given as a Unix timestamp.",
 		"token_id":                   "The unique identifier of the authentication token used.",
 		"token_scopes":               "A comma-separated list of permissions associated with the authentication token.",
-		"user":                       "The user that was affected by the action performed (if available).",
 		"user_id":                    "The unique identifier of the user who performed the action.",
-		"additional_fields":          "A JSON object containing any extra metadata related to the event.",
+		"user":                       "The user that was affected by the action performed (if available).",
 
 		// Override table-specific tp_* column descriptions
 		"tp_index":     "The organization name, or GitHub package name that received the request.",
 		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
-		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
 		"tp_source_ip": "The IP address of the actor.",
+		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
 	}
 }
 
