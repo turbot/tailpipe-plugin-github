@@ -68,7 +68,7 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"user":                       "The user that was affected by the action performed (if available).",
 
 		// Override table-specific tp_* column descriptions
-		"tp_index":     "The organization name, or GitHub package name that received the request.",
+		"tp_index":     "The organization name associated with the event, or 'default' if not available.",
 		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
 		"tp_source_ip": "The IP address of the actor.",
 		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
