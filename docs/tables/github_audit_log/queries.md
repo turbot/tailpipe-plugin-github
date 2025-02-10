@@ -40,6 +40,7 @@ List the top 10 pull request authors and how many pull requests they've created.
 ```sql
 select
   actor,
+  repo,
   count(*) as action_count
 from
   github_audit_log
@@ -73,33 +74,15 @@ group by
 
 ## GitHub Security Threat Detection Queries
 
-### Frequent changes to security settings
-
-Flags users who frequently modify security-related settings or secrets, potentially indicating suspicious activity.
-
-```sql
-select
-  actor,
-  count(*) as setting_changes
-from
-  github_audit_log
-where
-  action in ('org.update_actions_settings', 'org.update_actions_secret')
-group by
-  actor
-having
-  setting_changes > 3;
-```
-
 ### Disabled security features
 
 Tracks actions that disable critical security features, which may indicate potential security risks.
 
 ```sql
 select
+  timestamp,
   actor,
   action,
-  timestamp,
   repo
 from
   github_audit_log
@@ -128,33 +111,15 @@ having
   count(distinct tp_source_ip) > 5;
 ```
 
-### Frequent code deletion
-
-Identifies users who frequently remove repository topics, which may impact project organization and discoverability.
-
-```sql
-select
-  actor,
-  count(*) as code_deletions
-from
-  github_audit_log
-where
-  action = 'repo.remove_topic'
-group by
-  actor
-having
-  code_deletions > 3;
-```
-
 ### Vulnerability alerts disabled
 
 Tracks instances where users disable vulnerability alerts, which may limit awareness of security issues.
 
 ```sql
 select
+  timestamp,
   actor,
   actor_ip,
-  timestamp,
   org
 from
   github_audit_log
@@ -170,14 +135,15 @@ Identifies users who modify IP allow lists, which can impact network access rest
 
 ```sql
 select
-  actor,
   timestamp,
+  actor,
   action,
   repo
 from
   github_audit_log
 where
-  action in ('ip_allow_list_entry.create', 'ip_allow_list_entry.destroy');
+  action in ('ip_allow_list_entry.create', 'ip_allow_list_entry.destroy')
+  and actor_ip in ('192.0.2.146', '206.253.208.100');
 ```
 
 ### Secret scanning disabled
@@ -186,11 +152,11 @@ Tracks instances where users disable secret scanning, reducing the ability to de
 
 ```sql
 select
+  timestamp,
   actor,
   action,
-  timestamp,
-  additional_fields ->> 'public_repo' as public_repo, 
-  additional_fields ->> 'user_agent' as user_agent, 
+  additional_fields ->> 'public_repo' as public_repo,
+  additional_fields ->> 'user_agent' as user_agent,
 from
   github_audit_log
 where
@@ -243,15 +209,39 @@ Identifies repository administrators who frequently override branch protection r
 ```sql
 select
   actor,
+  additional_fields ->> 'branch' as branch,
   count(*) as branch_protection_changes
 from
   github_audit_log
 where
   action = 'protected_branch.policy_override'
 group by
-  actor
+  actor,
+  branch
 having
   branch_protection_changes > 3;
+```
+
+## Baseline Examples
+
+### Activity outside of normal hours
+
+Flag activity occurring outside of standard working hours, e.g., activity bewteen 8 PM and 6 AM.
+
+```sql
+select
+  timestamp,
+  action,
+  actor,
+  repo,
+  operation_type
+from
+  github_audit_log
+where
+  cast(strftime(timestamp, '%H') as integer) >= 20 -- 8 PM
+  or cast(strftime(timestamp, '%H') as integer) < 6 -- 6 AM
+order by
+  timestamp desc;
 ```
 
 ## Operational Examples
@@ -262,12 +252,12 @@ Identifies issue comments that were updated or deleted by a bot, helping track a
 
 ```sql
 select
+  timestamp,
   actor,
   action,
-  timestamp,
   repo as repository,
+  operation_type,
   (additional_fields ->> 'programmatic_access_type') as programmatic_access_type,
-  (additional_fields ->> 'operation_type') as operation_type,
   (additional_fields ->> 'actor_is_bot') as actor_is_bot
 from
   github_audit_log
@@ -282,10 +272,10 @@ Tracks modifications to the workflow execution settings, including restricting w
 
 ```sql
 select
-  actor,
   timestamp,
+  actor,
   repo,
-  (additional_fields ->> 'operation_type') as operation_type,
+  operation_type,
   (additional_fields ->> 'public_repo') as is_public_repo,
   created_at
 from
@@ -296,35 +286,39 @@ order by
   created_at desc;
 ```
 
-### Most recent pull request reviews
+### List Organization Membership Changes
 
-Retrieves pull request reviews submitted in the last two days.
+Monitor users being added or removed from an organization.
 
 ```sql
 select
-  actor,
   timestamp,
-  (additional_fields ->> 'pull_request_title') as pull_request_title,
-  (additional_fields ->> 'pull_request_url') as pull_request_url
+  actor,
+  action,
+  user
 from
-  github_audit_log 
-where 
-  action = 'pull_request_review.submit'
-  and timestamp >= cast(current_timestamp as timestamp) - interval '2 days';
+  github_audit_log
+where
+  action in ('org.add_member', 'org.remove_member')
+order by
+  timestamp desc;
 ```
 
-### Advanced security disabled in repositories
+### Monitor Team and Role Assignments
 
-Identifies instances where advanced security features were disabled for a repository.
+Identify when users are added or removed from teams.
 
 ```sql
 select
-  actor,
-  actor_ip,
   timestamp,
-  repo
+  actor,
+  action,
+  user,
+  additional_fields ->> 'team' as team_name
 from
-  github_audit_log 
-where 
-  action = 'repo.advanced_security_disabled';
+  github_audit_log
+where
+  action in ('team.add_member', 'team.remove_member')
+order by
+  timestamp desc;
 ```

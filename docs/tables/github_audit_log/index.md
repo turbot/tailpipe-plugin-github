@@ -42,7 +42,7 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 15+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 17+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
 ### Repositories made public
 
@@ -50,16 +50,16 @@ Track repositories that were made public to check for accidental visibility chan
 
 ```sql
 select
-  created_at,
+  timestamp,
   actor,
-  additional_fields ->> 'repo' as repo
+  repo
 from
   github_audit_log
 where
   action = 'repo.access'
   and (additional_fields ->> 'visibility') = 'public'
 order by
-  created_at desc;
+  timestamp desc;
 ```
 
 ### Branch protection overrides
@@ -70,7 +70,7 @@ Find instances where a branch protection requirement was overridden by a reposit
 select
   created_at,
   actor,
-  additional_fields ->> 'repo' as repo,
+  repo,
   additional_fields ->> 'branch' as branch,
   additional_fields ->> 'reasons' as reasons
 from
