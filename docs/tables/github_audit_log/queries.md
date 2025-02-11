@@ -33,7 +33,7 @@ order by
 limit 10;
 ```
 
-### Top 10 pull requester authors
+### Top 10 pull request authors
 
 List the top 10 pull request authors and how many pull requests they've created.
 
