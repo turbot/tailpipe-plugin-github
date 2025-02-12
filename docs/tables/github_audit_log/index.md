@@ -42,7 +42,7 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 17+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 10+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
 ### Repositories made public
 
@@ -51,8 +51,8 @@ Track repositories that were made public to check for accidental visibility chan
 ```sql
 select
   timestamp,
-  actor,
-  repo
+  repo,
+  actor
 from
   github_audit_log
 where
@@ -68,8 +68,9 @@ Find instances where a branch protection requirement was overridden by a reposit
 
 ```sql
 select
-  created_at,
+  timestamp,
   actor,
+  actor_ip,
   repo,
   additional_fields ->> 'branch' as branch,
   additional_fields ->> 'reasons' as reasons
@@ -92,8 +93,7 @@ select
 from
   github_audit_log
 where
-  actor is not null -- Exclude system events
-  and action = 'pull_request.create'
+  action = 'pull_request.create'
 group by
   actor
 order by
@@ -118,7 +118,7 @@ partition "github_audit_log" "my_logs" {
 
 ### Exclude comment events
 
-Use the filter argument in your partition to filter out events like issue and pull request review comments.
+Use the filter argument in your partition to filter out events, like issue and pull request review comments.
 
 ```hcl
 partition "github_audit_log" "my_logs_issue_comment" {

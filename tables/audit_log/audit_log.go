@@ -71,7 +71,6 @@ func (c *AuditLog) GetColumnDescriptions() map[string]string {
 		"tp_index":     "The organization name associated with the event, or 'default' if not available.",
 		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
 		"tp_source_ip": "The IP address of the actor.",
-		"tp_timestamp": "The date and time the event occurred, in ISO 8601 format.",
 	}
 }
 
