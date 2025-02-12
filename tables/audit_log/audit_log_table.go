@@ -1,7 +1,6 @@
 package audit_log
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/rs/xid"
@@ -26,7 +25,7 @@ func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
 	return []*table.SourceMetadata[*AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
-			Mapper: &AuditLogMapper{},
+			Mapper:     &AuditLogMapper{},
 			Options: []row_source.RowSourceOption{
 				artifact_source.WithRowPerLine(),
 			},
@@ -43,23 +42,24 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 	row.TpTimestamp = *row.Timestamp
 	row.TpIngestTimestamp = time.Now()
 	row.TpSourceIP = row.ActorIP
+	if row.ActorIP != nil {
+		row.TpIps = append(row.TpIps, *row.TpSourceIP)
+	}
+	if row.User != nil {
+		row.TpUsernames = append(row.TpUsernames, *row.User)
+	}
 
-	switch {
-	case row.Org != nil:
+	if row.Org != nil {
 		row.TpIndex = *row.Org
-	case row.User != nil:
-		row.TpIndex = *row.User
-	case row.OrgID != nil:
-		row.TpIndex = *row.OrgID
-	case row.UserID != nil:
-		row.TpIndex = fmt.Sprintf("%d", *row.UserID)
-	default:
+	} else {
+		// Set the default tp_index value to "default" for events that do not contain the "org" property, such as packages.package_version_deleted and packages.package_version_published.
 		row.TpIndex = "default"
 	}
+	
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
 }
 
 func (c *AuditLogTable) GetDescription() string {
-	return "GitHub Audit logs capture API activity and user actions within your GiHub account."
+	return "GitHub audit logs list events triggered by activities that affect your organization."
 }

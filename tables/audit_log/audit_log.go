@@ -7,16 +7,6 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/schema"
 )
 
-/*
-* TODOs:
-* - Should IDs be strings or ints?
-* - Should IP addresses be strings?
-* - Are the CreatedAt and Timestamp properties the correct type? Should they be *time.Time or helpers.UnixMillis?
-* - Should we preserve millisecond time fields as is and create new fields?
-* - Should nested properties be broken out/flattened?
-* - How best to add all possible fields? There are about 130 top level properties and 33 nested properties.
- */
-
 type AuditLogBatch struct {
 	Records []AuditLog `json:"Records"`
 }
@@ -25,6 +15,7 @@ type AuditLog struct {
 	schema.CommonFields
 
 	Action                   *string                 `json:"action,omitempty"`
+	OperationType            *string                 `json:"operation_type,omitempty"`
 	Actor                    *string                 `json:"actor,omitempty"`
 	ActorID                  *int64                  `json:"actor_id,omitempty"`
 	ActorIP                  *string                 `json:"actor_ip,omitempty"`
@@ -37,6 +28,7 @@ type AuditLog struct {
 	ExternalIdentityUsername *string                 `json:"external_identity_username,omitempty"`
 	HashedToken              *string                 `json:"hashed_token,omitempty"`
 	Org                      *string                 `json:"org,omitempty"`
+	Repo                     *string                 `json:"repo,omitempty"`
 	OrgID                    *string                 `json:"org_id,omitempty"`
 	Timestamp                *time.Time              `json:"timestamp,omitempty"`
 	TokenID                  *int64                  `json:"token_id,omitempty"`
@@ -48,6 +40,38 @@ type AuditLog struct {
 
 type ActorLocation struct {
 	CountryCode *string `json:"country_code,omitempty"`
+}
+
+func (c *AuditLog) GetColumnDescriptions() map[string]string {
+	return map[string]string{
+		"action":                     "The name of the action that was performed, for example 'user.login' or 'repo.create'.",
+		"actor_id":                   "The ID of the actor who performed the action.",
+		"actor_ip":                   "The IP address from which the action was performed.",
+		"actor_location":             "A JSON object containing geographical information about the actor’s IP address.",
+		"actor":                      "The actor who performed the action.",
+		"additional_fields":          "A JSON object containing any extra metadata related to the event.",
+		"business_id":                "The unique identifier of the business associated with the event.",
+		"business":                   "The name of the business associated with the event, if applicable.",
+		"created_at":                 "The time the audit log event was recorded in UTC.",
+		"document_id":                "A unique identifier for an audit event.",
+		"external_identity_name_id":  "The unique identifier of an external identity provider or linked identity.",
+		"external_identity_username": "The username associated with an external identity provider.",
+		"hashed_token":               "A hashed representation of the authentication token used in the event.",
+		"operation_type":             "Indicates the type of operation performed with the event, such as create, modify, access, transfer or remove.",
+		"org_id":                     "The unique identifier of the organization associated with the event.",
+		"org":                        "The name of the organization associated with the event, if applicable.",
+		"repo":                       "The name of the repository associated with the event, if applicable.",
+		"timestamp":                  "The time the audit log event occurred, given as a Unix timestamp.",
+		"token_id":                   "The unique identifier of the authentication token used.",
+		"token_scopes":               "A comma-separated list of permissions associated with the authentication token.",
+		"user_id":                    "The unique identifier of the user who performed the action.",
+		"user":                       "The user that was affected by the action performed (if available).",
+
+		// Override table-specific tp_* column descriptions
+		"tp_index":     "The organization name associated with the event, or 'default' if not available.",
+		"tp_ips":       "IP addresses associated with the event, including the source IP address.",
+		"tp_source_ip": "The IP address of the actor.",
+	}
 }
 
 func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
@@ -64,9 +88,18 @@ func (a *AuditLog) mapAuditLogFields(in map[string]interface{}) {
 			if strVal, ok := value.(string); ok {
 				a.Actor = &strVal
 			}
+		case "repo", "repository":
+			if strVal, ok := value.(string); ok {
+				a.Repo = &strVal
+			}
+			dynamicFields[key] = value
 		case "actor_ip":
 			if strVal, ok := value.(string); ok {
 				a.ActorIP = &strVal
+			}
+		case "operation_type":
+			if strVal, ok := value.(string); ok {
+				a.OperationType = &strVal
 			}
 		case "actor_id":
 			if floatVal, ok := value.(float64); ok {
