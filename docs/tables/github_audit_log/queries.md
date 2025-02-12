@@ -94,7 +94,7 @@ order by
   timestamp desc;
 ```
 
-### Frequent IP address changes
+### Frequent user IP address changes
 
 Flag users with frequent IP address changes, which may indicate unauthorized access attempts.
 
@@ -112,7 +112,7 @@ order by
   ip_changes desc;
 ```
 
-### Vulnerability alerts disabled
+### Repository vulnerability alerts disabled
 
 Detect when vulnerability alerts were disabled in a repository.
 
@@ -129,7 +129,7 @@ order by
   timestamp desc;
 ```
 
-### Secret scanning disabled
+### Repository secret scanning disabled
 
 Detect when secret scanning was disabled in a repository.
 
@@ -146,9 +146,9 @@ order by
   timestamp desc;
 ```
 
-### IP allow list modifications
+### Organization IP allow list modifications
 
-Identify users who modify IP allow lists (only available in [GitHub Enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-for-enterprises)), which can impact network access restrictions.
+Detect when IP allow lists are modified (only available in [GitHub Enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-for-enterprises)), which can impact network access restrictions.
 
 ```sql
 select
