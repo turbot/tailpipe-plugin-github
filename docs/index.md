@@ -1,18 +1,27 @@
-# GitHub Plugin for Tailpipe
+---
+organization: Turbot
+category: ["software development"]
+icon_url: "/images/plugins/turbot/github.svg"
+brand_color: "#191717"
+display_name: "GitHub"
+description: "Tailpipe plugin for collecting and querying various audit logs from GitHub."
+og_description: "Collect GitHub logs and query them instantly with SQL! Open source CLI. No DB required."
+og_image: "/images/plugins/turbot/github-social-graphic.png"
+---
+
+# GitHub + Tailpipe
 
 [Tailpipe](https://tailpipe.io) is an open-source CLI tool that allows you to collect logs and query them with SQL.
 
 [GitHub](https://www.github.com/) is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features.
 
-The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub audit logs using SQL to track activity, monitor trends, detect anomalies, and more!
+The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) allows you to collect and query GitHub logs using SQL to track activity, monitor trends, detect anomalies, and more!
 
-- **[Get started →](https://hub.tailpipe.io/plugins/turbot/github)**
 - Documentation: [Table definitions & examples](https://hub.tailpipe.io/plugins/turbot/github/tables)
 - Community: [Join #tailpipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/tailpipe-plugin-github/issues)
 
-Collect and query logs:
-![image](docs/images/github_audit_log_terminal.png)
+![image](https://raw.githubusercontent.com/turbot/tailpipe-plugin-github/main/docs/images/github_audit_log_terminal.png?type=thumbnail)
 
 ## Getting Started
 
@@ -34,7 +43,7 @@ Install the plugin:
 tailpipe plugin install github
 ```
 
-Configure your [connection credentials](https://hub.tailpipe.io/plugins/turbot/github#connection-credentials), table partition, and data source ([examples](https://hub.tailpipe.io/plugins/turbot/github/tables/github_audit_log#example-configurations)):
+Configure your table partition and data source ([examples](https://hub.tailpipe.io/plugins/turbot/github/tables/github_audit_log#example-configurations)):
 
 ```sh
 vi ~/.tailpipe/config/github.tpc
@@ -93,51 +102,3 @@ order by
 | repo.change_merge_setting              | 892          |
 +----------------------------------------+--------------+
 ```
-
-## Developing
-
-Prerequisites:
-
-- [Tailpipe](https://tailpipe.io/downloads)
-- [Golang](https://golang.org/doc/install)
-
-Clone:
-
-```sh
-git clone https://github.com/turbot/tailpipe-plugin-github.git
-cd tailpipe-plugin-github
-```
-
-After making your local changes, build the plugin, which automatically installs the new version to your `~/.tailpipe/plugins` directory:
-
-```sh
-make
-```
-
-Re-collect your data:
-
-```sh
-tailpipe collect github_audit_log
-```
-
-Try it!
-
-```sh
-tailpipe query
-> .inspect github_audit_log
-```
-
-## Open Source & Contributing
-
-This repository is published under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) (source code) and [CC BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/2.0/) (docs) licenses. Please see our [code of conduct](https://github.com/turbot/.github/blob/main/CODE_OF_CONDUCT.md). We look forward to collaborating with you!
-
-[Tailpipe](https://tailpipe.io) is a product produced from this open source software, exclusively by [Turbot HQ, Inc](https://turbot.com). It is distributed under our commercial terms. Others are allowed to make their own distribution of the software, but cannot use any of the Turbot trademarks, cloud services, etc. You can learn more in our [Open Source FAQ](https://turbot.com/open-source).
-
-## Get Involved
-
-**[Join #tailpipe on Slack →](https://turbot.com/community/join)**
-
-Want to help but don't know where to start? Pick up one of the `help wanted` issues:
-
-- [Tailpipe](https://github.com/turbot/tailpipe/labels/help%20wanted)
-- [GitHub Plugin](https://github.com/turbot/tailpipe-plugin-github/labels/help%20wanted)
