@@ -17,7 +17,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### Top 10 Events
@@ -38,7 +38,7 @@ limit 10;
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### Top 10 Pull Request Authors
@@ -61,7 +61,7 @@ limit 10;
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### Bot Activity
@@ -85,7 +85,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ## Detection Examples
@@ -111,7 +111,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### Frequent User IP Address Changes
@@ -133,7 +133,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### Repository Vulnerability Alerts Disabled
@@ -154,7 +154,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Repository
 ```
 
 ### Repository Secret Scanning Disabled
@@ -175,7 +175,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Repository
 ```
 
 ### Organization IP Allow List Modifications
@@ -199,7 +199,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ## Operational Examples
@@ -223,7 +223,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
 
 ### List Team Membership Changes
@@ -246,7 +246,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Team
 ```
 
 ## Volume Examples
@@ -276,7 +276,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Branch
 ```
 
 ### Frequent Personal Access Token Access Grants
@@ -300,7 +300,7 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: User
 ```
 
 ## Baseline Examples
@@ -329,5 +329,5 @@ order by
 ```
 
 ```yaml
-folder: Account
+folder: Organization
 ```
