@@ -61,7 +61,7 @@ limit 10;
 ```
 
 ```yaml
-folder: Organization
+folder: Pull Request
 ```
 
 ### Bot Activity
@@ -300,7 +300,7 @@ order by
 ```
 
 ```yaml
-folder: User
+folder: Personal Access Token
 ```
 
 ## Baseline Examples
