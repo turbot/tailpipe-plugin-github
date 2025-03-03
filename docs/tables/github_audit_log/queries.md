@@ -1,6 +1,6 @@
 ## Activity Examples
 
-### Daily activity trends
+### Daily Activity Trends
 
 Count events per day to identify activity trends over time.
 
@@ -16,7 +16,11 @@ order by
   event_date asc;
 ```
 
-### Top 10 events
+```yaml
+folder: Organization
+```
+
+### Top 10 Events
 
 List the 10 most frequently called actions.
 
@@ -33,7 +37,11 @@ order by
 limit 10;
 ```
 
-### Top 10 pull request authors
+```yaml
+folder: Organization
+```
+
+### Top 10 Pull Request Authors
 
 List the top 10 pull request authors and how many pull requests they've created.
 
@@ -52,7 +60,11 @@ order by
 limit 10;
 ```
 
-### Bot activity
+```yaml
+folder: Pull Request
+```
+
+### Bot Activity
 
 Count actions performed by bots.
 
@@ -72,9 +84,13 @@ order by
   action_count desc;
 ```
 
+```yaml
+folder: Organization
+```
+
 ## Detection Examples
 
-### Activity from unapproved IP addresses
+### Activity from Unapproved IP Addresses
 
 Flag activity originating from IP addresses outside an approved list.
 
@@ -94,7 +110,11 @@ order by
   timestamp desc;
 ```
 
-### Frequent user IP address changes
+```yaml
+folder: Organization
+```
+
+### Frequent User IP Address Changes
 
 Flag users with frequent IP address changes, which may indicate unauthorized access attempts.
 
@@ -112,7 +132,11 @@ order by
   ip_changes desc;
 ```
 
-### Repository vulnerability alerts disabled
+```yaml
+folder: Organization
+```
+
+### Repository Vulnerability Alerts Disabled
 
 Detect when vulnerability alerts were disabled in a repository.
 
@@ -129,7 +153,11 @@ order by
   timestamp desc;
 ```
 
-### Repository secret scanning disabled
+```yaml
+folder: Repository
+```
+
+### Repository Secret Scanning Disabled
 
 Detect when secret scanning was disabled in a repository.
 
@@ -146,7 +174,11 @@ order by
   timestamp desc;
 ```
 
-### Organization IP allow list modifications
+```yaml
+folder: Repository
+```
+
+### Organization IP Allow List Modifications
 
 Detect when IP allow lists are modified (only available in [GitHub Enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-for-enterprises)), which can impact network access restrictions.
 
@@ -166,9 +198,13 @@ order by
   timestamp desc;
 ```
 
+```yaml
+folder: Organization
+```
+
 ## Operational Examples
 
-### List organization membership changes
+### List Organization Membership Changes
 
 Track changes to organization memberships.
 
@@ -186,7 +222,11 @@ order by
   timestamp desc;
 ```
 
-### List team membership changes
+```yaml
+folder: Organization
+```
+
+### List Team Membership Changes
 
 Track changes to team memberships.
 
@@ -205,9 +245,13 @@ order by
   timestamp desc;
 ```
 
+```yaml
+folder: Team
+```
+
 ## Volume Examples
 
-### Frequent branch protection overrides
+### Frequent Branch Protection Overrides
 
 Identify repository administrators who frequently override branch protection requirements.
 
@@ -231,7 +275,11 @@ order by
   branch_protection_overrides desc;
 ```
 
-### Frequent personal access token access grants
+```yaml
+folder: Branch
+```
+
+### Frequent Personal Access Token Access Grants
 
 Identify users who frequently grant fine-grained personal access tokens access to resources, which may indicate excessive or unintended token usage.
 
@@ -251,9 +299,13 @@ order by
   access_token_grants desc;
 ```
 
+```yaml
+folder: Personal Access Token
+```
+
 ## Baseline Examples
 
-### Activity outside of normal hours
+### Activity Outside of Normal Hours
 
 Flag activity occurring outside of standard working hours, e.g., activity bewteen 8 PM and 6 AM.
 
@@ -274,4 +326,8 @@ where
   and actor is not null
 order by
   timestamp desc;
+```
+
+```yaml
+folder: Organization
 ```
