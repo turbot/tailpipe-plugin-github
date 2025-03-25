@@ -1,3 +1,9 @@
+## v0.2.1 [2025-03-25]
+
+_Enhancements_
+
+- Updated the plugin doc to include the GitHub Audit Log Mitre dashboard image. ([#17](https://github.com/turbot/tailpipe-plugin-github/pull/17))
+
 ## v0.2.0 [2025-03-03]
 
 _Enhancements_
