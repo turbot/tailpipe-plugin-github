@@ -22,6 +22,7 @@ The [GitHub Plugin for Tailpipe](https://hub.tailpipe.io/plugins/turbot/github) 
 - Get involved: [Issues](https://github.com/turbot/tailpipe-plugin-github/issues)
 
 ![image](https://raw.githubusercontent.com/turbot/tailpipe-plugin-github/main/docs/images/github_audit_log_terminal.png?type=thumbnail)
+![image](https://raw.githubusercontent.com/turbot/tailpipe-plugin-github/main/docs/images/github_audit_log_mitre_dashboard.png?type=thumbnail)
 
 ## Getting Started
 
