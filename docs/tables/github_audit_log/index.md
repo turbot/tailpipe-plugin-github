@@ -42,7 +42,7 @@ tailpipe collect github_audit_log.my_logs
 
 ## Query
 
-**[Explore 10+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
+**[Explore 35+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_audit_log)**
 
 ### Repositories made public
 
