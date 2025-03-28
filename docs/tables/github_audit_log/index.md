@@ -5,9 +5,10 @@ description: "GitHub audit logs list events triggered by activities that affect 
 
 # Table: github_audit_log - Query GitHub audit logs
 
-The `github_audit_log` table allows you to query data from GitHub audit logs. This table provides detailed information about activity performed within your GitHub organization, including the event name, source IP address, user identity, and more.
+The `github_audit_log` table allows you to query data from [GitHub organization audit logs](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization). This table provides detailed information about activity performed within your GitHub organization, including the event name, source IP address, user identity, and more.
 
-The table currently supports exported logs in JSON format.
+Limitations and notes:
+- The table currently supports exported logs in JSON format.
 
 ## Configure
 
