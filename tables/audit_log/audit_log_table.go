@@ -21,7 +21,7 @@ func (t *AuditLogTable) Identifier() string {
 	return AuditLogTableIdentifier
 }
 
-func (t *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
+func (t *AuditLogTable) GetSourceMetadata() ([]*table.SourceMetadata[*AuditLog], error) {
 	return []*table.SourceMetadata[*AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
@@ -30,7 +30,7 @@ func (t *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
 				artifact_source.WithRowPerLine(),
 			},
 		},
-	}
+	}, nil
 }
 
 // EnrichRow implements table.Table
