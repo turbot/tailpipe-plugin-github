@@ -42,7 +42,7 @@ type ActorLocation struct {
 	CountryCode *string `json:"country_code,omitempty"`
 }
 
-func (c *AuditLog) GetColumnDescriptions() map[string]string {
+func (a *AuditLog) GetColumnDescriptions() map[string]string {
 	return map[string]string{
 		"action":                     "The name of the action that was performed, for example 'user.login' or 'repo.create'.",
 		"actor_id":                   "The ID of the actor who performed the action.",
