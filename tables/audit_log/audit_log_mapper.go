@@ -4,17 +4,19 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 
-	"github.com/turbot/tailpipe-plugin-sdk/table"
+	"github.com/turbot/tailpipe-plugin-sdk/error_types"
+	"github.com/turbot/tailpipe-plugin-sdk/mappers"
 )
 
-type AuditLogMapper struct {}
+type AuditLogMapper struct{}
 
-func (c *AuditLogMapper) Identifier() string {
+func (m *AuditLogMapper) Identifier() string {
 	return "audit_log_mapper"
 }
 
-func (c *AuditLogMapper) Map(ctx context.Context, a any, _ ...table.MapOption[*AuditLog]) (*AuditLog, error) {
+func (m *AuditLogMapper) Map(ctx context.Context, a any, _ ...mappers.MapOption[*AuditLog]) (*AuditLog, error) {
 	var auditLog AuditLog
 	var fields map[string]interface{}
 	var jsonBytes []byte
@@ -23,17 +25,20 @@ func (c *AuditLogMapper) Map(ctx context.Context, a any, _ ...table.MapOption[*A
 	// validate input type is string
 	switch v := a.(type) {
 	case *string:
-		jsonBytes, err = c.decodeString(*v)
+		jsonBytes, err = m.decodeString(*v)
 		if err != nil {
-			return nil, fmt.Errorf("error decoding string: %w", err)
+			slog.Error("unable to decode provided string as expected json", "err", err, "input", *v)
+			return nil, error_types.NewRowErrorWithMessage("invalid json string")
 		}
 	case string:
-		jsonBytes, err = c.decodeString(v)
+		jsonBytes, err = m.decodeString(v)
 		if err != nil {
-			return nil, fmt.Errorf("error decoding string: %w", err)
+			slog.Error("unable to decode provided string as expected json", "err", err, "input", v)
+			return nil, error_types.NewRowErrorWithMessage("invalid json string")
 		}
 	default:
-		return nil, fmt.Errorf("expected string, *string got %T", a)
+		slog.Error("unable to map audit log record: expected string/*string, got %T", a)
+		return nil, error_types.NewRowErrorWithMessage("unable to map row, invalid type received")
 	}
 
 	// Parse JSONL line

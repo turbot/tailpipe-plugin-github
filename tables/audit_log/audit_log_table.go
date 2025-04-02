@@ -21,7 +21,7 @@ func (t *AuditLogTable) Identifier() string {
 	return AuditLogTableIdentifier
 }
 
-func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
+func (t *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
 	return []*table.SourceMetadata[*AuditLog]{
 		{
 			SourceName: constants.ArtifactSourceIdentifier,
@@ -34,7 +34,7 @@ func (c *AuditLogTable) GetSourceMetadata() []*table.SourceMetadata[*AuditLog] {
 }
 
 // EnrichRow implements table.Table
-func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.SourceEnrichment) (*AuditLog, error) {
+func (t *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.SourceEnrichment) (*AuditLog, error) {
 	row.CommonFields = sourceEnrichmentFields.CommonFields
 
 	// Record standardization
@@ -55,11 +55,11 @@ func (c *AuditLogTable) EnrichRow(row *AuditLog, sourceEnrichmentFields schema.S
 		// Set the default tp_index value to "default" for events that do not contain the "org" property, such as packages.package_version_deleted and packages.package_version_published.
 		row.TpIndex = "default"
 	}
-	
+
 	row.TpDate = row.Timestamp.Truncate(24 * time.Hour)
 	return row, nil
 }
 
-func (c *AuditLogTable) GetDescription() string {
+func (t *AuditLogTable) GetDescription() string {
 	return "GitHub audit logs list events triggered by activities that affect your organization."
 }
