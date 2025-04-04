@@ -22,7 +22,7 @@ vi ~/.tailpipe/config/github.tpc
 partition "github_audit_log" "my_logs" {
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
-    file_layout = "%{DATA}.json.gz"
+    file_layout = `%{DATA}.json.gz`
   }
 }
 ```
@@ -112,7 +112,7 @@ Collect GitHub audit logs exported locally as JSON.
 partition "github_audit_log" "my_logs" {
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
-    file_layout = "%{DATA}.json.gz"
+    file_layout = `%{DATA}.json.gz`
   }
 }
 ```
@@ -127,7 +127,7 @@ partition "github_audit_log" "my_logs_issue_comment" {
 
   source "file"  {
     paths       = ["/Users/myuser/github_audit_logs"]
-    file_layout = "%{DATA}.json.gz"
+    file_layout = `%{DATA}.json.gz`
   }
 }
 ```
