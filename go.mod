@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/rs/xid v1.6.0
-	github.com/turbot/tailpipe-plugin-sdk v0.3.1
+	github.com/turbot/tailpipe-plugin-sdk v0.4.0
 )
 
 require (
