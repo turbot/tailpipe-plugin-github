@@ -1,3 +1,7 @@
+## v0.3.1 [2025-06-04]
+
+- Recompiled plugin with [tailpipe-plugin-sdk v0.7.1](https://github.com/turbot/tailpipe-plugin-sdk/blob/develop/CHANGELOG.md#v071-2025-06-04) that fixes an issue affecting collections using a file source. ([#25](https://github.com/turbot/tailpipe-plugin-github/pull/25))
+
 ## v0.3.0 [2025-06-03]
 
 _Dependencies_
