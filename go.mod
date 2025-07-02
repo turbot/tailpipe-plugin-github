@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/rs/xid v1.6.0
-	github.com/turbot/tailpipe-plugin-sdk v0.7.1
+	github.com/turbot/tailpipe-plugin-sdk v0.9.0
 )
 
 require (
@@ -111,7 +111,7 @@ require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/karrick/gows v0.3.0 // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
@@ -160,7 +160,7 @@ require (
 	github.com/tklauser/numcpus v0.3.0 // indirect
 	github.com/tkrajina/go-reflector v0.5.8 // indirect
 	github.com/turbot/go-kit v1.3.0
-	github.com/turbot/pipe-fittings/v2 v2.4.1 // indirect
+	github.com/turbot/pipe-fittings/v2 v2.5.2 // indirect
 	github.com/turbot/pipes-sdk-go v0.12.0 // indirect
 	github.com/turbot/terraform-components v0.0.0-20231213122222-1f3526cab7a7 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
