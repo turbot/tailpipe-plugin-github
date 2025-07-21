@@ -12,8 +12,8 @@ type SecurityLog struct {
 	schema.CommonFields
 
 	// Common field for all events
-	Timestamp  *time.Time `json:"@timestamp"`
-	DocumentId *string    `json:"_document_id"`
+	Timestamp  *time.Time `json:"timestamp"`
+	DocumentId *string    `json:"document_id"`
 	Action     *string    `json:"action"`
 
 	// Present in: 1/334 events – actions_cache.delete
@@ -34,7 +34,7 @@ type SecurityLog struct {
 	// Present in: 1/334 events – hook.active_changed
 	ActiveWas *string `json:"active_was,omitempty"`
 
-	// Present in: 324/334 events – account.plan_change, actions_cache.delete, artifact.destroy, billing.change_billing_type, billing.change_email, business.security_center_export_code_scanning_metrics, business.security_center_export_coverage, business.security_center_export_overview_dashboard, business.security_center_export_risk, business.set_actions_fork_pr_approvals_policy, business.set_actions_private_fork_pr_approvals_policy, business.set_actions_retention_limit, business.set_default_workflow_permissions, business.set_fork_pr_workflows_policy, business.set_workflow_permission_can_approve_pr, checks.auto_trigger_disabled, checks.auto_trigger_enabled, checks.delete_logs, codespaces.allow_permissions, codespaces.connect, codespaces.create, codespaces.destroy, codespaces.export_environment, codespaces.restore, codespaces.start_environment, codespaces.suspend_environment, codespaces.trusted_repositories_access_update, copilot.cfb_seat_added, copilot.cfb_seat_assignment_created, copilot.cfb_seat_assignment_refreshed, copilot.cfb_seat_assignment_reused, copilot.cfb_seat_assignment_unassigned, copilot.cfb_seat_cancelled, copilot.cfb_seat_cancelled_by_staff, copilot.swe_agent_repo_disabled, copilot.swe_agent_repo_enabled, copilot.swe_agent_repo_enablement_updated, dependabot_alerts.disable, dependabot_alerts.enable, dependabot_alerts_new_repos.disable, dependabot_alerts_new_repos.enable, dependabot_repository_access.repositories_updated, dependabot_security_updates.disable, dependabot_security_updates.enable, dependabot_security_updates_new_repos.disable, dependabot_security_updates_new_repos.enable, dependency_graph.disable, dependency_graph.enable, dependency_graph_new_repos.disable, dependency_graph_new_repos.enable, environment.add_protection_rule, environment.create_actions_secret, environment.create_actions_variable, environment.delete, environment.remove_actions_secret, environment.remove_actions_variable, environment.remove_protection_rule, environment.update_actions_secret, environment.update_actions_variable, environment.update_protection_rule, gist.create, gist.destroy, gist.visibility_change, git_signing_ssh_public_key.create, git_signing_ssh_public_key.delete, hook.active_changed, hook.config_changed, hook.create, hook.destroy, hook.events_changed, integration.create, integration.destroy, integration.manager_added, integration.manager_removed, integration.remove_client_secret, integration.revoke_all_tokens, integration.revoke_tokens, integration.suspend, integration.transfer, integration.unsuspend, integration_installation.destroy, integration_installation.repositories_added, integration_installation.repositories_removed, integration_installation.version_updated, marketplace_agreement_signature.create, marketplace_listing.approve, marketplace_listing.change_category, marketplace_listing.create, marketplace_listing.delist, marketplace_listing.redraft, marketplace_listing.reject, migration.create, oauth_access.create, oauth_access.destroy, oauth_access.regenerate, oauth_access.update, oauth_application.create, oauth_application.destroy, oauth_application.generate_client_secret, oauth_application.remove_client_secret, oauth_application.reset_secret, oauth_application.revoke_all_tokens, oauth_application.revoke_tokens, oauth_application.transfer, oauth_authorization.create, oauth_authorization.destroy, oauth_authorization.update, org.add_member, org.add_outside_collaborator, org.advanced_security_disabled_for_new_repos, org.advanced_security_disabled_on_all_repos, org.advanced_security_enabled_for_new_repos, org.advanced_security_enabled_on_all_repos, org.remove_member, org.security_center_export_code_scanning_metrics, org.security_center_export_coverage, org.security_center_export_overview_dashboard, org.security_center_export_risk, org.set_actions_fork_pr_approvals_policy, org.set_actions_private_fork_pr_approvals_policy, org.set_actions_retention_limit, org.set_default_workflow_permissions, org.set_fork_pr_workflows_policy, org.set_workflow_permission_can_approve_pr, org.update_member, org.update_member_repository_creation_permission, org.update_member_repository_invitation_permission, pages_protected_domain.create, pages_protected_domain.delete, pages_protected_domain.verify, passkey.register, passkey.remove, payment_method.create, payment_method.remove, payment_method.update, personal_access_token.access_granted, personal_access_token.access_revoked, personal_access_token.create, personal_access_token.credential_regenerated, personal_access_token.destroy, personal_access_token.request_cancelled, personal_access_token.request_created, personal_access_token.request_denied, personal_access_token.update, profile_picture.update, project.access, project.close, project.create, project.delete, project.link, project.open, project.rename, project.unlink, project.update_org_permission, project.update_team_permission, project.update_user_permission, project.visibility_private, project.visibility_public, project_collaborator.add, project_collaborator.remove, project_collaborator.update, project_field.create, project_field.delete, project_view.create, project_view.delete, protected_branch.update_merge_queue_enforcement_level, public_key.create, public_key.delete, public_key.unverify, public_key.update, public_key.verification_failure, public_key.verify, repo.access, repo.actions_enabled, repo.add_member, repo.add_topic, repo.advanced_security_disabled, repo.advanced_security_enabled, repo.archived, repo.change_merge_setting, repo.code_scanning_analysis_deleted, repo.code_scanning_configuration_for_branch_deleted, repo.config.disable_collaborators_only, repo.config.disable_contributors_only, repo.config.disable_sockpuppet_disallowed, repo.config.enable_collaborators_only, repo.config.enable_contributors_only, repo.config.enable_sockpuppet_disallowed, repo.create, repo.create_actions_secret, repo.create_actions_variable, repo.create_integration_secret, repo.destroy, repo.pages_cname, repo.pages_create, repo.pages_destroy, repo.pages_https_redirect_disabled, repo.pages_https_redirect_enabled, repo.pages_private, repo.pages_public, repo.pages_soft_delete_restore, repo.pages_source, repo.register_self_hosted_runner, repo.remove_actions_secret, repo.remove_actions_variable, repo.remove_integration_secret, repo.remove_member, repo.remove_self_hosted_runner, repo.remove_topic, repo.rename, repo.set_actions_fork_pr_approvals_policy, repo.set_actions_private_fork_pr_approvals_policy, repo.set_actions_retention_limit, repo.set_default_workflow_permissions, repo.set_fork_pr_workflows_policy, repo.set_workflow_permission_can_approve_pr, repo.staff_unlock, repo.temporary_access_granted, repo.transfer, repo.transfer_outgoing, repo.transfer_start, repo.unarchived, repo.update_actions_access_settings, repo.update_actions_secret, repo.update_actions_settings, repo.update_actions_variable, repo.update_default_branch, repo.update_integration_secret, repo.update_member, repository_image.create, repository_image.destroy, repository_invitation.accept, repository_invitation.cancel, repository_invitation.create, repository_invitation.reject, repository_ruleset.create, repository_ruleset.destroy, repository_ruleset.update, security_key.register, security_key.remove, sponsors.agreement_sign, sponsors.custom_amount_settings_change, sponsors.fiscal_host_change, sponsors.repo_funding_links_file_action, sponsors.sponsor_sponsorship_cancel, sponsors.sponsor_sponsorship_create, sponsors.sponsor_sponsorship_payment_complete, sponsors.sponsor_sponsorship_preference_change, sponsors.sponsor_sponsorship_tier_change, sponsors.sponsored_developer_approve, sponsors.sponsored_developer_create, sponsors.sponsored_developer_disable, sponsors.sponsored_developer_profile_update, sponsors.sponsored_developer_redraft, sponsors.sponsored_developer_request_approval, sponsors.sponsored_developer_tier_description_update, sponsors.sponsored_developer_update_newsletter_send, sponsors.sponsors_patreon_user_create, sponsors.sponsors_patreon_user_destroy, sponsors.update_tier_repository, sponsors.update_tier_welcome_message, sponsors.waitlist_join, sponsors.withdraw_agreement_signature, successor_invitation.accept, successor_invitation.cancel, successor_invitation.create, successor_invitation.decline, successor_invitation.revoke, trusted_device.register, trusted_device.remove, two_factor_authentication.add_factor, two_factor_authentication.disabled, two_factor_authentication.enabled, two_factor_authentication.recovery_codes_regenerated, two_factor_authentication.remove_factor, two_factor_authentication.update_fallback, user.add_email, user.async_delete, user.audit_log_export, user.block_user, user.change_password, user.codespaces_trusted_repo_access_granted, user.codespaces_trusted_repo_access_revoked, user.create, user.create_integration_secret, user.creation_rate_limit_exceeded, user.delete, user.demote, user.destroy, user.failed_login, user.hide_private_contributions_count, user.login, user.logout, user.new_device_used, user.promote, user.recreate, user.remove_email, user.remove_integration_secret, user.rename, user.reset_password, user.show_private_contributions_count, user.sign_in_from_unrecognized_device, user.sign_in_from_unrecognized_device_and_location, user.suspend, user.two_factor_challenge_failure, user.two_factor_challenge_success, user.two_factor_recover, user.two_factor_recovery_codes_downloaded, user.two_factor_recovery_codes_printed, user.two_factor_recovery_codes_viewed, user.two_factor_requested, user.unblock_user, user.unsuspend, user.update_integration_secret, user_email.confirm_claim, user_status.destroy, user_status.update, workflows.approve_workflow_job, workflows.delete_workflow_run, workflows.disable_workflow, workflows.enable_workflow, workflows.pin_workflow, workflows.reject_workflow_job, workflows.unpin_workflow
+	// Present in: 324/334 events – account.plan_change, actions_cache.delete, artifact.destroy, billing.change_billing_type, billing.change_email, business.security_center_export_code_scanning_metrics, business.security_center_export_coverage, business.security_center_export_overview_dashboard, business.security_center_export_risk, business.set_actions_fork_pr_approvals_policy, business.set_actions_private_fork_pr_approvals_policy, business.set_actions_retention_limit, business.set_default_workflow_permissions, business.set_fork_pr_workflows_policy, business.set_workflow_permission_can_approve_pr, checks.auto_trigger_disabled, checks.auto_trigger_enabled, checks.delete_logs, codespaces.allow_permissions, codespaces.connect, codespaces.create, codespaces.destroy, codespaces.export_environment, codespaces.restore, codespaces.start_environment, codespaces.suspend_environment, codespaces.trusted_repositories_access_update, copilot.cfb_seat_added, copilot.cfb_seat_assignment_created, copilot.cfb_seat_assignment_refreshed, copilot.cfb_seat_assignment_reused, copilot.cfb_seat_assignment_unassigned, copilot.cfb_seat_cancelled, copilot.cfb_seat_cancelled_by_staff, copilot.swe_agent_repo_disabled, copilot.swe_agent_repo_enabled, copilot.swe_agent_repo_enablement_updated, dependabot_alerts.disable, dependabot_alerts.enable, dependabot_alerts_new_repos.disable, dependabot_alerts_new_repos.enable, dependabot_repository_access.repositories_updated, dependabot_security_updates.disable, dependabot_security_updates.enable, dependabot_security_updates_new_repos.disable, dependabot_security_updates_new_repos.enable, dependency_graph.disable, dependency_graph.enable, dependency_graph_new_repos.disable, dependency_graph_new_repos.enable, environment.add_protection_rule, environment.create_actions_secret, environment.create_actions_variable, environment.delete, environment.remove_actions_secret, environment.remove_actions_variable, environment.remove_protection_rule, environment.update_actions_secret, environment.update_actions_variable, environment.update_protection_rule, gist.create, gist.destroy, gist.visibility_change, git_signing_ssh_public_key.create, git_signing_ssh_public_key.delete, hook.active_changed, hook.config_changed, hook.create, hook.destroy, hook.events_changed, integration.create, integration.destroy, integration.manager_added, integration.manager_removed, integration.remove_client_secret, integration.revoke_all_tokens, integration.revoke_tokens, integration.suspend, integration.transfer, integration.unsuspend, integration_installation.destroy, integration_installation.repositories_added, integration_installation.repositories_removed, integration_installation.version_updated, marketplace_agreement_signature.create, marketplace_listing.approve, marketplace_listing.change_category, marketplace_listing.create, marketplace_listing.delist, marketplace_listing.redraft, marketplace_listing.reject, migration.create, oauth_access.create, oauth_access.destroy, oauth_access.regenerate, oauth_access.update, oauth_application.create, oauth_application.destroy, oauth_application.generate_client_secret, oauth_application.remove_client_secret, oauth_application.reset_secret, oauth_application.revoke_all_tokens, oauth_application.revoke_tokens, oauth_application.transfer, oauth_authorization.create, oauth_authorization.destroy, oauth_authorization.update, org.add_member, org.add_outside_collaborator, org.advanced_security_disabled_for_new_repos, org.advanced_security_disabled_on_all_repos, org.advanced_security_enabled_for_new_repos, org.advanced_security_enabled_on_all_repos, org.remove_member, org.security_center_export_code_scanning_metrics, org.security_center_export_coverage, org.security_center_export_overview_dashboard, org.security_center_export_risk, org.set_actions_fork_pr_approvals_policy, org.set_actions_private_fork_pr_approvals_policy, org.set_actions_retention_limit, org.set_default_workflow_permissions, org.set_fork_pr_workflows_policy, org.set_workflow_permission_can_approve_pr, checks.auto_trigger_disabled, checks.auto_trigger_enabled, checks.delete_logs, codespaces.allow_permissions, codespaces.connect, codespaces.create, codespaces.destroy, codespaces.export_environment, codespaces.restore, codespaces.start_environment, codespaces.suspend_environment, codespaces.trusted_repositories_access_update, copilot.cfb_seat_added, copilot.cfb_seat_assignment_created, copilot.cfb_seat_assignment_refreshed, copilot.cfb_seat_assignment_reused, copilot.cfb_seat_assignment_unassigned, copilot.cfb_seat_cancelled, copilot.cfb_seat_cancelled_by_staff, copilot.swe_agent_repo_disabled, copilot.swe_agent_repo_enabled, copilot.swe_agent_repo_enablement_updated, dependabot_alerts.disable, dependabot_alerts.enable, dependabot_alerts_new_repos.disable, dependabot_alerts_new_repos.enable, dependabot_repository_access.repositories_updated, dependabot_security_updates.disable, dependabot_security_updates.enable, dependabot_security_updates_new_repos.disable, dependabot_security_updates_new_repos.enable, dependency_graph.disable, dependency_graph.enable, dependency_graph_new_repos.disable, dependency_graph_new_repos.enable, environment.add_protection_rule, environment.create_actions_secret, environment.create_actions_variable, environment.delete, environment.remove_actions_secret, environment.remove_actions_variable, environment.remove_protection_rule, environment.update_actions_secret, environment.update_actions_variable, environment.update_protection_rule, gist.create, gist.destroy, gist.visibility_change, git_signing_ssh_public_key.create, git_signing_ssh_public_key.delete, hook.active_changed, hook.config_changed, hook.create, hook.destroy, hook.events_changed, integration.create, integration.destroy, integration.manager_added, integration.manager_removed, integration.remove_client_secret, integration.revoke_all_tokens, integration.revoke_tokens, integration.suspend, integration.transfer, integration.unsuspend, integration_installation.destroy, integration_installation.repositories_added, integration_installation.repositories_removed, integration_installation.suspend, integration_installation.unsuspend, integration_installation.version_updated, marketplace_agreement_signature.create, marketplace_listing.approve, marketplace_listing.change_category, marketplace_listing.create, marketplace_listing.delist, marketplace_listing.redraft, marketplace_listing.reject, migration.create, oauth_access.create, oauth_access.destroy, oauth_access.regenerate, oauth_access.update, oauth_application.create, oauth_application.destroy, oauth_application.generate_client_secret, oauth_application.remove_client_secret, oauth_application.reset_secret, oauth_application.revoke_all_tokens, oauth_application.revoke_tokens, oauth_application.transfer, oauth_authorization.create, oauth_authorization.destroy, oauth_authorization.update, org.add_member, org.add_outside_collaborator, org.advanced_security_disabled_for_new_repos, org.advanced_security_disabled_on_all_repos, org.advanced_security_enabled_for_new_repos, org.advanced_security_enabled_on_all_repos, org.remove_member, org.security_center_export_code_scanning_metrics, org.security_center_export_coverage, org.security_center_export_overview_dashboard, org.security_center_export_risk, org.set_actions_fork_pr_approvals_policy, org.set_actions_private_fork_pr_approvals_policy, org.set_actions_retention_limit, org.set_default_workflow_permissions, org.set_fork_pr_workflows_policy, org.set_workflow_permission_can_approve_pr, org.update_member, org.update_member_repository_creation_permission, org.update_member_repository_invitation_permission, pages_protected_domain.create, pages_protected_domain.delete, pages_protected_domain.verify, passkey.register, passkey.remove, payment_method.create, payment_method.remove, payment_method.update, personal_access_token.access_granted, personal_access_token.access_revoked, personal_access_token.create, personal_access_token.credential_regenerated, personal_access_token.destroy, personal_access_token.request_cancelled, personal_access_token.request_created, personal_access_token.request_denied, personal_access_token.update, profile_picture.update, project.access, project.close, project.create, project.delete, project.link, project.open, project.rename, project.unlink, project.update_org_permission, project.update_team_permission, project.update_user_permission, project.visibility_private, project.visibility_public, project_collaborator.add, project_collaborator.remove, project_collaborator.update, project_field.create, project_field.delete, project_view.create, project_view.delete, protected_branch.update_merge_queue_enforcement_level, public_key.create, public_key.delete, public_key.unverify, public_key.update, public_key.verification_failure, public_key.verify, repo.access, repo.actions_enabled, repo.add_member, repo.add_topic, repo.advanced_security_disabled, repo.advanced_security_enabled, repo.archived, repo.change_merge_setting, repo.code_scanning_analysis_deleted, repo.code_scanning_configuration_for_branch_deleted, repo.config.disable_collaborators_only, repo.config.disable_contributors_only, repo.config.disable_sockpuppet_disallowed, repo.config.enable_collaborators_only, repo.config.enable_contributors_only, repo.config.enable_sockpuppet_disallowed, repo.create, repo.create_actions_secret, repo.create_actions_variable, repo.create_integration_secret, repo.destroy, repo.pages_cname, repo.pages_create, repo.pages_destroy, repo.pages_https_redirect_disabled, repo.pages_https_redirect_enabled, repo.pages_private, repo.pages_public, repo.pages_soft_delete_restore, repo.pages_source, repo.register_self_hosted_runner, repo.remove_actions_secret, repo.remove_actions_variable, repo.remove_integration_secret, repo.remove_member, repo.remove_self_hosted_runner, repo.remove_topic, repo.rename, repo.set_actions_fork_pr_approvals_policy, repo.set_actions_private_fork_pr_approvals_policy, repo.set_actions_retention_limit, repo.set_default_workflow_permissions, repo.set_fork_pr_workflows_policy, repo.set_workflow_permission_can_approve_pr, repo.staff_unlock, repo.temporary_access_granted, repo.transfer, repo.transfer_outgoing, repo.transfer_start, repo.unarchived, repo.update_actions_access_settings, repo.update_actions_secret, repo.update_actions_settings, repo.update_actions_variable, repo.update_default_branch, repo.update_integration_secret, repo.update_member, repository_image.create, repository_image.destroy, repository_invitation.accept, repository_invitation.cancel, repository_invitation.create, repository_invitation.reject, repository_ruleset.create, repository_ruleset.destroy, repository_ruleset.update, security_key.register, security_key.remove, sponsors.agreement_sign, sponsors.custom_amount_settings_change, sponsors.fiscal_host_change, sponsors.repo_funding_links_file_action, sponsors.sponsor_sponsorship_cancel, sponsors.sponsor_sponsorship_create, sponsors.sponsor_sponsorship_payment_complete, sponsors.sponsor_sponsorship_preference_change, sponsors.sponsor_sponsorship_tier_change, sponsors.sponsored_developer_approve, sponsors.sponsored_developer_create, sponsors.sponsored_developer_disable, sponsors.sponsored_developer_profile_update, sponsors.sponsored_developer_redraft, sponsors.sponsored_developer_request_approval, sponsors.sponsored_developer_tier_description_update, sponsors.sponsored_developer_update_newsletter_send, sponsors.sponsors_patreon_user_create, sponsors.sponsors_patreon_user_destroy, sponsors.update_tier_repository, sponsors.update_tier_welcome_message, sponsors.waitlist_join, sponsors.withdraw_agreement_signature, successor_invitation.accept, successor_invitation.cancel, successor_invitation.create, successor_invitation.decline, successor_invitation.revoke, trusted_device.register, trusted_device.remove, two_factor_authentication.add_factor, two_factor_authentication.disabled, two_factor_authentication.enabled, two_factor_authentication.recovery_codes_regenerated, two_factor_authentication.remove_factor, two_factor_authentication.update_fallback, user.add_email, user.async_delete, user.audit_log_export, user.block_user, user.change_password, user.codespaces_trusted_repo_access_granted, user.codespaces_trusted_repo_access_revoked, user.create, user.create_integration_secret, user.creation_rate_limit_exceeded, user.delete, user.demote, user.destroy, user.failed_login, user.hide_private_contributions_count, user.login, user.logout, user.new_device_used, user.promote, user.recreate, user.remove_email, user.remove_integration_secret, user.rename, user.reset_password, user.show_private_contributions_count, user.sign_in_from_unrecognized_device, user.sign_in_from_unrecognized_device_and_location, user.suspend, user.two_factor_challenge_failure, user.two_factor_challenge_success, user.two_factor_recover, user.two_factor_recovery_codes_downloaded, user.two_factor_recovery_codes_printed, user.two_factor_recovery_codes_viewed, user.two_factor_requested, user.unblock_user, user.unsuspend, user.update_integration_secret, user_email.confirm_claim, user_status.destroy, user_status.update, workflows.approve_workflow_job, workflows.delete_workflow_run, workflows.disable_workflow, workflows.enable_workflow, workflows.pin_workflow, workflows.reject_workflow_job, workflows.unpin_workflow
 	Actor *string `json:"actor,omitempty"`
 
 	// Present in: 326/334 events – account.plan_change, actions_cache.delete, artifact.destroy, billing.change_billing_type, billing.change_email, business.security_center_export_code_scanning_metrics, business.security_center_export_coverage, business.security_center_export_overview_dashboard, business.security_center_export_risk, business.set_actions_fork_pr_approvals_policy, business.set_actions_private_fork_pr_approvals_policy, business.set_actions_retention_limit, business.set_default_workflow_permissions, business.set_fork_pr_workflows_policy, business.set_workflow_permission_can_approve_pr, checks.auto_trigger_disabled, checks.auto_trigger_enabled, checks.delete_logs, codespaces.allow_permissions, codespaces.connect, codespaces.create, codespaces.destroy, codespaces.export_environment, codespaces.restore, codespaces.start_environment, codespaces.suspend_environment, codespaces.trusted_repositories_access_update, copilot.cfb_seat_added, copilot.cfb_seat_assignment_created, copilot.cfb_seat_assignment_refreshed, copilot.cfb_seat_assignment_reused, copilot.cfb_seat_assignment_unassigned, copilot.cfb_seat_cancelled, copilot.cfb_seat_cancelled_by_staff, copilot.swe_agent_repo_disabled, copilot.swe_agent_repo_enabled, copilot.swe_agent_repo_enablement_updated, dependabot_alerts.disable, dependabot_alerts.enable, dependabot_alerts_new_repos.disable, dependabot_alerts_new_repos.enable, dependabot_repository_access.repositories_updated, dependabot_security_updates.disable, dependabot_security_updates.enable, dependabot_security_updates_new_repos.disable, dependabot_security_updates_new_repos.enable, dependency_graph.disable, dependency_graph.enable, dependency_graph_new_repos.disable, dependency_graph_new_repos.enable, environment.add_protection_rule, environment.create_actions_secret, environment.create_actions_variable, environment.delete, environment.remove_actions_secret, environment.remove_actions_variable, environment.remove_protection_rule, environment.update_actions_secret, environment.update_actions_variable, environment.update_protection_rule, gist.create, gist.destroy, gist.visibility_change, git_signing_ssh_public_key.create, git_signing_ssh_public_key.delete, hook.active_changed, hook.config_changed, hook.create, hook.destroy, hook.events_changed, integration.create, integration.destroy, integration.manager_added, integration.manager_removed, integration.remove_client_secret, integration.revoke_all_tokens, integration.revoke_tokens, integration.suspend, integration.transfer, integration.unsuspend, integration_installation.destroy, integration_installation.repositories_added, integration_installation.repositories_removed, integration_installation.suspend, integration_installation.unsuspend, integration_installation.version_updated, marketplace_agreement_signature.create, marketplace_listing.approve, marketplace_listing.change_category, marketplace_listing.create, marketplace_listing.delist, marketplace_listing.redraft, marketplace_listing.reject, migration.create, oauth_access.create, oauth_access.destroy, oauth_access.regenerate, oauth_access.update, oauth_application.create, oauth_application.destroy, oauth_application.generate_client_secret, oauth_application.remove_client_secret, oauth_application.reset_secret, oauth_application.revoke_all_tokens, oauth_application.revoke_tokens, oauth_application.transfer, oauth_authorization.create, oauth_authorization.destroy, oauth_authorization.update, org.add_member, org.add_outside_collaborator, org.advanced_security_disabled_for_new_repos, org.advanced_security_disabled_on_all_repos, org.advanced_security_enabled_for_new_repos, org.advanced_security_enabled_on_all_repos, org.remove_member, org.security_center_export_code_scanning_metrics, org.security_center_export_coverage, org.security_center_export_overview_dashboard, org.security_center_export_risk, org.set_actions_fork_pr_approvals_policy, org.set_actions_private_fork_pr_approvals_policy, org.set_actions_retention_limit, org.set_default_workflow_permissions, org.set_fork_pr_workflows_policy, org.set_workflow_permission_can_approve_pr, org.update_member, org.update_member_repository_creation_permission, org.update_member_repository_invitation_permission, pages_protected_domain.create, pages_protected_domain.delete, pages_protected_domain.verify, passkey.register, passkey.remove, payment_method.create, payment_method.remove, payment_method.update, personal_access_token.access_granted, personal_access_token.access_revoked, personal_access_token.create, personal_access_token.credential_regenerated, personal_access_token.destroy, personal_access_token.request_cancelled, personal_access_token.request_created, personal_access_token.request_denied, personal_access_token.update, profile_picture.update, project.access, project.close, project.create, project.delete, project.link, project.open, project.rename, project.unlink, project.update_org_permission, project.update_team_permission, project.update_user_permission, project.visibility_private, project.visibility_public, project_collaborator.add, project_collaborator.remove, project_collaborator.update, project_field.create, project_field.delete, project_view.create, project_view.delete, protected_branch.update_merge_queue_enforcement_level, public_key.create, public_key.delete, public_key.unverify, public_key.update, public_key.verification_failure, public_key.verify, repo.access, repo.actions_enabled, repo.add_member, repo.add_topic, repo.advanced_security_disabled, repo.advanced_security_enabled, repo.archived, repo.change_merge_setting, repo.code_scanning_analysis_deleted, repo.code_scanning_configuration_for_branch_deleted, repo.config.disable_collaborators_only, repo.config.disable_contributors_only, repo.config.disable_sockpuppet_disallowed, repo.config.enable_collaborators_only, repo.config.enable_contributors_only, repo.config.enable_sockpuppet_disallowed, repo.create, repo.create_actions_secret, repo.create_actions_variable, repo.create_integration_secret, repo.destroy, repo.pages_cname, repo.pages_create, repo.pages_destroy, repo.pages_https_redirect_disabled, repo.pages_https_redirect_enabled, repo.pages_private, repo.pages_public, repo.pages_soft_delete_restore, repo.pages_source, repo.register_self_hosted_runner, repo.remove_actions_secret, repo.remove_actions_variable, repo.remove_integration_secret, repo.remove_member, repo.remove_self_hosted_runner, repo.remove_topic, repo.rename, repo.set_actions_fork_pr_approvals_policy, repo.set_actions_private_fork_pr_approvals_policy, repo.set_actions_retention_limit, repo.set_default_workflow_permissions, repo.set_fork_pr_workflows_policy, repo.set_workflow_permission_can_approve_pr, repo.staff_unlock, repo.temporary_access_granted, repo.transfer, repo.transfer_outgoing, repo.transfer_start, repo.unarchived, repo.update_actions_access_settings, repo.update_actions_secret, repo.update_actions_settings, repo.update_actions_variable, repo.update_default_branch, repo.update_integration_secret, repo.update_member, repository_image.create, repository_image.destroy, repository_invitation.accept, repository_invitation.cancel, repository_invitation.create, repository_invitation.reject, repository_ruleset.create, repository_ruleset.destroy, repository_ruleset.update, security_key.register, security_key.remove, sponsors.agreement_sign, sponsors.custom_amount_settings_change, sponsors.fiscal_host_change, sponsors.repo_funding_links_file_action, sponsors.sponsor_sponsorship_cancel, sponsors.sponsor_sponsorship_create, sponsors.sponsor_sponsorship_payment_complete, sponsors.sponsor_sponsorship_preference_change, sponsors.sponsor_sponsorship_tier_change, sponsors.sponsored_developer_approve, sponsors.sponsored_developer_create, sponsors.sponsored_developer_disable, sponsors.sponsored_developer_profile_update, sponsors.sponsored_developer_redraft, sponsors.sponsored_developer_request_approval, sponsors.sponsored_developer_tier_description_update, sponsors.sponsored_developer_update_newsletter_send, sponsors.sponsors_patreon_user_create, sponsors.sponsors_patreon_user_destroy, sponsors.update_tier_repository, sponsors.update_tier_welcome_message, sponsors.waitlist_join, sponsors.withdraw_agreement_signature, successor_invitation.accept, successor_invitation.cancel, successor_invitation.create, successor_invitation.decline, successor_invitation.revoke, trusted_device.register, trusted_device.remove, two_factor_authentication.add_factor, two_factor_authentication.disabled, two_factor_authentication.enabled, two_factor_authentication.recovery_codes_regenerated, two_factor_authentication.remove_factor, two_factor_authentication.update_fallback, user.add_email, user.async_delete, user.audit_log_export, user.block_user, user.change_password, user.codespaces_trusted_repo_access_granted, user.codespaces_trusted_repo_access_revoked, user.create, user.create_integration_secret, user.creation_rate_limit_exceeded, user.delete, user.demote, user.destroy, user.failed_login, user.hide_private_contributions_count, user.login, user.logout, user.new_device_used, user.promote, user.recreate, user.remove_email, user.remove_integration_secret, user.rename, user.reset_password, user.show_private_contributions_count, user.sign_in_from_unrecognized_device, user.sign_in_from_unrecognized_device_and_location, user.suspend, user.two_factor_challenge_failure, user.two_factor_challenge_success, user.two_factor_recover, user.two_factor_recovery_codes_downloaded, user.two_factor_recovery_codes_printed, user.two_factor_recovery_codes_viewed, user.two_factor_requested, user.unblock_user, user.unsuspend, user.update_integration_secret, user_email.confirm_claim, user_status.destroy, user_status.update, workflows.approve_workflow_job, workflows.delete_workflow_run, workflows.disable_workflow, workflows.enable_workflow, workflows.pin_workflow, workflows.reject_workflow_job, workflows.unpin_workflow
@@ -104,7 +104,7 @@ type SecurityLog struct {
 	EnvironmentName *string `json:"environment_name,omitempty"`
 
 	// Present in: 5/334 events – hook.active_changed, hook.config_changed, hook.create, hook.destroy, hook.events_changed
-	Events *string `json:"events,omitempty"`
+	Events []string `json:"events,omitempty"`
 
 	// Present in: 1/334 events – hook.events_changed
 	EventsWere *string `json:"events_were,omitempty"`
@@ -334,7 +334,7 @@ type SecurityLog struct {
 	Repository *string `json:"repository,omitempty"`
 
 	// Present in: 6/334 events – codespaces.connect, codespaces.create, codespaces.destroy, repo.advanced_security_disabled, repo.advanced_security_enabled, sponsors.repo_funding_links_file_action
-	RepositoryId *string `json:"repository_id,omitempty"`
+	RepositoryId *int64 `json:"repository_id,omitempty"`
 
 	// Present in: 14/334 events – integration_installation.create, integration_installation.destroy, integration_installation.repositories_added, integration_installation.repositories_removed, integration_installation.suspend, integration_installation.unsuspend, integration_installation.version_updated, personal_access_token.access_granted, personal_access_token.access_revoked, personal_access_token.create, personal_access_token.request_cancelled, personal_access_token.request_created, personal_access_token.request_denied, personal_access_token.update
 	RepositorySelection *string `json:"repository_selection,omitempty"`
@@ -359,6 +359,15 @@ type SecurityLog struct {
 
 	// Present in: 1/334 events – integration.transfer
 	RequesterId *string `json:"requester_id,omitempty"`
+
+	// Present in personal access token events
+	Repositories []int64 `json:"repositories,omitempty"`
+
+	// Present in environment-related events
+	EnvironmentId *int64 `json:"environment_id,omitempty"`
+
+	// Present in events with value changes
+	OldValue *string `json:"old_value,omitempty"`
 
 	// Present in: 2/334 events – repository_ruleset.create, repository_ruleset.destroy
 	RulesetBypassActors *string `json:"ruleset_bypass_actors,omitempty"`
@@ -427,7 +436,7 @@ type SecurityLog struct {
 	SponsorsListingId *string `json:"sponsors_listing_id,omitempty"`
 
 	// Present in: 4/334 events – business.security_center_export_code_scanning_metrics, business.security_center_export_overview_dashboard, org.security_center_export_code_scanning_metrics, org.security_center_export_overview_dashboard
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 
 	// Present in: 1/334 events – workflows.delete_workflow_run
 	StartedAt *string `json:"started_at,omitempty"`
@@ -530,13 +539,13 @@ type SecurityLog struct {
 // | map[id:38865304 ids:<nil>]                               |
 // +----------------------------------------------------------+
 type OrganizationId struct {
-  Id *int64
-  Ids []int64
+	Id  *int64
+	Ids []int64
 }
 
 type OrganizationName struct {
-  Name *string
-  Names []string
+	Name  *string
+	Names []string
 }
 
 type RulesetCondition struct {
@@ -547,173 +556,176 @@ type RulesetCondition struct {
 
 func (s *SecurityLog) GetColumnDescriptions() map[string]string {
 	return map[string]string{
-		"timestamp":                           "TODO: Description for @timestamp",
-		"document_id":                         "TODO: Description for _document_id",
-		"action":                              "TODO: Description for action",
-		"actions_cache_id":                    "TODO: Description for actions_cache_id",
-		"actions_cache_key":                   "TODO: Description for actions_cache_key",
-		"actions_cache_scope":                 "TODO: Description for actions_cache_scope",
-		"actions_cache_version":               "TODO: Description for actions_cache_version",
-		"active":                              "TODO: Description for active",
-		"active_was":                          "TODO: Description for active_was",
-		"actor":                               "TODO: Description for actor",
-		"actor_id":                            "TODO: Description for actor_id",
-		"actor_is_bot":                        "TODO: Description for actor_is_bot",
-		"application_client_id":               "TODO: Description for application_client_id",
-		"approvers":                           "TODO: Description for approvers",
-		"approvers_was":                       "TODO: Description for approvers_was",
-		"blocked_user":                        "TODO: Description for blocked_user",
-		"branch":                              "TODO: Description for branch",
-		"business":                            "TODO: Description for business",
-		"business_id":                         "TODO: Description for business_id",
-		"can_admins_bypass":                   "TODO: Description for can_admins_bypass",
-		"category":                            "TODO: Description for category",
-		"cname":                               "TODO: Description for cname",
-		"collaborator":                        "TODO: Description for collaborator",
-		"collaborator_type":                   "TODO: Description for collaborator_type",
-		"content_type":                        "TODO: Description for content_type",
-		"created_at":                          "TODO: Description for created_at",
-		"devcontainer_path":                   "TODO: Description for devcontainer_path",
-		"domain":                              "TODO: Description for domain",
-		"email":                               "TODO: Description for email",
-		"emoji":                               "TODO: Description for emoji",
-		"end_date":                            "TODO: Description for end_date",
-		"environment_name":                    "TODO: Description for environment_name",
-		"events":                              "TODO: Description for events",
-		"events_were":                         "TODO: Description for events_were",
-		"explanation":                         "TODO: Description for explanation",
-		"filename":                            "TODO: Description for filename",
-		"fingerprint":                         "TODO: Description for fingerprint",
-		"gist_id":                             "TODO: Description for gist_id",
-		"hashed_token":                        "TODO: Description for hashed_token",
-		"head_branch":                         "TODO: Description for head_branch",
-		"head_sha":                            "TODO: Description for head_sha",
-		"hook_id":                             "TODO: Description for hook_id",
-		"integration":                         "TODO: Description for integration",
-		"invitee":                             "TODO: Description for invitee",
-		"inviter":                             "TODO: Description for inviter",
-		"key":                                 "TODO: Description for key",
-		"limit":                               "TODO: Description for limit",
-		"limited_availability":                "TODO: Description for limited_availability",
-		"machine_type":                        "TODO: Description for machine_type",
-		"manager":                             "TODO: Description for manager",
-		"marketplace_listing":                 "TODO: Description for marketplace_listing",
-		"merge_queue_enforcement_level":       "TODO: Description for merge_queue_enforcement_level",
-		"message":                             "TODO: Description for message",
-		"name":                                "TODO: Description for name",
-		"new_access":                          "TODO: Description for new_access",
-		"new_nwo":                             "TODO: Description for new_nwo",
-		"new_policy":                          "TODO: Description for new_policy",
-		"new_repo_base_role":                  "TODO: Description for new_repo_base_role",
-		"new_repo_permission":                 "TODO: Description for new_repo_permission",
-		"new_value":                           "TODO: Description for new_value",
-		"nickname":                            "TODO: Description for nickname",
-		"oauth_application":                   "TODO: Description for oauth_application",
-		"oauth_application_id":                "TODO: Description for oauth_application_id",
-		"oauth_application_name":              "TODO: Description for oauth_application_name",
-		"old_access":                          "TODO: Description for old_access",
-		"old_base_role":                       "TODO: Description for old_base_role",
-		"old_cname":                           "TODO: Description for old_cname",
-		"old_login":                           "TODO: Description for old_login",
-		"old_name":                            "TODO: Description for old_name",
-		"old_permission":                      "TODO: Description for old_permission",
-		"old_policy":                          "TODO: Description for old_policy",
-		"old_project_role":                    "TODO: Description for old_project_role",
-		"old_repo_base_role":                  "TODO: Description for old_repo_base_role",
-		"old_repo_permission":                 "TODO: Description for old_repo_permission",
-		"old_user":                            "TODO: Description for old_user",
-		"operation_type":                      "TODO: Description for operation_type",
-		"org":                                 "TODO: Description for org",
-		"org_id":                              "TODO: Description for org_id",
-		"origin_repository":                   "TODO: Description for origin_repository",
-		"owner":                               "TODO: Description for owner",
-		"owner_type":                          "TODO: Description for owner_type",
-		"passkey_nickname":                    "TODO: Description for passkey_nickname",
-		"patreon_email":                       "TODO: Description for patreon_email",
-		"patreon_username":                    "TODO: Description for patreon_username",
-		"permissions":                          "TODO: Description for permissions",
-		"permissions_added":                   "TODO: Description for policy",
-		"permissions_unchanged":               "TODO: Description for policy",
-		"permissions_upgraded":                "TODO: Description for policy",
-		"policy":                              "TODO: Description for policy",
-		"prevent_self_review":                 "TODO: Description for prevent_self_review",
-		"previous_visibility":                 "TODO: Description for previous_visibility",
-		"primary_category":                    "TODO: Description for primary_category",
-		"programmatic_access_type":            "TODO: Description for programmatic_access_type",
-		"project_id":                          "TODO: Description for project_id",
-		"project_kind":                        "TODO: Description for project_kind",
-		"project_name":                        "TODO: Description for project_name",
-		"project_role":                        "TODO: Description for project_role",
-		"public_project":                      "TODO: Description for public_project",
-		"public_repo":                         "TODO: Description for public_repo",
-		"pull_request_id":                     "TODO: Description for pull_request_id",
-		"query":                               "TODO: Description for query",
-		"read_only":                           "TODO: Description for read_only",
-		"repo":                                "TODO: Description for repo",
-		"repo_id":                             "TODO: Description for repo_id",
-		"repo_was":                            "TODO: Description for repo_was",
-		"repositories_added":                  "TODO: Description for repositories_added",
-		"repositories_added_names":            "TODO: Description for repositories_added_names",
-		"repositories_removed":                "TODO: Description for repositories_removed",
-		"repositories_removed_names":          "TODO: Description for repositories_removed_names",
-		"repository":                          "TODO: Description for repository",
-		"repository_id":                       "TODO: Description for repository_id",
-		"repository_selection":                "TODO: Description for repository_selection",
-		"request_access_security_header":      "TODO: Description for request_access_security_header",
-		"request_category":                    "TODO: Description for request_category",
-		"request_id":                          "TODO: Description for request_id",
-		"request_method":                      "TODO: Description for request_method",
-		"requested_at":                        "TODO: Description for requested_at",
-		"requester":                           "TODO: Description for requester",
-		"requester_id":                        "TODO: Description for requester_id",
-		"ruleset_bypass_actors":               "TODO: Description for ruleset_bypass_actors",
-		"ruleset_bypass_actors_added":         "TODO: Description for ruleset_bypass_actors_added",
-		"ruleset_bypass_actors_deleted":       "TODO: Description for ruleset_bypass_actors_deleted",
-		"ruleset_bypass_actors_updated":       "TODO: Description for ruleset_bypass_actors_updated",
-		"ruleset_conditions":                  "TODO: Description for ruleset_conditions",
-		"ruleset_conditions_added":            "TODO: Description for ruleset_conditions_added",
-		"ruleset_conditions_deleted":          "TODO: Description for ruleset_conditions_deleted",
-		"ruleset_conditions_updated":          "TODO: Description for ruleset_conditions_updated",
-		"ruleset_enforcement":                 "TODO: Description for ruleset_enforcement",
-		"ruleset_id":                          "TODO: Description for ruleset_id",
-		"ruleset_name":                        "TODO: Description for ruleset_name",
-		"ruleset_old_enforcement":             "TODO: Description for ruleset_old_enforcement",
-		"ruleset_old_name":                    "TODO: Description for ruleset_old_name",
-		"ruleset_rules":                       "TODO: Description for ruleset_rules",
-		"ruleset_rules_added":                 "TODO: Description for ruleset_rules_added",
-		"ruleset_rules_deleted":               "TODO: Description for ruleset_rules_deleted",
-		"ruleset_rules_updated":               "TODO: Description for ruleset_rules_updated",
-		"ruleset_source_type":                 "TODO: Description for ruleset_source_type",
-		"run_number":                          "TODO: Description for run_number",
-		"seat_assignment":                     "TODO: Description for seat_assignment",
-		"secondary_category":                  "TODO: Description for secondary_category",
-		"sponsors_listing_id":                 "TODO: Description for sponsors_listing_id",
-		"start_date":                          "TODO: Description for start_date",
-		"started_at":                          "TODO: Description for started_at",
-		"state":                               "TODO: Description for state",
-		"team":                                "TODO: Description for team",
-		"title":                               "TODO: Description for title",
-		"token_id":                            "TODO: Description for token_id",
-		"token_scopes":                        "TODO: Description for token_scopes",
-		"tool":                                "TODO: Description for tool",
-		"topic":                               "TODO: Description for topic",
-		"transfer_from":                       "TODO: Description for transfer_from",
-		"transfer_from_id":                    "TODO: Description for transfer_from_id",
-		"transfer_from_type":                  "TODO: Description for transfer_from_type",
-		"transfer_to":                         "TODO: Description for transfer_to",
-		"transfer_to_id":                      "TODO: Description for transfer_to_id",
-		"transfer_to_type":                    "TODO: Description for transfer_to_type",
-		"trigger_id":                          "TODO: Description for trigger_id",
-		"updated_access_policy":               "TODO: Description for updated_access_policy",
-		"user":                                "TODO: Description for user",
-		"user_agent":                          "TODO: Description for user_agent",
-		"user_id":                             "TODO: Description for user_id",
-		"user_programmatic_access_id":         "TODO: Description for user_programmatic_access_id",
-		"user_programmatic_access_name":       "TODO: Description for user_programmatic_access_name",
-		"user_programmatic_access_request_id": "TODO: Description for user_programmatic_access_request_id",
-		"visibility":                          "TODO: Description for visibility",
-		"workflow_id":                         "TODO: Description for workflow_id",
-		"workflow_run_id":                     "TODO: Description for workflow_run_id",
+		"timestamp":                           "The timestamp when the security event occurred.",
+		"document_id":                         "Unique identifier for the document in the security log.",
+		"action":                              "The type of security action that was performed (e.g., repo.create, org.invite_member).",
+		"actions_cache_id":                    "Identifier for the GitHub Actions cache involved in the event.",
+		"actions_cache_key":                   "The key of the GitHub Actions cache.",
+		"actions_cache_scope":                 "The scope of the GitHub Actions cache (repository, organization, etc.).",
+		"actions_cache_version":               "The version of the GitHub Actions cache.",
+		"active":                              "Current active status of the entity (true/false).",
+		"active_was":                          "Previous active status of the entity before the change.",
+		"actor":                               "The username of the user who performed the action.",
+		"actor_id":                            "The unique identifier of the user who performed the action.",
+		"actor_is_bot":                        "Whether the actor is a bot account (true/false).",
+		"application_client_id":               "The client ID of the OAuth application involved in the event.",
+		"approvers":                           "List of users who can approve the action or policy.",
+		"approvers_was":                       "Previous list of approvers before the change.",
+		"blocked_user":                        "The username of the user who was blocked.",
+		"branch":                              "The branch name associated with the security event.",
+		"business":                            "The business account name associated with the event.",
+		"business_id":                         "The unique identifier of the business account.",
+		"can_admins_bypass":                   "Whether administrators can bypass the security policy (true/false).",
+		"category":                            "The category of the security event or action.",
+		"cname":                               "The custom domain name (CNAME) associated with the event.",
+		"collaborator":                        "The username of the collaborator involved in the event.",
+		"collaborator_type":                   "The type of collaborator (outside, direct, etc.).",
+		"content_type":                        "The MIME type of the content involved in the event.",
+		"created_at":                          "The timestamp when the resource was created.",
+		"devcontainer_path":                   "The path to the development container configuration.",
+		"domain":                              "The domain name associated with the security event.",
+		"email":                               "The email address associated with the event.",
+		"emoji":                               "The emoji associated with the event (for reactions, etc.).",
+		"end_date":                            "The end date of a time-based security policy or event.",
+		"environment_name":                    "The name of the deployment environment.",
+		"events":                              "List of events associated with a webhook or integration.",
+		"events_were":                         "Previous list of events before the change.",
+		"explanation":                         "Additional explanation or context for the security event.",
+		"filename":                            "The name of the file involved in the security event.",
+		"fingerprint":                         "The fingerprint of a security key or certificate.",
+		"gist_id":                             "The unique identifier of the gist involved in the event.",
+		"hashed_token":                        "The hashed version of an authentication token.",
+		"head_branch":                         "The head branch of a pull request or merge.",
+		"head_sha":                            "The SHA hash of the head commit.",
+		"hook_id":                             "The unique identifier of the webhook.",
+		"integration":                         "The name or identifier of the integration involved.",
+		"invitee":                             "The username of the user who was invited.",
+		"inviter":                             "The username of the user who sent the invitation.",
+		"key":                                 "The SSH key or API key involved in the event.",
+		"limit":                               "The rate limit or quota limit associated with the event.",
+		"limited_availability":                "Whether the feature has limited availability (true/false).",
+		"machine_type":                        "The type of machine used for GitHub Actions runners.",
+		"manager":                             "The username of the user who manages the resource.",
+		"marketplace_listing":                 "The GitHub Marketplace listing associated with the event.",
+		"merge_queue_enforcement_level":       "The enforcement level of the merge queue policy.",
+		"message":                             "The message or description associated with the event.",
+		"name":                                "The name of the resource or entity involved in the event.",
+		"new_access":                          "The new access level granted in the permission change.",
+		"new_nwo":                             "The new name/owner combination for a repository transfer.",
+		"new_policy":                          "The new security policy that was applied.",
+		"new_repo_base_role":                  "The new base role for repository access.",
+		"new_repo_permission":                 "The new repository permission level.",
+		"new_value":                           "The new value after a configuration change.",
+		"nickname":                            "The nickname or display name associated with the user.",
+		"oauth_application":                   "The OAuth application involved in the authorization event.",
+		"oauth_application_id":                "The unique identifier of the OAuth application.",
+		"oauth_application_name":              "The name of the OAuth application.",
+		"old_access":                          "The previous access level before the permission change.",
+		"old_base_role":                       "The previous base role before the change.",
+		"old_cname":                           "The previous custom domain name before the change.",
+		"old_login":                           "The previous username before the account change.",
+		"old_name":                            "The previous name of the resource before the change.",
+		"old_permission":                      "The previous permission level before the change.",
+		"old_policy":                          "The previous security policy before the change.",
+		"old_project_role":                    "The previous project role before the change.",
+		"old_repo_base_role":                  "The previous repository base role before the change.",
+		"old_repo_permission":                 "The previous repository permission before the change.",
+		"old_user":                            "The previous user before a transfer or change.",
+		"operation_type":                      "The type of operation performed (create, update, delete, etc.).",
+		"org":                                 "The organization name where the security event occurred.",
+		"org_id":                              "The unique identifier of the organization.",
+		"origin_repository":                   "The original repository in a fork or transfer operation.",
+		"owner":                               "The owner of the repository or resource.",
+		"owner_type":                          "The type of owner (User, Organization, etc.).",
+		"passkey_nickname":                    "The nickname assigned to a passkey for identification.",
+		"patreon_email":                       "The Patreon email address associated with sponsorship.",
+		"patreon_username":                    "The Patreon username associated with sponsorship.",
+		"permissions":                         "The permissions associated with the security event.",
+		"permissions_added":                   "Permissions that were added in the change.",
+		"permissions_unchanged":               "Permissions that remained unchanged.",
+		"permissions_upgraded":                "Permissions that were upgraded or enhanced.",
+		"policy":                              "The security policy applied to the resource.",
+		"prevent_self_review":                 "Whether self-review is prevented in pull requests (true/false).",
+		"previous_visibility":                 "The previous visibility setting before the change (public, private, internal).",
+		"primary_category":                    "The primary category classification of the event.",
+		"programmatic_access_type":            "The type of programmatic access (token, key, etc.).",
+		"project_id":                          "The unique identifier of the project.",
+		"project_kind":                        "The type or kind of project (classic, next-gen, etc.).",
+		"project_name":                        "The name of the project involved in the event.",
+		"project_role":                        "The role assigned within the project.",
+		"public_project":                      "Whether the project is publicly visible (true/false).",
+		"public_repo":                         "Whether the repository is publicly visible (true/false).",
+		"pull_request_id":                     "The unique identifier of the pull request.",
+		"query":                               "The search query or filter used in the event.",
+		"read_only":                           "Whether the access is read-only (true/false).",
+		"repo":                                "The repository name where the security event occurred.",
+		"repo_id":                             "The unique identifier of the repository.",
+		"repo_was":                            "The previous repository before a transfer or change.",
+		"repositories_added":                  "List of repositories that were added to a scope or permission.",
+		"repositories_added_names":            "Names of repositories that were added.",
+		"repositories_removed":                "List of repositories that were removed from a scope or permission.",
+		"repositories_removed_names":          "Names of repositories that were removed.",
+		"repository":                          "The full name of the repository (owner/repo).",
+		"repository_id":                       "The unique identifier of the repository.",
+		"repository_selection":                "The repository selection criteria (all, selected, etc.).",
+		"request_access_security_header":      "Security headers included in the access request.",
+		"request_category":                    "The category of the access request.",
+		"request_id":                          "The unique identifier of the request.",
+		"request_method":                      "The HTTP method used in the request (GET, POST, etc.).",
+		"requested_at":                        "The timestamp when the request was made.",
+		"requester":                           "The username of the user who made the request.",
+		"requester_id":                        "The unique identifier of the user who made the request.",
+		"repositories":                        "Array of repository IDs associated with the security event.",
+		"environment_id":                      "The unique identifier of the environment involved in the event.",
+		"old_value":                           "The previous value before a configuration change.",
+		"ruleset_bypass_actors":               "List of actors who can bypass the ruleset.",
+		"ruleset_bypass_actors_added":         "Bypass actors that were added to the ruleset.",
+		"ruleset_bypass_actors_deleted":       "Bypass actors that were removed from the ruleset.",
+		"ruleset_bypass_actors_updated":       "Bypass actors that were updated in the ruleset.",
+		"ruleset_conditions":                  "Conditions defined in the ruleset.",
+		"ruleset_conditions_added":            "Conditions that were added to the ruleset.",
+		"ruleset_conditions_deleted":          "Conditions that were removed from the ruleset.",
+		"ruleset_conditions_updated":          "Conditions that were updated in the ruleset.",
+		"ruleset_enforcement":                 "The enforcement level of the ruleset (active, evaluate, disabled).",
+		"ruleset_id":                          "The unique identifier of the ruleset.",
+		"ruleset_name":                        "The name of the ruleset.",
+		"ruleset_old_enforcement":             "The previous enforcement level before the change.",
+		"ruleset_old_name":                    "The previous name of the ruleset before the change.",
+		"ruleset_rules":                       "The rules defined in the ruleset.",
+		"ruleset_rules_added":                 "Rules that were added to the ruleset.",
+		"ruleset_rules_deleted":               "Rules that were removed from the ruleset.",
+		"ruleset_rules_updated":               "Rules that were updated in the ruleset.",
+		"ruleset_source_type":                 "The source type of the ruleset (repository, organization).",
+		"run_number":                          "The run number of the GitHub Actions workflow.",
+		"seat_assignment":                     "The seat assignment information for licensed users.",
+		"secondary_category":                  "The secondary category classification of the event.",
+		"sponsors_listing_id":                 "The unique identifier of the sponsors listing.",
+		"start_date":                          "The start date of a time-based security policy or event.",
+		"started_at":                          "The timestamp when the process or workflow started.",
+		"state":                               "The current state of the resource (active, inactive, pending, etc.).",
+		"team":                                "The team name involved in the security event.",
+		"title":                               "The title or name of the resource or event.",
+		"token_id":                            "The unique identifier of the authentication token.",
+		"token_scopes":                        "The scopes or permissions granted to the token.",
+		"tool":                                "The tool or service that triggered the security event.",
+		"topic":                               "The topic or subject associated with the event.",
+		"transfer_from":                       "The source account in a transfer operation.",
+		"transfer_from_id":                    "The unique identifier of the source account in a transfer.",
+		"transfer_from_type":                  "The type of the source account in a transfer (User, Organization).",
+		"transfer_to":                         "The destination account in a transfer operation.",
+		"transfer_to_id":                      "The unique identifier of the destination account in a transfer.",
+		"transfer_to_type":                    "The type of the destination account in a transfer (User, Organization).",
+		"trigger_id":                          "The unique identifier of the trigger that caused the event.",
+		"updated_access_policy":               "The updated access policy after the change.",
+		"user":                                "The username of the user involved in the security event.",
+		"user_agent":                          "The user agent string from the client that made the request.",
+		"user_id":                             "The unique identifier of the user involved in the event.",
+		"user_programmatic_access_id":         "The unique identifier of the user's programmatic access credential.",
+		"user_programmatic_access_name":       "The name of the user's programmatic access credential.",
+		"user_programmatic_access_request_id": "The unique identifier of the programmatic access request.",
+		"visibility":                          "The visibility setting of the resource (public, private, internal).",
+		"workflow_id":                         "The unique identifier of the GitHub Actions workflow.",
+		"workflow_run_id":                     "The unique identifier of the GitHub Actions workflow run.",
 		"tp_index":                            "The organization name or 'default' if not set.",
 		"tp_ips":                              "IP addresses related to the event.",
 		"tp_source_ip":                        "The IP address of the actor.",
@@ -747,7 +759,6 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 			if strVal, ok := value.(string); ok {
 				a.ActionsCacheKey = &strVal
 			}
-			dynamicFields[key] = value
 		case "actions_cache_scope":
 			if strVal, ok := value.(string); ok {
 				a.ActionsCacheScope = &strVal
@@ -802,10 +813,10 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.Business = &strVal
 			}
 		case "business_id":
-      intVal, err := toInt64(value)
-      if err == nil {
-        a.BusinessId = &intVal
-      }
+			intVal, err := toInt64(value)
+			if err == nil {
+				a.BusinessId = &intVal
+			}
 		case "can_admins_bypass":
 			if strVal, ok := value.(string); ok {
 				a.CanAdminsBypass = &strVal
@@ -861,8 +872,9 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.EnvironmentName = &strVal
 			}
 		case "events":
-			if strVal, ok := value.(string); ok {
-				a.Events = &strVal
+			strArray, err := convertToStringArray(value)
+			if err == nil {
+				a.Events = strArray
 			}
 		case "events_were":
 			if strVal, ok := value.(string); ok {
@@ -871,6 +883,10 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 		case "explanation":
 			if strVal, ok := value.(string); ok {
 				a.Explanation = &strVal
+			}
+		case "filename":
+			if strVal, ok := value.(string); ok {
+				a.Filename = &strVal
 			}
 		case "fingerprint":
 			if strVal, ok := value.(string); ok {
@@ -1036,19 +1052,19 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 			if strVal, ok := value.(string); ok {
 				a.Org.Name = &strVal
 			}
-      stringArr, err := convertToStringArray(value)
-      if err == nil {
-        a.Org.Names = stringArr
-      }
+			stringArr, err := convertToStringArray(value)
+			if err == nil {
+				a.Org.Names = stringArr
+			}
 		case "org_id":
 			intVal, err := toInt64(value)
 			if err == nil {
 				a.OrgId.Id = &intVal
 			}
-      intArr, err := convertToInt64Slice(value)
-      if err == nil {
-        a.OrgId.Ids = intArr
-      }
+			intArr, err := convertToInt64Slice(value)
+			if err == nil {
+				a.OrgId.Ids = intArr
+			}
 		case "origin_repository":
 			if strVal, ok := value.(string); ok {
 				a.OriginRepository = &strVal
@@ -1074,26 +1090,26 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.PatreonUsername = &strVal
 			}
 		case "permissions":
-      mapVal, err := convertToMapStringString(value)
-      if err == nil {
-        a.Permissions = mapVal
-      }
-    
-    case "permissions_added":
-      mapVal, err := convertToMapStringString(value)
-      if err == nil {
-        a.PermissionsAdded = mapVal
-      }
-    case "permissions_unchanged":
-      mapVal, err := convertToMapStringString(value)
-      if err == nil {
-        a.PermissionsUnchanged = mapVal
-      }
-    case "permissions_upgraded":
-      mapVal, err := convertToMapStringString(value)
-      if err == nil {
-        a.PermissionsUpgraded = mapVal
-      }
+			mapVal, err := convertToMapStringString(value)
+			if err == nil {
+				a.Permissions = mapVal
+			}
+
+		case "permissions_added":
+			mapVal, err := convertToMapStringString(value)
+			if err == nil {
+				a.PermissionsAdded = mapVal
+			}
+		case "permissions_unchanged":
+			mapVal, err := convertToMapStringString(value)
+			if err == nil {
+				a.PermissionsUnchanged = mapVal
+			}
+		case "permissions_upgraded":
+			mapVal, err := convertToMapStringString(value)
+			if err == nil {
+				a.PermissionsUpgraded = mapVal
+			}
 		case "policy":
 			if strVal, ok := value.(string); ok {
 				a.Policy = &strVal
@@ -1164,10 +1180,10 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.RepoWas = &strVal
 			}
 		case "repositories_added":
-      intArr, err := convertToInt64Slice(value)
-      if err == nil {
-        a.RepositoriesAdded = intArr
-      }
+			intArr, err := convertToInt64Slice(value)
+			if err == nil {
+				a.RepositoriesAdded = intArr
+			}
 		case "repositories_added_names":
 			stringSliceVal, err := convertToStringArray(value)
 			if err == nil {
@@ -1186,8 +1202,9 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.Repository = &strVal
 			}
 		case "repository_id":
-			if strVal, ok := value.(string); ok {
-				a.RepositoryId = &strVal
+			intVal, err := toInt64(value)
+			if err == nil {
+				a.RepositoryId = &intVal
 			}
 		case "repository_selection":
 			if strVal, ok := value.(string); ok {
@@ -1221,6 +1238,20 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 		case "requester_id":
 			if strVal, ok := value.(string); ok {
 				a.RequesterId = &strVal
+			}
+		case "repositories":
+			intArr, err := convertToInt64Slice(value)
+			if err == nil {
+				a.Repositories = intArr
+			}
+		case "environment_id":
+			intVal, err := toInt64(value)
+			if err == nil {
+				a.EnvironmentId = &intVal
+			}
+		case "old_value":
+			if strVal, ok := value.(string); ok {
+				a.OldValue = &strVal
 			}
 		case "ruleset_bypass_actors":
 			if strVal, ok := value.(string); ok {
@@ -1314,8 +1345,9 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 				a.SponsorsListingId = &strVal
 			}
 		case "start_date":
-			if strVal, ok := value.(string); ok {
-				a.StartDate = &strVal
+			if floatVal, ok := value.(float64); ok {
+				t := time.Unix(0, int64(floatVal)*int64(time.Millisecond))
+				a.StartDate = &t
 			}
 		case "started_at":
 			if strVal, ok := value.(string); ok {
@@ -1414,9 +1446,9 @@ func (a *SecurityLog) mapSecurityLogFields(in map[string]interface{}) {
 			}
 		case "workflow_id":
 			intVal, err := toInt64(value)
-      if err == nil {
-        a.WorkflowId = &intVal
-      }
+			if err == nil {
+				a.WorkflowId = &intVal
+			}
 		case "workflow_run_id":
 			if strVal, ok := value.(string); ok {
 				a.WorkflowRunId = &strVal
@@ -1469,7 +1501,6 @@ func convertToMapStringString(val interface{}) (map[string]string, error) {
 
 	return result, nil
 }
-
 
 func toInt64(val interface{}) (int64, error) {
 	if val == nil {
