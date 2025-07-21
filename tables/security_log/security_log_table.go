@@ -42,14 +42,8 @@ func (t *SecurityLogTable) EnrichRow(row *SecurityLog, sourceEnrichmentFields sc
 
 	// Parse timestamp from the @timestamp field
 	if row.Timestamp != nil {
-		if timestamp, err := time.Parse(time.RFC3339, row.Timestamp.Format(time.RFC3339)); err == nil {
-			row.TpTimestamp = timestamp
-		} else {
-			// Fallback to current time if parsing fails
-			row.TpTimestamp = time.Now()
-		}
-	} else {
-		row.TpTimestamp = time.Now()
+		row.TpTimestamp = *row.Timestamp
+		row.TpDate = row.TpTimestamp.Truncate(24 * time.Hour)
 	}
 
 	row.TpIngestTimestamp = time.Now()
@@ -62,10 +56,6 @@ func (t *SecurityLogTable) EnrichRow(row *SecurityLog, sourceEnrichmentFields sc
 		row.TpUsernames = append(row.TpUsernames, *row.User)
 	}
 
-	// Note: Security logs don't typically have direct IP fields like audit logs
-	// We would need to extract from additional fields if available
-
-	row.TpDate = row.TpTimestamp.Truncate(24 * time.Hour)
 	return row, nil
 }
 

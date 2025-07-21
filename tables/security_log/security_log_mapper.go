@@ -37,7 +37,7 @@ func (m *SecurityLogMapper) Map(ctx context.Context, a any, _ ...mappers.MapOpti
 			return nil, error_types.NewRowErrorWithMessage("invalid json string")
 		}
 	default:
-		slog.Error("unable to map security log record: expected string/*string, got %T", a)
+		slog.Error("unable to map security log record: expected string/*string", "got_type", fmt.Sprintf("%T", a))
 		return nil, error_types.NewRowErrorWithMessage("unable to map row, invalid type received")
 	}
 

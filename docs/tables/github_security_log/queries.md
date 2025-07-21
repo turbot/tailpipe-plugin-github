@@ -603,7 +603,7 @@ Identify peak activity hours for security events.
 
 ```sql
 select
-  extract(hour from "@timestamp") as hour_of_day,
+  extract(hour from timestamp) as hour_of_day,
   count(*) as event_count
 from
   github_security_log
