@@ -1,0 +1,5 @@
+# GitHub Security Log Event Fields Scraper Dependencies
+# Install with: pip install -r requirements.txt
+
+requests==2.31.0        # HTTP client for fetching GitHub documentation
+beautifulsoup4==4.12.2  # HTML parsing library 
