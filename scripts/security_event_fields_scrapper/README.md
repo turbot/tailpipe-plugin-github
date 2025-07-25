@@ -35,10 +35,10 @@ The script automates the complete workflow of GitHub security log analysis by:
 From the repository root, navigate to the script directory:
 
 ```sh
-cd script/security_event_fields_scrapper
+cd scripts/security_event_fields_scrapper
 ```
 
-**Important:** All commands must be run from this directory (`script/security_event_fields_scrapper/`).
+**Important:** All commands must be run from this directory (`scripts/security_event_fields_scrapper/`).
 
 ### **2️⃣ Install Dependencies**
 
@@ -99,7 +99,7 @@ error: externally-managed-environment
 
 ```sh
 # Navigate to the script directory
-cd script/security_event_fields_scrapper
+cd scripts/security_event_fields_scrapper
 
 # Create and activate virtual environment
 python3 -m venv venv
