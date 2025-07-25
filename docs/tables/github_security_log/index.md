@@ -45,7 +45,7 @@ tailpipe collect github_security_log.my_security_logs
 
 ## Query
 
-**[Explore 25+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_security_log)**
+**[Explore 33+ example queries for this table →](https://hub.tailpipe.io/plugins/turbot/github/queries/github_security_log)**
 
 ### Recent login attempts
 

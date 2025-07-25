@@ -1,29 +1,5 @@
 ## Authentication Examples
 
-### Recent Login Attempts
-
-Track recent login attempts to monitor account access patterns.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  tp_source_ip,
-  user_agent
-from
-  github_security_log
-where
-  action like '%login%'
-order by
-  timestamp desc
-limit 20;
-```
-
-```yaml
-folder: Authentication
-```
-
 ### Failed Login Attempts
 
 Identify failed login attempts that might indicate security threats.
@@ -547,31 +523,6 @@ order by
 folder: Security Analysis
 ```
 
-### Geographic Anomalies
-
-Detect rapid geographic changes in access patterns (when location data is available).
-
-```sql
-select
-  timestamp,
-  actor,
-  tp_source_ip,
-  action,
-  lag(tp_source_ip) over (partition by actor order by timestamp) as previous_ip,
-  lag(timestamp) over (partition by actor order by timestamp) as previous_timestamp
-from
-  github_security_log
-where
-  actor is not null
-  and timestamp >= current_timestamp - interval '24 hours'
-order by
-  actor, timestamp;
-```
-
-```yaml
-folder: Security Analysis
-```
-
 ## Operational Monitoring
 
 ### Daily Security Event Trends
@@ -813,31 +764,6 @@ folder: Environment Security
 
 ## Repository Access Analysis
 
-### Multi-Repository Token Analysis
-
-Analyze tokens with access to multiple repositories.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  cardinality(repositories) as repo_count,
-  repositories,
-  repository_selection
-from
-  github_security_log
-where
-  repositories is not null
-  and cardinality(repositories) > 1
-order by
-  repo_count desc, timestamp desc;
-```
-
-```yaml
-folder: Repository Security
-```
-
 ### Repository Access Patterns
 
 Track which repositories are most frequently accessed via security events.
@@ -866,56 +792,6 @@ group by
 order by
   access_events desc
 limit 20;
-```
-
-```yaml
-folder: Repository Security
-```
-
-### Specific Repository Security Events
-
-Monitor security events for a specific repository.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  permissions,
-  repository_selection
-from
-  github_security_log
-where
-  repositories @> '[313325091]'  -- Replace with your repository ID
-order by
-  timestamp desc;
-```
-
-```yaml
-folder: Repository Security
-```
-
-### Repository Permission Changes
-
-Track changes in repository permissions using old_value and new_value fields.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  repositories,
-  old_value,
-  new_value,
-  permissions_added,
-  permissions_upgraded
-from
-  github_security_log
-where
-  (old_value is not null or new_value is not null)
-  and repositories is not null
-order by
-  timestamp desc;
 ```
 
 ```yaml
