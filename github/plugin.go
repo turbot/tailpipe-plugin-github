@@ -7,6 +7,7 @@ import (
 	"github.com/turbot/tailpipe-plugin-sdk/table"
 
 	"github.com/turbot/tailpipe-plugin-github/tables/audit_log"
+	"github.com/turbot/tailpipe-plugin-github/tables/security_log"
 )
 
 type Plugin struct {
@@ -18,6 +19,7 @@ func init() {
 	// 1. row struct
 	// 2. table implementation
 	table.RegisterTable[*audit_log.AuditLog, *audit_log.AuditLogTable]()
+	table.RegisterTable[*security_log.SecurityLog, *security_log.SecurityLogTable]()
 
 	// TODO: register sources in future if needed
 }
