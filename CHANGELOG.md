@@ -1,3 +1,10 @@
+## v0.5.0 [2025-08-06]
+
+_What's new?_
+
+- New tables added
+  - [github_security_log](https://hub.tailpipe.io/plugins/turbot/github/tables/github_security_log)
+
 ## v0.4.1 [2025-07-28]
 
 _Dependencies_
