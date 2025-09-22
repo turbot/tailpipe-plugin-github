@@ -88,7 +88,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ### Personal Access Token Usage
@@ -111,7 +111,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ### OAuth Application Authorizations
@@ -134,7 +134,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ### Token Regeneration Events
@@ -157,7 +157,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ### Repository-Specific Token Access
@@ -182,7 +182,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ### Token Permission Changes
@@ -209,7 +209,7 @@ order by
 ```
 
 ```yaml
-folder: Access Tokens
+folder: Access Token
 ```
 
 ## SSH Key Management
@@ -234,7 +234,7 @@ order by
 ```
 
 ```yaml
-folder: SSH Keys
+folder: SSH Key
 ```
 
 ### Git Signing SSH Key Events
@@ -256,7 +256,7 @@ order by
 ```
 
 ```yaml
-folder: SSH Keys
+folder: SSH Key
 ```
 
 ### SSH Key Verification Events
@@ -279,7 +279,7 @@ order by
 ```
 
 ```yaml
-folder: SSH Keys
+folder: SSH Key
 ```
 
 ## Device and Security Management
@@ -393,7 +393,7 @@ order by
 ```
 
 ```yaml
-folder: Account Management
+folder: Account
 ```
 
 ### Password Changes
@@ -415,7 +415,7 @@ order by
 ```
 
 ```yaml
-folder: Account Management
+folder: Account
 ```
 
 ### Profile Picture Updates
@@ -436,7 +436,7 @@ order by
 ```
 
 ```yaml
-folder: Account Management
+folder: Account
 ```
 
 ## Suspicious Activity Detection
