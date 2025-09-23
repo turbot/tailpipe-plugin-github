@@ -1,3 +1,9 @@
+## v0.5.1 [2025-09-23]
+
+_Bug fixes_
+
+- Fixed the folder names for GitHub security log table queries. ([#36](https://github.com/turbot/tailpipe-plugin-github/pull/36)) ([#37](https://github.com/turbot/tailpipe-plugin-github/pull/37))
+
 ## v0.5.0 [2025-08-06]
 
 _What's new?_
