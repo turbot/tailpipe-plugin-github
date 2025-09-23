@@ -66,7 +66,7 @@ order by
 folder: Authentication
 ```
 
-## Access Token Examples
+## Personal Access Token Examples
 
 ### Personal Access Token Creation
 
@@ -88,7 +88,7 @@ order by
 ```
 
 ```yaml
-folder: Access Token
+folder: Personal Access Token
 ```
 
 ### Personal Access Token Usage
@@ -111,8 +111,62 @@ order by
 ```
 
 ```yaml
-folder: Access Token
+folder: Personal Access Token
 ```
+
+### Repository-Specific Token Access
+
+Monitor personal access tokens granted access to specific repositories.
+
+```sql
+select
+  timestamp,
+  action,
+  actor,
+  repositories,
+  permissions,
+  repository_selection
+from
+  github_security_log
+where
+  repositories is not null
+  and action in ('personal_access_token.access_granted', 'personal_access_token.request_created')
+order by
+  timestamp desc;
+```
+
+```yaml
+folder: Personal Access Token
+```
+
+### Token Permission Changes
+
+Track changes in token permissions using the old_value field.
+
+```sql
+select
+  timestamp,
+  action,
+  actor,
+  permissions_added,
+  permissions_unchanged,
+  permissions_upgraded,
+  old_value,
+  new_value
+from
+  github_security_log
+where
+  action = 'personal_access_token.request_created'
+  and (permissions_added is not null or permissions_upgraded is not null)
+order by
+  timestamp desc;
+```
+
+```yaml
+folder: Personal Access Token
+```
+
+## Access Token Examples
 
 ### OAuth Application Authorizations
 
@@ -152,58 +206,6 @@ from
   github_security_log
 where
   action like '%regenerate%'
-order by
-  timestamp desc;
-```
-
-```yaml
-folder: Access Token
-```
-
-### Repository-Specific Token Access
-
-Monitor personal access tokens granted access to specific repositories.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  repositories,
-  permissions,
-  repository_selection
-from
-  github_security_log
-where
-  repositories is not null
-  and action in ('personal_access_token.access_granted', 'personal_access_token.request_created')
-order by
-  timestamp desc;
-```
-
-```yaml
-folder: Access Token
-```
-
-### Token Permission Changes
-
-Track changes in token permissions using the old_value field.
-
-```sql
-select
-  timestamp,
-  action,
-  actor,
-  permissions_added,
-  permissions_unchanged,
-  permissions_upgraded,
-  old_value,
-  new_value
-from
-  github_security_log
-where
-  action = 'personal_access_token.request_created'
-  and (permissions_added is not null or permissions_upgraded is not null)
 order by
   timestamp desc;
 ```
